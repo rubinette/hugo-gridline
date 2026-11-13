@@ -27,6 +27,11 @@ pub struct EditorSettings {
 
 設定分成三層：預設值、使用者設定、專案設定。後面的覆蓋前面的，而且每個值都能查到它來自哪一層。
 
+```mermaid
+flowchart LR
+    defaults[預設值] --> user[使用者設定] --> project[專案設定] --> effective((生效的設定))
+```
+
 | 層級 | 位置 | 會進版本控制 |
 | --- | --- | --- |
 | 預設值 | 內建 | 否 |

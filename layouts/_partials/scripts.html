@@ -1,3 +1,4 @@
 {{- $js := resources.Get "js/main.js" }}
 {{- if hugo.IsProduction }}{{ $js = $js | minify | fingerprint }}{{ end }}
 <script src="{{ $js.RelPermalink }}" defer></script>
+{{- if .Store.Get "hasMermaid" }}{{ partial "mermaid.html" . }}{{ end }}

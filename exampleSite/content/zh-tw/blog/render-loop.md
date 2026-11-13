@@ -20,6 +20,15 @@ cover: covers/frames.svg
 2. 只重新排版受影響的行
 3. 把剩下的時間預算交給背景工作
 
+```mermaid {caption="每個畫格的流程：輸入永遠先處理，背景工作只用剩下的時間。"}
+flowchart LR
+    input[處理所有輸入] --> layout[重排變動的行]
+    layout --> budget{還有時間預算？}
+    budget -- 有 --> work[執行一個背景工作]
+    work --> budget
+    budget -- 沒有 --> paint[繪製畫格]
+```
+
 ```ts {title="loop.ts"}
 function frame(budget: number) {
   const start = performance.now();

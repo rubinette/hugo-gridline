@@ -1,0 +1,12 @@
+{{- /* ```mermaid {caption="Shown under the diagram"}
+  Rendered in the browser by Pele (assets/vendor/pele). The page loads Pele only
+  when it contains at least one of these blocks; without JavaScript the source stays visible. */ -}}
+{{- .Page.Store.Set "hasMermaid" true }}
+<figure class="figure diagram"{{ with .Attributes.id }} id="{{ . }}"{{ end }}>
+  <div class="figure-frame">
+    <pre class="mermaid">{{ .Inner }}</pre>
+  </div>
+  {{- with .Attributes.caption | default .Attributes.title }}
+  <figcaption>{{ . | markdownify }}</figcaption>
+  {{- end }}
+</figure>

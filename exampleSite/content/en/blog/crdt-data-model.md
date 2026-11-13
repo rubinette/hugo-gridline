@@ -47,6 +47,20 @@ CRDTs come at it from the other side. Instead of describing an insert by *positi
 
 A big share of Orbitline use is closing the laptop on a train, writing anyway, and syncing on arrival. For operational transformation that is one very long run of unacknowledged edits. For a CRDT it is an ordinary merge.
 
+```mermaid {caption="Figure 2: replica B keeps editing offline; once it reconnects, both sides exchange edits and sort by identifier into the same document."}
+sequenceDiagram
+    participant A as Replica A
+    participant S as Sync service
+    participant B as Replica B
+    A->>S: insert "a" @ (1, A)
+    Note over B: Offline, still editing
+    B->>B: insert "b" @ (1, B)
+    B->>S: Back online, send queued edits
+    S-->>A: Forward insert "b"
+    S-->>B: Forward insert "a"
+    Note over A,B: Sorted by (clock, replica), both read "ab"
+```
+
 ## The smallest implementation
 
 Here is a simplified version. Every character carries an `Id` made of a replica number and a monotonic clock. Ordering compares the clock first and the replica second, so every replica sorts identically.

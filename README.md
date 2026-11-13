@@ -9,6 +9,7 @@
 - **部落格首頁**：格線主視覺、三張精選卡片（最新文章，第一張標「最新」）、左側分類與作者欄、依年份分組的緊湊文章列表、分頁
 - **文章頁**：分類眉標、作者頭像與職稱、日期與閱讀時間、右側「本頁內容」目錄（捲動時高亮目前段落）、延伸連結框、標籤、上一篇／下一篇、相關文章、結尾行動呼籲
 - **內文排版**：帶語言標籤與複製按鈕的程式碼區塊、Markdown 提示框（`> [!NOTE]` 等）、帶說明文字的圖片框、表格橫向捲動、註腳、`kbd` 按鍵
+- **Mermaid 圖表**：以 [Pele](https://github.com/obsidianmd/pele) 渲染，顏色與字型跟著佈景主題和深淺色走，只在有圖表的頁面載入
 - **深淺色**：跟隨系統並提供切換按鈕（記住偏好），或鎖定其中一種
 - **多語系**：內建繁體中文與英文介面字串；中文排版使用 CJK 襯線／黑體字型、著重號、嚴格斷行
 - **響應式**：1080px 以下目錄收進文章頂端，880px 以下分類變成標籤列，820px 以下主選單收進「選單」按鈕
@@ -130,9 +131,26 @@ initials: 林            # 選用：覆寫縮寫
 > [!NOTE]
 > 也支援 TIP、IMPORTANT、WARNING、CAUTION。
 
+```mermaid {caption="圖表下方的說明（選用）"}
+flowchart LR
+    A[Markdown] --> B[SVG]
+```
+
 {{</* kbd "⌘ K" */>}}
 {{</* video src="demo.mp4" poster="demo.jpg" caption="說明文字" */>}}
 ````
+
+### Mermaid 圖表
+
+` ```mermaid ` 程式碼區塊會在瀏覽器中由 [Pele](https://github.com/obsidianmd/pele) 1.13.0 渲染成 SVG，支援 Mermaid 12.1 的所有圖表類型（流程圖、循序圖、狀態圖、甘特圖、圓餅圖等）。
+
+- **不需要任何設定**。Pele 存放在佈景主題的 `assets/vendor/pele/` 裡，不經過 CDN，也沒有對外連線。
+- **只在需要時載入**。沒有圖表的頁面不會載入任何東西；有圖表的頁面只下載用到的圖表類型（通常 10–20 個小檔案，不是全部 87 個）。
+- **跟著佈景主題走**。顏色、字型都對應到佈景主題的 CSS 變數，所以會跟著深淺色切換和 `params.accent`，不需要重新渲染。圖表的系列色以強調色和中性灰交錯，在兩種模式下對背景的對比都至少 4.2:1。
+- **語法錯誤**會直接顯示在圖表位置，標出行號；未啟用 JavaScript 時則顯示原始碼。
+- 圖表太寬、必須縮小才放得下時，右下角會出現放大／縮小按鈕。
+
+要調整圖表樣式，可以覆寫 `.mermaid-diagram` 上的 `--pele-*` 變數（見 `assets/css/main.css`）。要升級 Pele：把新版 npm 套件 `dist/esm/` 裡的 `lazy.js` 和 `chunks/` 放進 `assets/vendor/pele/<版本>/`，再更新 `layouts/_partials/mermaid.html` 裡的版本號。
 
 ## 客製化
 
@@ -142,4 +160,6 @@ initials: 林            # 選用：覆寫縮寫
 
 ## 授權
 
-MIT
+MIT。
+
+`assets/vendor/pele/` 內含 [Pele](https://github.com/obsidianmd/pele)（MIT，© kepano），授權條款與其中引用的 Lucide 圖示（ISC）一併保留在 `assets/vendor/pele/1.13.0/LICENSE.txt`，並會隨圖表一起發布到網站。

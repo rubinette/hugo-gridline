@@ -47,6 +47,20 @@ CRDT 換了一個角度：不再用「位置」描述插入，而是讓每個字
 
 Orbitline 的使用情境裡，有很大一部分是筆電闔上、在高鐵上繼續寫，然後下車再同步。對操作轉換來說，這等於一段很長的「未確認操作」；對 CRDT 來說，這只是普通的合併。
 
+```mermaid {caption="圖二：副本 B 離線時繼續編輯，回到線上後兩邊交換操作，依識別碼排序得到相同的文件。"}
+sequenceDiagram
+    participant A as 副本 A
+    participant S as 同步服務
+    participant B as 副本 B
+    A->>S: insert "a" @ (1, A)
+    Note over B: 離線，繼續編輯
+    B->>B: insert "b" @ (1, B)
+    B->>S: 回到線上，送出暫存的操作
+    S-->>A: 轉送 insert "b"
+    S-->>B: 轉送 insert "a"
+    Note over A,B: 依 (clock, replica) 排序，兩邊都是 "ab"
+```
+
 ## 最小的實作
 
 下面是簡化過的資料結構。每個字元帶著一個 `Id`，由副本編號與遞增的時鐘組成；排序時先比時鐘，再比副本編號，確保所有副本得到相同的順序。

@@ -20,6 +20,15 @@ Every frame is split into three phases:
 2. Re-lay out only the lines that changed
 3. Hand whatever time is left to background work
 
+```mermaid {caption="One frame: input always goes first; background work only gets the time that is left."}
+flowchart LR
+    input[Drain input] --> layout[Re-lay out changed lines]
+    layout --> budget{Budget left?}
+    budget -- yes --> work[Run one background job]
+    work --> budget
+    budget -- no --> paint[Paint the frame]
+```
+
 ```ts {title="loop.ts"}
 function frame(budget: number) {
   const start = performance.now();
