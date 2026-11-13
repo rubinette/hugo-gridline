@@ -1,0 +1,18 @@
+{{- /* GitHub-style alerts (> [!NOTE], [!TIP], [!IMPORTANT], [!WARNING], [!CAUTION]) become callouts. */ -}}
+{{- if eq .Type "alert" }}
+  {{- $title := .AlertTitle }}
+  {{- $body := .Text }}
+  {{- /* A one-line alert whose text landed in the title slot: move it back to the body. */}}
+  {{- if and $title (not (strings.TrimSpace (string $body))) }}
+    {{- $body = printf "<p>%s</p>" $title | safeHTML }}
+    {{- $title = "" }}
+  {{- end }}
+<div class="callout callout-{{ .AlertType }}" role="note">
+  <p class="callout-title">{{ with $title }}{{ . }}{{ else }}{{ T (printf "alert_%s" .AlertType) | default (.AlertType | humanize) }}{{ end }}</p>
+  {{ $body }}
+</div>
+{{- else }}
+<blockquote{{ with .Attributes.class }} class="{{ . }}"{{ end }}>
+  {{ .Text }}
+</blockquote>
+{{- end }}

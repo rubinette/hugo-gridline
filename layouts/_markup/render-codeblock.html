@@ -1,0 +1,9 @@
+{{- /* Fenced code with a header strip: ```go {title="main.go"} */ -}}
+{{- $label := .Attributes.title | default .Type | default "text" }}
+<figure class="code-block">
+  <figcaption class="code-head">
+    <span class="code-label">{{ $label }}</span>
+    <button class="copy" type="button" data-done="{{ T "copied" }}" hidden>{{ T "copy" }}</button>
+  </figcaption>
+  {{- transform.Highlight .Inner .Type .Options }}
+</figure>

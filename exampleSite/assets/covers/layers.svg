@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" fill="none">
+  <g stroke="#8f8f88" stroke-opacity=".22">
+    <path d="M0 50H800M0 100H800M0 150H800M0 200H800M0 250H800M0 300H800M0 350H800M0 400H800M0 450H800"/>
+    <path d="M50 0V500M100 0V500M150 0V500M200 0V500M250 0V500M300 0V500M350 0V500M400 0V500M450 0V500M500 0V500M550 0V500M600 0V500M650 0V500M700 0V500M750 0V500"/>
+  </g>
+  <rect x="210" y="160" width="440" height="260" stroke="#8f8f88" stroke-width="1.5" fill="#8f8f88" fill-opacity=".08"/>
+  <rect x="180" y="130" width="440" height="260" stroke="#8f8f88" stroke-width="1.5" fill="#8f8f88" fill-opacity=".08"/>
+  <rect x="150" y="100" width="440" height="260" stroke="#315cf4" stroke-width="2" fill="#315cf4" fill-opacity=".06"/>
+  <path d="M150 130H590" stroke="#315cf4" stroke-width="1.5"/>
+  <path d="M370 130V360" stroke="#315cf4" stroke-width="1.5"/>
+  <g stroke="#8f8f88" stroke-width="2" stroke-linecap="square">
+    <path d="M175 160H300M175 180H340M175 200H280M175 220H320M175 240H260"/>
+    <path d="M395 160H520M395 180H560M395 200H480M395 220H540"/>
+  </g>
+  <path d="M395 240H470" stroke="#315cf4" stroke-width="2" stroke-linecap="square"/>
+  <g fill="#315cf4"><circle cx="166" cy="115" r="4"/></g>
+  <g fill="none" stroke="#8f8f88"><circle cx="182" cy="115" r="4"/><circle cx="198" cy="115" r="4"/></g>
+  <text x="150" y="88" font-family="ui-monospace, Menlo, monospace" font-size="16" fill="#8f8f88">v0.9</text>
+</svg>

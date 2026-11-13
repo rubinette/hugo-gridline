@@ -1,0 +1,8 @@
+{{- /* Standalone pages (about, colophon …): no byline, no related posts. */ -}}
+{{- partial "hero.html" (dict "title" .Title "lead" .Description "eyebrow" .Params.eyebrow "align" "left") }}
+{{- partial "divider.html" }}
+<div class="frame page-layout">
+  <div class="prose">
+    {{ .Content }}
+  </div>
+</div>

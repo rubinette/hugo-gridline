@@ -1,0 +1,199 @@
+# Run from the repository root:
+#   hugo server -s exampleSite --themesDir ../..
+baseURL = "https://example.org/"
+theme = "hugo-zed"
+themesDir = "../.."
+
+defaultContentLanguage = "zh-tw"
+defaultContentLanguageInSubdir = false
+hasCJKLanguage = true
+enableRobotsTXT = true
+summaryLength = 40
+
+[pagination]
+  pagerSize = 20
+
+# Pull the theme's markup (code highlighting classes, CJK line breaks, figures)
+# and related-content settings into this site.
+[markup]
+  _merge = "deep"
+[related]
+  _merge = "deep"
+
+[taxonomies]
+  category = "categories"
+  tag = "tags"
+  author = "authors"
+
+# Category and author archives live under /blog/, like the posts.
+[permalinks]
+  [permalinks.page]
+    blog = "/blog/:contentbasename/"
+  [permalinks.term]
+    categories = "/blog/tagged/:contentbasename/"
+    authors = "/blog/authors/:contentbasename/"
+  [permalinks.taxonomy]
+    categories = "/blog/tagged/"
+    authors = "/blog/authors/"
+
+[params]
+  mainSections = ["blog"]
+  monogram = "O"
+  colorScheme = "auto"
+  featuredCount = 3
+  # "latest" (default): newest posts on top. "featured": posts with `featured: true` first.
+  featuredRow = "latest"
+
+# ───────────── 繁體中文 ─────────────
+[languages.zh-tw]
+  locale = "zh-Hant-TW"
+  label = "中文"
+  title = "Orbitline 部落格"
+  contentDir = "content/zh-tw"
+  weight = 1
+  copyright = "© 2026 Orbitline 示範團隊 · 內容為虛構範例"
+
+  [languages.zh-tw.params]
+    description = "Orbitline 團隊的工程筆記、產品更新與使用技巧。"
+    [languages.zh-tw.params.hero]
+      eyebrow = "Blog / 部落格"
+      title = "來自部落格"
+      subtitle = "團隊的工程筆記、產品更新與使用技巧。"
+    [languages.zh-tw.params.headerButton]
+      label = "訂閱"
+      url = "/index.xml"
+    [languages.zh-tw.params.cta]
+      eyebrow = "保持聯繫"
+      title = "每篇新文章，第一時間送到你的閱讀器"
+      text = "用 RSS 訂閱，或到討論區告訴我們你想讀什麼。"
+      [[languages.zh-tw.params.cta.buttons]]
+        label = "以 RSS 訂閱"
+        url = "/index.xml"
+        primary = true
+      [[languages.zh-tw.params.cta.buttons]]
+        label = "關於我們"
+        url = "/about/"
+
+  [[languages.zh-tw.menus.main]]
+    name = "部落格"
+    pageRef = "/blog"
+    weight = 10
+  [[languages.zh-tw.menus.main]]
+    name = "分類"
+    pageRef = "/categories"
+    weight = 20
+  [[languages.zh-tw.menus.main]]
+    name = "關於"
+    pageRef = "/about"
+    weight = 30
+
+  [[languages.zh-tw.menus.footer]]
+    name = "部落格"
+    identifier = "blog"
+    weight = 10
+  [[languages.zh-tw.menus.footer]]
+    name = "全部文章"
+    pageRef = "/blog"
+    parent = "blog"
+    weight = 1
+  [[languages.zh-tw.menus.footer]]
+    name = "分類"
+    pageRef = "/categories"
+    parent = "blog"
+    weight = 2
+  [[languages.zh-tw.menus.footer]]
+    name = "作者"
+    pageRef = "/authors"
+    parent = "blog"
+    weight = 3
+  [[languages.zh-tw.menus.footer]]
+    name = "專案"
+    identifier = "project"
+    weight = 20
+  [[languages.zh-tw.menus.footer]]
+    name = "關於"
+    pageRef = "/about"
+    parent = "project"
+    weight = 1
+  [[languages.zh-tw.menus.footer]]
+    name = "Hugo"
+    url = "https://gohugo.io"
+    parent = "project"
+    weight = 2
+
+# ───────────── English ─────────────
+[languages.en]
+  locale = "en-US"
+  label = "EN"
+  title = "Orbitline Blog"
+  contentDir = "content/en"
+  weight = 2
+  copyright = "© 2026 Orbitline demo team · Sample content is fictional"
+
+  [languages.en.params]
+    description = "Engineering notes, product updates and tips from the Orbitline team."
+    [languages.en.params.hero]
+      eyebrow = "Blog"
+      title = "From the Blog"
+      subtitle = "Engineering notes, product updates and tips from the team."
+    [languages.en.params.headerButton]
+      label = "Subscribe"
+      url = "/index.xml"
+    [languages.en.params.cta]
+      eyebrow = "Stay in the loop"
+      title = "Every new post, straight to your reader"
+      text = "Subscribe with RSS, or tell us what you would like to read next."
+      [[languages.en.params.cta.buttons]]
+        label = "Subscribe via RSS"
+        url = "/index.xml"
+        primary = true
+      [[languages.en.params.cta.buttons]]
+        label = "About us"
+        url = "/about/"
+
+  [[languages.en.menus.main]]
+    name = "Blog"
+    pageRef = "/blog"
+    weight = 10
+  [[languages.en.menus.main]]
+    name = "Categories"
+    pageRef = "/categories"
+    weight = 20
+  [[languages.en.menus.main]]
+    name = "About"
+    pageRef = "/about"
+    weight = 30
+
+  [[languages.en.menus.footer]]
+    name = "Blog"
+    identifier = "blog"
+    weight = 10
+  [[languages.en.menus.footer]]
+    name = "All posts"
+    pageRef = "/blog"
+    parent = "blog"
+    weight = 1
+  [[languages.en.menus.footer]]
+    name = "Categories"
+    pageRef = "/categories"
+    parent = "blog"
+    weight = 2
+  [[languages.en.menus.footer]]
+    name = "Authors"
+    pageRef = "/authors"
+    parent = "blog"
+    weight = 3
+  [[languages.en.menus.footer]]
+    name = "Project"
+    identifier = "project"
+    weight = 20
+  [[languages.en.menus.footer]]
+    name = "About"
+    pageRef = "/about"
+    parent = "project"
+    weight = 1
+  [[languages.en.menus.footer]]
+    name = "Hugo"
+    url = "https://gohugo.io"
+    parent = "project"
+    weight = 2

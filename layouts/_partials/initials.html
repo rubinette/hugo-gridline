@@ -1,0 +1,7 @@
+{{- /* "Ada Lovelace" → "AL", "林語" → "林". */ -}}
+{{- $parts := split (trim . " ") " " }}
+{{- $initials := substr . 0 1 }}
+{{- if gt (len $parts) 1 }}
+  {{- $initials = printf "%s%s" (substr (index $parts 0) 0 1) (substr (index $parts 1) 0 1) }}
+{{- end }}
+{{- return upper $initials }}

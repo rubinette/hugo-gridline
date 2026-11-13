@@ -1,0 +1,85 @@
+{{- $authors := partial "authors.html" . }}
+{{- $toc := and (site.Params.showToc | default true) (ne .Params.toc false) (gt (len .Fragments.HeadingsMap) 1) }}
+{{- $tocHTML := "" }}
+{{- if $toc }}{{ $tocHTML = .TableOfContents | replaceRE `^<nav id="TableOfContents">|</nav>$` "" | safeHTML }}{{ end }}
+{{- $aside := or $toc .Params.links }}
+
+<article class="post">
+  <header class="post-hero grid-bg">
+    <div class="frame post-hero-inner">
+      {{- with .GetTerms "categories" }}
+      <p class="eyebrow">{{ range $i, $t := . }}{{ if $i }} / {{ end }}<a href="{{ $t.RelPermalink }}">{{ $t.LinkTitle }}</a>{{ end }}</p>
+      {{- end }}
+      <h1 class="post-title">{{ .Title }}</h1>
+      {{- with .Params.subtitle }}<p class="lead">{{ . }}</p>{{ end }}
+      {{- with $authors }}
+      <ul class="byline" aria-label="{{ T "by" }}">
+        {{- range . }}
+        <li class="author">
+          {{- partial "avatars.html" (dict "authors" (slice .) "size" "md") }}
+          <span class="author-text">
+            {{- if .url }}<a href="{{ .url }}">{{ .name }}</a>{{ else }}{{ .name }}{{ end }}
+            {{- with .role }}<span class="author-role">{{ . }}</span>{{ end }}
+          </span>
+        </li>
+        {{- end }}
+      </ul>
+      {{- end }}
+      <p class="post-meta">
+        <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date | time.Format ":date_long" }}</time>
+        {{- if site.Params.showReadingTime }}<span>{{ T "reading_time" .ReadingTime }}</span>{{ end }}
+        {{- if gt (.Lastmod.Sub .Date).Hours 24 }}<span>{{ T "updated" }} <time datetime="{{ .Lastmod.Format "2006-01-02" }}">{{ .Lastmod | time.Format ":date_medium" }}</time></span>{{ end }}
+      </p>
+    </div>
+  </header>
+
+  {{- partial "divider.html" }}
+
+  <div class="frame post-layout{{ if not $aside }} no-aside{{ end }}">
+    <div class="post-main">
+      {{- if $toc }}
+      <details class="toc toc-inline">
+        <summary>{{ T "on_this_page" }}</summary>
+        {{ $tocHTML }}
+      </details>
+      {{- end }}
+
+      <div class="prose">
+        {{ .Content }}
+      </div>
+
+      <footer class="post-footer">
+        {{- with .GetTerms "tags" }}
+        <ul class="tag-list" aria-label="{{ T "tags" }}">
+          {{- range . }}<li><a href="{{ .RelPermalink }}">#{{ .LinkTitle }}</a></li>{{ end }}
+        </ul>
+        {{- end }}
+        {{- partial "post-nav.html" . }}
+      </footer>
+    </div>
+
+    {{- if $aside }}
+    <aside class="post-aside">
+      <div class="aside-sticky">
+        {{- if $toc }}
+        <nav class="toc toc-aside" aria-label="{{ T "on_this_page" }}">
+          <p class="nav-label">{{ T "on_this_page" }}</p>
+          {{ $tocHTML }}
+        </nav>
+        {{- end }}
+        {{- with .Params.links }}
+        <div class="links-box">
+          <p class="nav-label">{{ T "see_also" }}</p>
+          <ul>
+            {{- range . }}<li><a href="{{ .url | relLangURL }}">{{ .title }} <span aria-hidden="true">→</span></a></li>{{ end }}
+          </ul>
+        </div>
+        {{- end }}
+      </div>
+    </aside>
+    {{- end }}
+  </div>
+</article>
+
+{{- partial "related.html" . }}
+{{- partial "cta.html" . }}

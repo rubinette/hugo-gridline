@@ -1,0 +1,12 @@
+{{- /* One label per post, in priority order: custom badge, featured, guest, first category. */ -}}
+{{- if .Params.badge }}
+<span class="badge">{{ .Params.badge }}</span>
+{{- else if .Params.featured }}
+<span class="badge accent">{{ T "featured" }}</span>
+{{- else if .Params.guest }}
+<span class="badge">{{ T "with_guest" .Params.guest }}</span>
+{{- else }}
+  {{- range first 1 (.GetTerms "categories") }}
+<span class="badge">{{ .LinkTitle }}</span>
+  {{- end }}
+{{- end }}

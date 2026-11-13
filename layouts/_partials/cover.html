@@ -1,0 +1,19 @@
+{{- /* Returns dict src/width/height for a page's cover (front matter `cover` or `image`).
+  Looks in the page bundle, then assets/, then treats it as a URL.             */ -}}
+{{- $p := . }}
+{{- $out := dict }}
+{{- with .Params.cover | default .Params.image }}
+  {{- $src := . }}
+  {{- $img := or ($p.Resources.Get $src) (resources.Get $src) }}
+  {{- if $img }}
+    {{- if and (eq $img.ResourceType "image") (not (in (slice "svg" "svg+xml" "gif") $img.MediaType.SubType)) }}
+      {{- $r := $img.Resize "1200x webp" }}
+      {{- $out = dict "src" $r.RelPermalink "width" $r.Width "height" $r.Height }}
+    {{- else }}
+      {{- $out = dict "src" $img.RelPermalink }}
+    {{- end }}
+  {{- else }}
+    {{- $out = dict "src" ($src | relURL) }}
+  {{- end }}
+{{- end }}
+{{- return $out }}

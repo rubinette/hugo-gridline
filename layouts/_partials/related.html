@@ -1,0 +1,20 @@
+{{- if and (site.Params.showRelated | default true) (ne .Params.related false) }}
+  {{- $pool := where site.RegularPages "Section" "in" site.MainSections }}
+  {{- $related := first 3 ($pool.Related .) }}
+  {{- if lt (len $related) 3 }}
+    {{- $more := where (where $pool "Section" .Section) "Permalink" "ne" .Permalink }}
+    {{- $related = first 3 (union $related $more) }}
+  {{- end }}
+  {{- with $related }}
+{{- partial "divider.html" }}
+<section class="related" aria-labelledby="related-title">
+  <div class="frame section-head">
+    <h2 id="related-title">{{ T "related_posts" }}</h2>
+    <p>{{ T "related_lead" }}</p>
+  </div>
+  <div class="frame card-grid">
+    {{- range . }}{{ partial "card.html" (dict "page" . "h" "h3") }}{{ end }}
+  </div>
+</section>
+  {{- end }}
+{{- end }}

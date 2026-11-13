@@ -1,0 +1,17 @@
+{{- /* Context: an author term page. Returns a dict for avatars and bylines. */ -}}
+{{- $avatar := "" }}
+{{- with .Params.avatar }}
+  {{- $img := or ($.Resources.Get .) (resources.Get .) }}
+  {{- if $img }}
+    {{- if ne $img.MediaType.SubType "svg" }}{{ $img = $img.Fill "96x96 webp" }}{{ end }}
+    {{- $avatar = $img.RelPermalink }}
+  {{- else }}
+    {{- $avatar = . | relURL }}
+  {{- end }}
+{{- end }}
+{{- return dict
+  "name" .LinkTitle
+  "url" .RelPermalink
+  "avatar" $avatar
+  "role" (.Params.role | default "")
+  "initials" (.Params.initials | default (partial "initials.html" .LinkTitle)) }}

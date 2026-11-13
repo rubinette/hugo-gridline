@@ -1,0 +1,54 @@
+# Theme defaults. A site's own config overrides any of these.
+
+[params]
+  # "auto" follows the reader's system and shows a toggle; "light" or "dark" locks it.
+  colorScheme = "auto"
+  # Optional accent overrides, e.g. "#315cf4". Soft tints are derived automatically.
+  accent = ""
+  accentDark = ""
+  # Single letter or short mark shown in the square brand mark.
+  monogram = ""
+  # Number of cards in the featured row on the blog index.
+  featuredCount = 3
+  showReadingTime = true
+  showToc = true
+  showRelated = true
+  # Load IBM Plex Serif / Sans / Mono from Google Fonts. Off by default:
+  # the font stacks fall back to good system fonts.
+  googleFonts = false
+
+# Hugo does not merge a theme's [markup] or [related] by default. Sites using
+# this theme should add `_merge = "deep"` under both (see README).
+[markup]
+  [markup.highlight]
+    noClasses = false
+    codeFences = true
+    guessSyntax = false
+    lineNos = false
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel = 3
+    ordered = false
+  [markup.goldmark.parser]
+    wrapStandAloneImageWithinParagraph = false
+    [markup.goldmark.parser.attribute]
+      block = true
+  [markup.goldmark.extensions.cjk]
+    enable = true
+    eastAsianLineBreaks = true
+    eastAsianLineBreaksStyle = "simple"
+    escapedSpace = true
+
+[related]
+  includeNewer = true
+  threshold = 50
+  toLower = true
+  [[related.indices]]
+    name = "tags"
+    weight = 100
+  [[related.indices]]
+    name = "categories"
+    weight = 60
+  [[related.indices]]
+    name = "date"
+    weight = 10

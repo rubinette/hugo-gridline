@@ -1,0 +1,2 @@
+{{- /* {{< kbd "⌘ K" >}} → <kbd>⌘</kbd> <kbd>K</kbd> */ -}}
+{{- range $i, $k := split (.Get 0) " " }}{{ if $i }} {{ end }}<kbd>{{ $k }}</kbd>{{ end -}}

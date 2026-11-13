@@ -1,0 +1,39 @@
+{{- partial "divider.html" (dict "plain" true) }}
+<footer class="site-footer">
+  <div class="frame footer-top">
+    <div class="footer-brand">
+      <a class="brand" href="{{ site.Home.RelPermalink }}">
+        <span class="brand-mark" aria-hidden="true">{{ site.Params.monogram | default (substr site.Title 0 1) }}</span>
+        <span class="brand-name">{{ site.Title }}</span>
+      </a>
+      {{- with site.Params.description }}<p>{{ . }}</p>{{ end }}
+    </div>
+    {{- with site.Menus.footer }}
+    <nav class="footer-cols" aria-label="Footer">
+      {{- range . }}
+      <div class="footer-col">
+        {{- if .HasChildren }}
+          <p class="nav-label">{{ .Name }}</p>
+          <ul>
+            {{- range .Children }}
+            <li><a href="{{ .URL }}"{{ if strings.HasPrefix .URL "http" }} rel="noopener"{{ end }}>{{ .Name }}</a></li>
+            {{- end }}
+          </ul>
+        {{- else }}
+          <a href="{{ .URL }}">{{ .Name }}</a>
+        {{- end }}
+      </div>
+      {{- end }}
+    </nav>
+    {{- end }}
+  </div>
+  <div class="footer-bottom">
+    <div class="frame footer-bottom-inner">
+      <span>{{ with site.Copyright }}{{ . | markdownify }}{{ else }}© {{ now.Year }} {{ site.Title }}{{ end }}</span>
+      <span class="footer-links">
+        {{- with site.Home.OutputFormats.Get "rss" }}<a href="{{ .RelPermalink }}">{{ T "subscribe" }}</a>{{ end }}
+        <a href="https://gohugo.io" rel="noopener">{{ T "built_with" }}</a>
+      </span>
+    </div>
+  </div>
+</footer>

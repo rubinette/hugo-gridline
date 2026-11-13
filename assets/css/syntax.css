@@ -1,0 +1,47 @@
+/* Chroma syntax colours for the dark code surface (used in both themes).
+   Restrained: blue keywords, green strings, amber literals, gray comments. */
+
+.chroma { color: var(--code-ink); background: transparent; }
+.chroma .line { display: flex; }
+.chroma .cl { flex: 1; }
+.chroma .hl { display: block; margin-inline: -20px; padding-inline: 20px; background: rgba(126, 155, 255, .12); box-shadow: inset 2px 0 0 #7e9bff; }
+.chroma .ln, .chroma .lnt { margin-right: 1.2em; color: #55575e; user-select: none; }
+.chroma .lntable { border-spacing: 0; }
+.chroma .lntd { vertical-align: top; padding: 0; }
+
+/* Comments */
+.chroma :is(.c, .ch, .cm, .c1, .cs, .cpf) { color: #8b8d95; }
+.chroma :is(.cp) { color: #b7a2ff; }
+
+/* Keywords */
+.chroma :is(.k, .kd, .kn, .kp, .kr, .kv) { color: #9eb0ff; }
+.chroma :is(.kc) { color: #f0c37e; }
+.chroma :is(.kt) { color: #8fd3e8; }
+
+/* Names */
+.chroma :is(.nf, .fm) { color: #e6e9ff; }
+.chroma :is(.nb, .bp) { color: #8fd3e8; }
+.chroma :is(.nc, .nn) { color: #8fd3e8; }
+.chroma :is(.nt) { color: #9eb0ff; }
+.chroma :is(.na) { color: #f0c37e; }
+.chroma :is(.nd) { color: #b7a2ff; }
+.chroma :is(.ne) { color: #f0a59a; }
+.chroma :is(.nv, .vc, .vg, .vi, .vm) { color: #e6e9ff; }
+.chroma :is(.no) { color: #f0c37e; }
+
+/* Literals */
+.chroma :is(.s, .sa, .sb, .sc, .dl, .sd, .s2, .sh, .s1, .ss) { color: #95dab8; }
+.chroma :is(.se, .si, .sx, .sr) { color: #b9e8a8; }
+.chroma :is(.m, .mb, .mf, .mh, .mi, .il, .mo) { color: #f0c37e; }
+
+/* Operators and punctuation */
+.chroma :is(.o, .ow) { color: #c9cad0; }
+.chroma :is(.p) { color: #a6a8b0; }
+
+/* Diffs and generics */
+.chroma .gd { color: #f0a59a; background: rgba(240, 138, 126, .1); }
+.chroma .gi { color: #95dab8; background: rgba(127, 207, 159, .1); }
+.chroma .gh, .chroma .gu { color: #9eb0ff; font-weight: 600; }
+.chroma .ge { font-style: italic; }
+.chroma .gs { font-weight: 600; }
+.chroma .err { color: #f0a59a; }

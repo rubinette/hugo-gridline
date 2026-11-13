@@ -1,0 +1,14 @@
+{{- /* Previous = older post, Next = newer post, within the same section. */ -}}
+{{- $pages := where site.RegularPages "Section" .Section }}
+{{- $older := $pages.Prev . }}
+{{- $newer := $pages.Next . }}
+{{- if or $older $newer }}
+<nav class="post-nav" aria-label="{{ T "previous_post" }} / {{ T "next_post" }}">
+  {{- with $older }}
+  <a class="prev" href="{{ .RelPermalink }}" rel="prev"><span class="nav-label">← {{ T "previous_post" }}</span><span class="post-nav-title">{{ .LinkTitle }}</span></a>
+  {{- else }}<span></span>{{ end }}
+  {{- with $newer }}
+  <a class="next" href="{{ .RelPermalink }}" rel="next"><span class="nav-label">{{ T "next_post" }} →</span><span class="post-nav-title">{{ .LinkTitle }}</span></a>
+  {{- end }}
+</nav>
+{{- end }}

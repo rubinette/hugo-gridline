@@ -1,0 +1,41 @@
+{{- /* The blog index: hero → featured cards → category rail + compact post list.
+  dict "page" P "pages" Pages "title" "lead" "eyebrow"
+       "featured" bool "active" termPage "allActive" bool "author" authorDict */ -}}
+{{- $page := .page }}
+{{- $pages := .pages }}
+{{- $paginator := $page.Paginate $pages }}
+
+{{- partial "hero.html" (dict "eyebrow" .eyebrow "title" .title "lead" .lead "author" .author) }}
+{{- partial "divider.html" }}
+
+{{- if and .featured (eq $paginator.PageNumber 1) (gt (len $pages) 2) }}
+  {{- $n := site.Params.featuredCount | default 3 }}
+  {{- $row := $pages }}
+  {{- if eq site.Params.featuredRow "featured" }}
+    {{- $row = union (where $pages "Params.featured" true) $pages }}
+  {{- end }}
+  {{- $newest := index $pages 0 }}
+<section class="featured" aria-label="{{ T "featured" }}">
+  <div class="frame card-grid">
+    {{- range first $n $row }}
+      {{- partial "card.html" (dict "page" . "h" "h2" "newest" (eq . $newest)) }}
+    {{- end }}
+  </div>
+</section>
+  {{- partial "divider.html" }}
+{{- end }}
+
+<section class="frame index-body">
+  {{- partial "cat-nav.html" (dict "active" .active "allActive" .allActive "allCount" (len (where site.RegularPages "Section" "in" site.MainSections))) }}
+  <div class="post-list">
+    {{- range $paginator.Pages.GroupByDate "2006" }}
+    <h2 class="year"><span>{{ .Key }}</span></h2>
+    <ol class="rows">
+      {{- range .Pages }}
+      <li>{{ partial "row.html" . }}</li>
+      {{- end }}
+    </ol>
+    {{- end }}
+    {{- partial "pagination.html" $paginator }}
+  </div>
+</section>

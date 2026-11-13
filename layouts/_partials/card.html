@@ -1,0 +1,30 @@
+{{- /* dict "page" P "h" "h2"|"h3" "newest" bool */ -}}
+{{- $p := .page }}
+{{- $h := .h | default "h3" }}
+{{- $cover := partial "cover.html" $p }}
+{{- $authors := partial "authors.html" $p }}
+<article class="card">
+  <a class="card-link" href="{{ $p.RelPermalink }}">
+    <div class="card-media">
+      {{- with $cover.src }}
+      <img src="{{ . }}" alt="" loading="lazy" decoding="async"{{ with $cover.width }} width="{{ . }}" height="{{ $cover.height }}"{{ end }}>
+      {{- else }}
+      <span class="card-placeholder" aria-hidden="true">
+        <span class="brand-mark">{{ site.Params.monogram | default (substr site.Title 0 1) }}</span>
+      </span>
+      {{- end }}
+    </div>
+    <div class="card-body">
+      {{- if eq $h "h2" }}<h2 class="card-title">{{ $p.LinkTitle }}</h2>{{ else }}<h3 class="card-title">{{ $p.LinkTitle }}</h3>{{ end }}
+      <p class="card-excerpt">{{ $p.Description | default ($p.Summary | plainify | htmlUnescape) | truncate 140 }}</p>
+      <div class="card-meta">
+        {{- partial "avatars.html" (dict "authors" $authors "size" "sm") }}
+        {{- with $authors }}
+        <span class="card-authors">{{ range $i, $a := . }}{{ if $i }}, {{ end }}{{ $a.name }}{{ end }}</span>
+        {{- end }}
+        <time datetime="{{ $p.Date.Format "2006-01-02" }}">{{ $p.Date | time.Format ":date_medium" }}</time>
+        {{- if .newest }}<span class="badge accent">{{ T "newest" }}</span>{{ end }}
+      </div>
+    </div>
+  </a>
+</article>

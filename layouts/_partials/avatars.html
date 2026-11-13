@@ -1,0 +1,8 @@
+{{- /* dict "authors" (slice from authors.html) "size" ("sm"|"lg"|"") */ -}}
+{{- with .authors }}
+<span class="avatars{{ with $.size }} {{ . }}{{ end }}" aria-hidden="true">
+  {{- range first 4 . }}
+  <span class="avatar">{{ with .avatar }}<img src="{{ . }}" alt="" loading="lazy" decoding="async" width="48" height="48">{{ else }}{{ .initials }}{{ end }}</span>
+  {{- end }}
+</span>
+{{- end }}

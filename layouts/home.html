@@ -1,0 +1,10 @@
+{{ define "main" }}
+  {{- $pages := where site.RegularPages "Section" "in" site.MainSections }}
+  {{- with site.Params.hero }}
+    {{- partial "blog-index.html" (dict "page" $ "pages" $pages "featured" true "allActive" true
+        "eyebrow" .eyebrow "title" (.title | default site.Title) "lead" (.subtitle | default site.Params.description)) }}
+  {{- else }}
+    {{- partial "blog-index.html" (dict "page" $ "pages" $pages "featured" true "allActive" true
+        "title" site.Title "lead" site.Params.description) }}
+  {{- end }}
+{{ end }}

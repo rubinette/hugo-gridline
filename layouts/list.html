@@ -1,0 +1,16 @@
+{{ define "main" }}
+  {{- if in site.MainSections .Section }}
+    {{- partial "blog-index.html" (dict "page" . "pages" .RegularPagesRecursive "featured" true "allActive" true
+        "eyebrow" .Params.eyebrow "title" .Title "lead" (.Description | default .Content)) }}
+  {{- else }}
+    {{- partial "hero.html" (dict "eyebrow" .Params.eyebrow "title" .Title "lead" (.Description | default .Content)) }}
+    {{- partial "divider.html" }}
+    {{- $paginator := .Paginate .RegularPagesRecursive }}
+    <section class="frame list-body">
+      <ol class="rows">
+        {{- range $paginator.Pages }}<li>{{ partial "row.html" . }}</li>{{ end }}
+      </ol>
+      {{- partial "pagination.html" $paginator }}
+    </section>
+  {{- end }}
+{{ end }}

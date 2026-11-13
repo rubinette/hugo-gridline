@@ -1,0 +1,14 @@
+{{- if hugo.IsMultilingual }}
+  {{- $page := . }}
+  {{- $current := site.Language.Lang }}
+  <nav class="lang-switch" aria-label="{{ T "language" }}">
+    {{- range hugo.Sites }}
+      {{- $lang := .Language.Lang }}
+      {{- if ne $lang $current }}
+        {{- $target := .Home }}
+        {{- range $page.Translations }}{{ if eq .Language.Lang $lang }}{{ $target = . }}{{ end }}{{ end }}
+        <a class="icon-btn" href="{{ $target.RelPermalink }}" hreflang="{{ .Language.Locale | default $lang }}" lang="{{ .Language.Locale | default $lang }}">{{ .Language.Label | default $lang }}</a>
+      {{- end }}
+    {{- end }}
+  </nav>
+{{- end }}

@@ -1,0 +1,25 @@
+{{- /* dict "active" (term page or nil) "allActive" bool "allCount" int */ -}}
+{{- $active := .active }}
+{{- $all := site.Home }}
+{{- with index site.MainSections 0 }}{{ with site.GetPage . }}{{ $all = . }}{{ end }}{{ end }}
+<nav class="cat-nav" aria-label="{{ T "categories" }}">
+  <div class="cat-nav-inner">
+    <p class="nav-label">{{ T "categories" }}</p>
+    <ul>
+      <li><a href="{{ $all.RelPermalink }}"{{ if .allActive }} aria-current="page"{{ end }}><span>{{ T "all_posts" }}</span><span class="count">{{ .allCount }}</span></a></li>
+      {{- with site.Taxonomies.categories }}
+      {{- range .ByCount }}
+      <li><a href="{{ .Page.RelPermalink }}"{{ if and $active (eq .Page $active) }} aria-current="page"{{ end }}><span>{{ .Page.LinkTitle }}</span><span class="count">{{ .Count }}</span></a></li>
+      {{- end }}
+      {{- end }}
+    </ul>
+    {{- with site.Taxonomies.authors }}
+    <p class="nav-label">{{ T "authors" }}</p>
+    <ul>
+      {{- range .ByCount }}
+      <li><a href="{{ .Page.RelPermalink }}"{{ if and $active (eq .Page $active) }} aria-current="page"{{ end }}><span>{{ .Page.LinkTitle }}</span><span class="count">{{ .Count }}</span></a></li>
+      {{- end }}
+    </ul>
+    {{- end }}
+  </div>
+</nav>

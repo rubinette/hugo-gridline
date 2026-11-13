@@ -1,0 +1,62 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{{- $title := site.Title }}
+{{- if not .IsHome }}{{ $title = printf "%s · %s" .Title site.Title }}{{ end }}
+<title>{{ $title }}</title>
+{{- $desc := "" }}
+{{- with .Description }}{{ $desc = . }}{{ else }}{{ if .IsPage }}{{ $desc = .Summary | plainify | truncate 160 }}{{ else }}{{ $desc = site.Params.description }}{{ end }}{{ end }}
+{{- with $desc }}
+<meta name="description" content="{{ . }}">
+{{- end }}
+<link rel="canonical" href="{{ .Permalink }}">
+{{- range .AllTranslations }}
+<link rel="alternate" hreflang="{{ .Language.Locale | default .Language.Lang }}" href="{{ .Permalink }}">
+{{- end }}
+{{- with .OutputFormats.Get "rss" }}
+<link rel="alternate" type="application/rss+xml" href="{{ .RelPermalink }}" title="{{ site.Title }}">
+{{- end }}
+{{- $scheme := site.Params.colorScheme | default "auto" }}
+<meta name="color-scheme" content="{{ if eq $scheme "auto" }}light dark{{ else }}{{ $scheme }}{{ end }}">
+<meta name="theme-color" content="#f5f5f0" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#111216" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="{{ "favicon.svg" | relURL }}" type="image/svg+xml">
+
+{{- if eq $scheme "auto" }}
+<script>
+  (function () {
+    var d = document.documentElement;
+    d.classList.remove("no-js");
+    try {
+      var t = localStorage.getItem("gridline-theme");
+      if (t === "light" || t === "dark") d.setAttribute("data-theme", t);
+    } catch (e) {}
+  })();
+</script>
+{{- else }}
+<script>document.documentElement.classList.remove("no-js");</script>
+{{- end }}
+
+{{- if site.Params.googleFonts }}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Serif:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap">
+{{- end }}
+
+{{- $css := slice (resources.Get "css/main.css") (resources.Get "css/syntax.css") | resources.Concat "css/gridline.css" }}
+{{- if hugo.IsProduction }}
+  {{- $css = $css | minify | fingerprint }}
+<link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}" crossorigin="anonymous">
+{{- else }}
+<link rel="stylesheet" href="{{ $css.RelPermalink }}">
+{{- end }}
+
+{{- with site.Params.accent }}
+<style>:root{--accent:{{ . | safeCSS }}}</style>
+{{- end }}
+{{- with site.Params.accentDark }}
+<style>:root[data-theme="dark"]{--accent:{{ . | safeCSS }}}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--accent:{{ . | safeCSS }}}}</style>
+{{- end }}
+
+{{- partial "opengraph.html" . }}
+{{- partial "twitter_cards.html" . }}
+{{- partial "extend-head.html" . }}

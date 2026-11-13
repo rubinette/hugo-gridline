@@ -1,0 +1,7 @@
+{{ define "main" }}
+  {{- if and (in site.MainSections .Section) (ne .Params.layout "page") }}
+    {{- partial "post.html" . }}
+  {{- else }}
+    {{- partial "page.html" . }}
+  {{- end }}
+{{ end }}

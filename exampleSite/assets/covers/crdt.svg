@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" fill="none">
+  <g stroke="#8f8f88" stroke-opacity=".22" stroke-width="1">
+    <path d="M0 50H800M0 100H800M0 150H800M0 200H800M0 250H800M0 300H800M0 350H800M0 400H800M0 450H800"/>
+    <path d="M50 0V500M100 0V500M150 0V500M200 0V500M250 0V500M300 0V500M350 0V500M400 0V500M450 0V500M500 0V500M550 0V500M600 0V500M650 0V500M700 0V500M750 0V500"/>
+  </g>
+  <g stroke="#8f8f88" stroke-width="2">
+    <path d="M100 150H300L400 250"/>
+    <path d="M100 350H300L400 250"/>
+    <path d="M400 250H700"/>
+  </g>
+  <g stroke="#8f8f88" stroke-width="2" fill="#8f8f88">
+    <path d="M150 140l10 10-10 10-10-10z"/><path d="M250 140l10 10-10 10-10-10z"/>
+    <path d="M150 340l10 10-10 10-10-10z"/><path d="M200 340l10 10-10 10-10-10z"/><path d="M270 340l10 10-10 10-10-10z"/>
+    <path d="M550 240l10 10-10 10-10-10z"/><path d="M650 240l10 10-10 10-10-10z"/>
+  </g>
+  <path d="M400 228l22 22-22 22-22-22z" fill="#315cf4" stroke="#315cf4" stroke-width="2"/>
+  <circle cx="400" cy="250" r="54" stroke="#315cf4" stroke-width="1.5" stroke-dasharray="3 6"/>
+  <g font-family="ui-monospace, Menlo, monospace" font-size="16" fill="#8f8f88">
+    <text x="100" y="128">replica A</text>
+    <text x="100" y="388">replica B</text>
+    <text x="470" y="228" fill="#315cf4">merge</text>
+  </g>
+</svg>

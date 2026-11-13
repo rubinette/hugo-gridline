@@ -1,0 +1,48 @@
+skip_to_content = "跳至主要內容"
+nav_main = "主選單"
+menu = "選單"
+toggle_theme = "切換深色模式"
+language = "語言"
+blog = "部落格"
+all_posts = "全部文章"
+categories = "分類"
+tags = "標籤"
+authors = "作者"
+featured = "精選"
+newest = "最新"
+on_this_page = "本頁內容"
+see_also = "延伸連結"
+related_posts = "相關文章"
+related_lead = "同一主題的其他文章。"
+published = "發布於"
+updated = "更新於"
+previous_post = "上一篇"
+next_post = "下一篇"
+newer_posts = "較新文章"
+older_posts = "較舊文章"
+copy = "複製"
+copied = "已複製"
+alert_note = "附註"
+alert_tip = "提示"
+alert_important = "重要"
+alert_warning = "警告"
+alert_caution = "注意"
+anchor_link = "連結到此段落"
+subscribe = "RSS"
+built_with = "以 Hugo 建置"
+not_found = "找不到頁面"
+not_found_lead = "這個頁面可能已經搬移，或從未存在。"
+back_home = "回到部落格"
+by = "作者"
+
+[reading_time]
+other = "閱讀約 {{ .Count }} 分鐘"
+
+[post_count]
+other = "{{ .Count }} 篇文章"
+
+[page_of]
+other = "第 {{ .Current }} / {{ .Total }} 頁"
+
+[with_guest]
+other = "與 {{ . }} 對談"

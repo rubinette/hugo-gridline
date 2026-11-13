@@ -1,0 +1,21 @@
+{{- /* Returns a slice of author dicts: name, url, avatar, initials, role.
+  Prefers the "authors" taxonomy (term pages carry avatar / initials / role);
+  falls back to plain strings in front matter or site.Params.author.        */ -}}
+{{- $out := slice }}
+{{- $terms := .GetTerms "authors" }}
+{{- if $terms }}
+  {{- range $terms }}
+    {{- $out = $out | append (partial "author-entry.html" .) }}
+  {{- end }}
+{{- else }}
+  {{- with .Params.authors | default .Params.author | default site.Params.author }}
+    {{- $list := . }}
+    {{- if not (reflect.IsSlice .) }}{{ $list = slice . }}{{ end }}
+    {{- range $list }}
+      {{- $name := . }}
+      {{- if reflect.IsMap . }}{{ $name = .name }}{{ end }}
+      {{- $out = $out | append (dict "name" $name "url" "" "avatar" "" "role" "" "initials" (partial "initials.html" $name)) }}
+    {{- end }}
+  {{- end }}
+{{- end }}
+{{- return $out }}

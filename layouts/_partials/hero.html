@@ -1,0 +1,11 @@
+{{- /* dict "eyebrow" "title" "lead" "author" (author dict) "align" "center"|"left" */ -}}
+<section class="hero grid-bg">
+  <div class="frame hero-inner {{ .align | default "center" }}">
+    {{- with .author }}
+    {{- partial "avatars.html" (dict "authors" (slice .) "size" "lg") }}
+    {{- end }}
+    {{- with .eyebrow }}<p class="eyebrow">{{ . }}</p>{{ end }}
+    <h1>{{ .title }}</h1>
+    {{- with .lead }}<div class="lead">{{ . }}</div>{{ end }}
+  </div>
+</section>

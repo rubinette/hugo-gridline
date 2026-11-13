@@ -1,0 +1,5 @@
+<h{{ .Level }} id="{{ .Anchor }}"
+  {{- range $k, $v := .Attributes }}{{ if ne $k "id" }} {{ $k }}="{{ $v }}"{{ end }}{{ end }}>
+  {{- .Text -}}
+  {{- if ge .Level 2 }}<a class="anchor" href="#{{ .Anchor }}" aria-label="{{ T "anchor_link" }}">#</a>{{ end -}}
+</h{{ .Level }}>

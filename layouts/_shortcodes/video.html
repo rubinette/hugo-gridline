@@ -1,0 +1,13 @@
+{{- /* {{< video src="demo.mp4" poster="demo.jpg" caption="What it looks like" >}} */ -}}
+{{- $src := .Get "src" }}
+{{- with .Page.Resources.Get $src }}{{ $src = .RelPermalink }}{{ end }}
+{{- $poster := .Get "poster" }}
+{{- with $poster }}{{ with $.Page.Resources.Get . }}{{ $poster = .RelPermalink }}{{ end }}{{ end }}
+<figure class="figure">
+  <div class="figure-frame">
+    <video controls preload="metadata" playsinline{{ with $poster }} poster="{{ . }}"{{ end }}{{ if .Get "loop" }} loop muted autoplay{{ end }}>
+      <source src="{{ $src }}">
+    </video>
+  </div>
+  {{- with .Get "caption" }}<figcaption>{{ . | markdownify }}</figcaption>{{ end }}
+</figure>

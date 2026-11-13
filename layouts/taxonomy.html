@@ -1,0 +1,13 @@
+{{ define "main" }}
+  {{- partial "hero.html" (dict "title" .Title "lead" (.Description | default .Content)) }}
+  {{- partial "divider.html" }}
+  <section class="frame term-grid">
+    {{- range .Data.Terms.ByCount }}
+    <a class="term" href="{{ .Page.RelPermalink }}">
+      <span class="term-name">{{ .Page.LinkTitle }}</span>
+      {{- with .Page.Description }}<span class="term-desc">{{ . }}</span>{{ end }}
+      <span class="term-count">{{ T "post_count" .Count }}</span>
+    </a>
+    {{- end }}
+  </section>
+{{ end }}

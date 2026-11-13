@@ -1,0 +1,7 @@
+{{- /* Section boundary on the construction grid.
+  dict "plain" true  → single hairline with diamonds where it meets the rails
+  default            → 12px diagonal band with diamonds on both edges        */ -}}
+{{- $plain := and (reflect.IsMap .) (index . "plain") }}
+<div class="divider{{ if $plain }} plain{{ end }}" aria-hidden="true">
+  <div class="frame"><i class="junction"></i>{{ if not $plain }}<i class="junction"></i>{{ end }}</div>
+</div>

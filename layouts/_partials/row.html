@@ -1,0 +1,12 @@
+{{- $authors := partial "authors.html" . }}
+<a class="row" href="{{ .RelPermalink }}">
+  <span class="row-title">
+    <span class="row-text">{{ .LinkTitle }}</span>
+    {{- partial "avatars.html" (dict "authors" $authors "size" "sm") }}
+    {{- with $authors }}<span class="sr-only"> — {{ range $i, $a := . }}{{ if $i }}, {{ end }}{{ $a.name }}{{ end }}</span>{{ end }}
+  </span>
+  <span class="row-meta">
+    {{- partial "badge.html" . }}
+    <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date | time.Format ":date_medium" }}</time>
+  </span>
+</a>
