@@ -20,13 +20,13 @@
 
 ```sh
 cd your-site
-git submodule add <這個 repo 的網址> themes/gridline
+git submodule add https://github.com/rubinette/hugo-gridline.git themes/hugo-gridline
 ```
 
 在網站設定檔加入：
 
 ```toml
-theme = "gridline"
+theme = "hugo-gridline"
 
 [params]
   mainSections = ["blog"]   # 哪個 section 是部落格
@@ -47,8 +47,12 @@ theme = "gridline"
 ### 執行示範站台
 
 ```sh
-hugo server -s exampleSite --themesDir ../..
+git clone https://github.com/rubinette/hugo-gridline.git
+cd hugo-gridline
+hugo server -s exampleSite
 ```
+
+`exampleSite/themes/hugo-gridline` 是指向 repo 根目錄的符號連結，所以不論資料夾叫什麼名字都能直接執行。Windows 上若 git 沒有啟用符號連結（`core.symlinks`），請把資料夾命名為 `hugo-gridline`，改用 `hugo server -s exampleSite --themesDir ../..`。
 
 示範站台（`exampleSite/`）是雙語的（繁中為預設、英文在 `/en/`），內容為虛構的 Orbitline 團隊部落格。
 

@@ -1,8 +1,8 @@
 name = "Gridline"
 license = "MIT"
-licenselink = ""  # set to your repository LICENSE URL
+licenselink = "https://github.com/rubinette/hugo-gridline/blob/main/LICENSE"
 description = "A grid-led editorial blog theme: hairline construction lines, serif display type, mono metadata, one electric-blue accent. Light and dark, English and Traditional Chinese."
-homepage = ""  # set to your repository URL
+homepage = "https://github.com/rubinette/hugo-gridline"
 tags = ["blog", "minimal", "responsive", "light", "dark", "multilingual", "syntax highlighting", "table of contents"]
 features = ["featured posts", "category sidebar", "author avatars", "table of contents", "related posts", "markdown alerts", "copy code button", "dark mode", "i18n (en, zh-tw)"]
 min_version = "0.158.0"

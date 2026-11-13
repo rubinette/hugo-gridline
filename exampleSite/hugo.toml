@@ -1,8 +1,9 @@
 # Run from the repository root:
-#   hugo server -s exampleSite --themesDir ../..
+#   hugo server -s exampleSite
+# exampleSite/themes/hugo-gridline is a symlink to the repository root, so this
+# works whatever the cloned folder is called.
 baseURL = "https://example.org/"
-theme = "hugo-zed"
-themesDir = "../.."
+theme = "hugo-gridline"
 
 defaultContentLanguage = "zh-tw"
 defaultContentLanguageInSubdir = false
