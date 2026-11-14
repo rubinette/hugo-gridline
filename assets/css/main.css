@@ -37,14 +37,16 @@
   --radius: 0;
   --node: 7px;
   --node-fill: #ffffff;
-  --grid-size: 48px;
+  --grid-size: 40px; /* divides the 1120px frame, so grid lines meet both rails */
   --max: 1120px;
   --gutter: 24px;
   --header-h: 64px;
   --pad: 48px;
-  /* Outer rails: up to --edge from the viewport, never inside the frame. */
+  /* Frame width, and the outer rails: up to --edge from the viewport, never
+     inside the frame. Both resolve 100% against the element that uses them. */
+  --frame-w: min(var(--max), 100% - 2 * var(--gutter));
   --edge: 48px;
-  --rails: max(min(var(--max), 100% - 2 * var(--gutter)), 100% - 2 * var(--edge));
+  --rails: max(var(--frame-w), 100% - 2 * var(--edge));
 
   --display: "IBM Plex Serif", "Iowan Old Style", Charter, Georgia, serif;
   --body: "IBM Plex Sans", Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -164,19 +166,41 @@ time, .count, .page-of, table, .post-meta { font-variant-numeric: tabular-nums; 
 /* Every band of the page sits inside .frame; stacked frames read as two
    continuous rails running the full height of the page. */
 .frame {
-  width: min(var(--max), calc(100% - 2 * var(--gutter)));
+  width: var(--frame-w);
   margin-inline: auto;
   border-inline: 1px solid var(--line);
   position: relative;
 }
 
+/* Construction grid behind a band (section.grid-bg > .frame). Each margin's
+   grid is anchored to its rail, and inside the frame `round` fits a whole
+   number of cells between the rails, so no grid line runs just beside a rail. */
 .grid-bg {
+  position: relative;
+  isolation: isolate;
   background-color: var(--canvas);
+}
+.grid-bg::before,
+.grid-bg::after,
+.grid-bg > .frame::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
   background-image:
     linear-gradient(var(--grid) 1px, transparent 1px),
     linear-gradient(90deg, var(--grid) 1px, transparent 1px);
   background-size: var(--grid-size) var(--grid-size);
-  background-position: center -1px;
+  pointer-events: none;
+}
+.grid-bg::before,
+.grid-bg::after { inset-block: 0; width: calc((100% - var(--frame-w)) / 2); }
+.grid-bg::before { left: 0; background-position: right top -1px; }
+.grid-bg::after { right: 0; background-position: left calc(var(--grid-size) - 1px) top -1px; }
+/* Spans the border box: the first line sits under the left rail. */
+.grid-bg > .frame::before {
+  inset: 0 -1px;
+  background-position: left top -1px;
+  background-repeat: round repeat;
 }
 
 /* Divider: 12px diagonal band between major sections, or a plain hairline.
@@ -310,6 +334,8 @@ time, .count, .page-of, table, .post-meta { font-variant-numeric: tabular-nums; 
   inset: 0;
   width: var(--rails);
   margin-inline: auto;
+  /* Same box as the elements that draw the rails, so the diamonds centre on them. */
+  border-inline: 1px solid transparent;
   pointer-events: none;
 }
 
@@ -364,8 +390,9 @@ time, .count, .page-of, table, .post-meta { font-variant-numeric: tabular-nums; 
 
 /* ───────────────────────── Hero ───────────────────────── */
 
-/* A denser grid than the CTA band, so the page opens on fine construction lines. */
-.hero { --grid-size: 24px; }
+/* A denser grid than the CTA band, so the page opens on fine construction lines.
+   20px divides the 1120px frame, like the CTA band's 40px. */
+.hero { --grid-size: 20px; }
 
 .hero-inner {
   padding: 88px var(--pad) 72px;
@@ -1284,6 +1311,16 @@ pre.mermaid {
 
 /* ───────────────────────── Responsive ───────────────────────── */
 
+/* Below this width the outer rails would sit on, or within 24px of, the frame
+   rails: fold them into the frame and drop what would draw twice (the rail
+   lines and their diamonds). 1264px = --max + 2 * --edge + 2 * 24px. */
+@media (max-width: 1264px) {
+  :root { --rails: var(--frame-w); }
+  .header-rails,
+  .post-hero-rails .junction { display: none; }
+  .post-hero-rails { border-color: transparent; }
+}
+
 @media (max-width: 1080px) {
   .post-layout { grid-template-columns: minmax(0, 1fr); }
   .post-aside { display: none; }
@@ -1372,6 +1409,7 @@ pre.mermaid {
   .site-header, .site-footer, .divider, .post-aside, .toc-inline, .related, .cta, .post-nav, .copy, .diagram-expand { display: none !important; }
   .frame { border: 0; width: 100%; }
   .grid-bg { background: none; }
+  .grid-bg::before, .grid-bg::after, .grid-bg > .frame::before { display: none; }
   .post-hero { background: none; }
   .post-hero::before, .post-hero::after, .post-hero-rails, .post-hero-inner::before { display: none; }
   .code-block { box-shadow: none; }
