@@ -347,6 +347,9 @@ time, .count, .page-of, table, .post-meta { font-variant-numeric: tabular-nums; 
 
 /* ───────────────────────── Hero ───────────────────────── */
 
+/* A denser grid than the CTA band, so the page opens on fine construction lines. */
+.hero { --grid-size: 24px; }
+
 .hero-inner {
   padding: 88px var(--pad) 72px;
   background: radial-gradient(ellipse 60% 70% at 50% 50%, var(--canvas) 0, color-mix(in srgb, var(--canvas) 80%, transparent) 55%, transparent 100%);
@@ -1228,6 +1231,7 @@ pre.mermaid {
   body { font-size: 15.5px; }
   .header-inner { padding-inline: 12px; gap: 12px; }
   .header-button { display: none; }
+  .hero { --grid-size: 16px; }
   .hero-inner { padding: 64px var(--pad) 52px; }
   .hero h1 { font-size: 40px; }
   .post-hero-inner { padding: 52px var(--pad) 36px; }
