@@ -108,7 +108,7 @@ CRDTs are not free. We accepted three things:
 
 ## Next
 
-The next post covers the tombstone compaction algorithm and how it runs in the background without blocking input. Keystroke latency is the one thing we refuse to trade away; see [the render loop post](/en/blog/render-loop/) for more.
+The next post covers the tombstone compaction algorithm and how it runs in the background without blocking input. Keystroke latency is the one thing we refuse to trade away; see [the render loop post](/blog/render-loop/) for more.
 
 To try it locally, press {{< kbd "⌘ K" >}} and run `collab: share`.[^demo]
 

@@ -47,3 +47,7 @@ The key is that background work can pause at any point. The parser became increm
 
 > [!TIP]
 > If a background job cannot be sliced, move it to another thread rather than into the frame loop.
+
+## Measuring it
+
+We record the input-to-paint time of every frame and mark frames that overrun the budget in red. The chart itself does not matter; what matters is that every frame over budget can be traced back to a cause.

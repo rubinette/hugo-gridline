@@ -5,7 +5,7 @@
 baseURL = "https://example.org/"
 theme = "hugo-gridline"
 
-defaultContentLanguage = "zh-tw"
+defaultContentLanguage = "en"
 defaultContentLanguageInSubdir = false
 hasCJKLanguage = true
 enableRobotsTXT = true
@@ -45,90 +45,13 @@ summaryLength = 40
   # "latest" (default): newest posts on top. "featured": posts with `featured: true` first.
   featuredRow = "latest"
 
-# ───────────── 繁體中文 ─────────────
-[languages.zh-tw]
-  locale = "zh-Hant-TW"
-  label = "中文"
-  title = "Orbitline 部落格"
-  contentDir = "content/zh-tw"
-  weight = 1
-  copyright = "© 2026 Orbitline 示範團隊 · 內容為虛構範例"
-
-  [languages.zh-tw.params]
-    description = "Orbitline 團隊的工程筆記、產品更新與使用技巧。"
-    [languages.zh-tw.params.hero]
-      eyebrow = "Blog / 部落格"
-      title = "來自部落格"
-      subtitle = "團隊的工程筆記、產品更新與使用技巧。"
-    [languages.zh-tw.params.headerButton]
-      label = "訂閱"
-      url = "/index.xml"
-    [languages.zh-tw.params.cta]
-      eyebrow = "保持聯繫"
-      title = "每篇新文章，第一時間送到你的閱讀器"
-      text = "用 RSS 訂閱，或到討論區告訴我們你想讀什麼。"
-      [[languages.zh-tw.params.cta.buttons]]
-        label = "以 RSS 訂閱"
-        url = "/index.xml"
-        primary = true
-      [[languages.zh-tw.params.cta.buttons]]
-        label = "關於我們"
-        url = "/about/"
-
-  [[languages.zh-tw.menus.main]]
-    name = "部落格"
-    pageRef = "/blog"
-    weight = 10
-  [[languages.zh-tw.menus.main]]
-    name = "分類"
-    pageRef = "/categories"
-    weight = 20
-  [[languages.zh-tw.menus.main]]
-    name = "關於"
-    pageRef = "/about"
-    weight = 30
-
-  [[languages.zh-tw.menus.footer]]
-    name = "部落格"
-    identifier = "blog"
-    weight = 10
-  [[languages.zh-tw.menus.footer]]
-    name = "全部文章"
-    pageRef = "/blog"
-    parent = "blog"
-    weight = 1
-  [[languages.zh-tw.menus.footer]]
-    name = "分類"
-    pageRef = "/categories"
-    parent = "blog"
-    weight = 2
-  [[languages.zh-tw.menus.footer]]
-    name = "作者"
-    pageRef = "/authors"
-    parent = "blog"
-    weight = 3
-  [[languages.zh-tw.menus.footer]]
-    name = "專案"
-    identifier = "project"
-    weight = 20
-  [[languages.zh-tw.menus.footer]]
-    name = "關於"
-    pageRef = "/about"
-    parent = "project"
-    weight = 1
-  [[languages.zh-tw.menus.footer]]
-    name = "Hugo"
-    url = "https://gohugo.io"
-    parent = "project"
-    weight = 2
-
 # ───────────── English ─────────────
 [languages.en]
   locale = "en-US"
   label = "EN"
   title = "Orbitline Blog"
   contentDir = "content/en"
-  weight = 2
+  weight = 1
   copyright = "© 2026 Orbitline demo team · Sample content is fictional"
 
   [languages.en.params]
@@ -194,6 +117,83 @@ summaryLength = 40
     parent = "project"
     weight = 1
   [[languages.en.menus.footer]]
+    name = "Hugo"
+    url = "https://gohugo.io"
+    parent = "project"
+    weight = 2
+
+# ───────────── Traditional Chinese (/zh-tw/) ─────────────
+[languages.zh-tw]
+  locale = "zh-Hant-TW"
+  label = "中文"
+  title = "Orbitline 部落格"
+  contentDir = "content/zh-tw"
+  weight = 2
+  copyright = "© 2026 Orbitline 示範團隊 · 內容為虛構範例"
+
+  [languages.zh-tw.params]
+    description = "Orbitline 團隊的工程筆記、產品更新與使用技巧。"
+    [languages.zh-tw.params.hero]
+      eyebrow = "Blog / 部落格"
+      title = "來自部落格"
+      subtitle = "團隊的工程筆記、產品更新與使用技巧。"
+    [languages.zh-tw.params.headerButton]
+      label = "訂閱"
+      url = "/index.xml"
+    [languages.zh-tw.params.cta]
+      eyebrow = "保持聯繫"
+      title = "每篇新文章，第一時間送到你的閱讀器"
+      text = "用 RSS 訂閱，或到討論區告訴我們你想讀什麼。"
+      [[languages.zh-tw.params.cta.buttons]]
+        label = "以 RSS 訂閱"
+        url = "/index.xml"
+        primary = true
+      [[languages.zh-tw.params.cta.buttons]]
+        label = "關於我們"
+        url = "/about/"
+
+  [[languages.zh-tw.menus.main]]
+    name = "部落格"
+    pageRef = "/blog"
+    weight = 10
+  [[languages.zh-tw.menus.main]]
+    name = "分類"
+    pageRef = "/categories"
+    weight = 20
+  [[languages.zh-tw.menus.main]]
+    name = "關於"
+    pageRef = "/about"
+    weight = 30
+
+  [[languages.zh-tw.menus.footer]]
+    name = "部落格"
+    identifier = "blog"
+    weight = 10
+  [[languages.zh-tw.menus.footer]]
+    name = "全部文章"
+    pageRef = "/blog"
+    parent = "blog"
+    weight = 1
+  [[languages.zh-tw.menus.footer]]
+    name = "分類"
+    pageRef = "/categories"
+    parent = "blog"
+    weight = 2
+  [[languages.zh-tw.menus.footer]]
+    name = "作者"
+    pageRef = "/authors"
+    parent = "blog"
+    weight = 3
+  [[languages.zh-tw.menus.footer]]
+    name = "專案"
+    identifier = "project"
+    weight = 20
+  [[languages.zh-tw.menus.footer]]
+    name = "關於"
+    pageRef = "/about"
+    parent = "project"
+    weight = 1
+  [[languages.zh-tw.menus.footer]]
     name = "Hugo"
     url = "https://gohugo.io"
     parent = "project"

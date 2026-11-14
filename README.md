@@ -1,51 +1,54 @@
 # Gridline
 
-一個以構造格線為骨架的 Hugo 部落格佈景主題：灰白底色、髮絲般的構造線、襯線標題字、等寬字中繼資料，只用一個電光藍作為強調色。版面結構參考 [zed.dev/blog](https://zed.dev/blog)（格線主視覺 → 精選卡片 → 分類欄 + 緊湊文章列表；文章頁右側「本頁內容」），視覺系統與程式碼皆為原創，不包含任何 Zed 的商標、標誌或素材，也與 Zed Industries 無關。
+**English** · [繁體中文](README.zh-TW.md)
+
+A Hugo blog theme built on visible construction lines: a gray-white canvas, hairline rails, serif display type, mono metadata and a single electric-blue accent. The page structure is modelled on [zed.dev/blog](https://zed.dev/blog) (grid hero → featured cards → category rail beside a compact post list; an "On this page" column on posts). The visual system and the code are original: the theme contains no Zed trademarks, logos or assets and is not affiliated with Zed Industries.
 
 ![Gridline](images/screenshot.png)
 
-## 功能
+## Features
 
-- **部落格首頁**：格線主視覺、三張精選卡片（最新文章，第一張標「最新」）、左側分類與作者欄、依年份分組的緊湊文章列表、分頁
-- **文章頁**：分類眉標、作者頭像與職稱、日期與閱讀時間、右側「本頁內容」目錄（捲動時高亮目前段落）、延伸連結框、標籤、上一篇／下一篇、相關文章、結尾行動呼籲
-- **內文排版**：帶語言標籤與複製按鈕的程式碼區塊、Markdown 提示框（`> [!NOTE]` 等）、帶說明文字的圖片框、表格橫向捲動、註腳、`kbd` 按鍵
-- **Mermaid 圖表**：以 [Pele](https://github.com/obsidianmd/pele) 渲染，顏色與字型跟著佈景主題和深淺色走，只在有圖表的頁面載入
-- **深淺色**：跟隨系統並提供切換按鈕（記住偏好），或鎖定其中一種
-- **多語系**：內建繁體中文與英文介面字串；中文排版使用 CJK 襯線／黑體字型、著重號、嚴格斷行
-- **響應式**：1080px 以下目錄收進文章頂端，880px 以下分類變成標籤列，820px 以下主選單收進「選單」按鈕
-- 無外部 JavaScript 相依；未啟用 JavaScript 時所有內容與連結仍可使用
+- **Blog home**: grid hero, three featured cards (the latest posts; the first is marked "Newest"), category and author rail, compact post list grouped by year, pagination
+- **Posts**: category eyebrow, author avatars and roles, date and reading time, an "On this page" table of contents that highlights the current section as you scroll, a "See also" links box, tags, previous / next, related posts and a closing call to action
+- **Prose**: code blocks with a language label and copy button, Markdown alerts (`> [!NOTE]` and friends), framed figures with captions, horizontally scrolling tables, footnotes, `kbd` keys
+- **Mermaid diagrams**: rendered by [Pele](https://github.com/obsidianmd/pele), with colours and type that follow the theme and its light / dark mode, loaded only on pages that have a diagram
+- **Light and dark**: follows the system with a toggle that remembers the choice, or lock either one
+- **Multilingual**: English and Traditional Chinese interface strings built in; Chinese text uses CJK serif and sans faces, emphasis dots and strict line breaking
+- **Responsive**: below 1080px the table of contents moves to the top of the article, below 880px the category rail becomes a chip list, below 820px the main menu folds behind a "Menu" button
+- No external JavaScript dependencies; every page and link still works with JavaScript off
 
-需求：Hugo **0.158.0** 以上（使用 `locale` / `label` 語言設定與新的範本目錄結構）。
+Requires Hugo **0.158.0** or later (for the `locale` / `label` language settings and the new template layout).
 
-## 安裝
+## Install
 
 ```sh
 cd your-site
 git submodule add https://github.com/rubinette/hugo-gridline.git themes/hugo-gridline
 ```
 
-在網站設定檔加入：
+Add to your site configuration:
 
 ```toml
 theme = "hugo-gridline"
 
 [params]
-  mainSections = ["blog"]   # 哪個 section 是部落格
+  mainSections = ["blog"]   # the section that holds the blog
 
 [taxonomies]
   category = "categories"
   tag = "tags"
-  author = "authors"        # 作者頭像與作者頁需要這個 taxonomy
+  author = "authors"        # needed for author avatars and author pages
 
-# 重要：Hugo 預設不會合併佈景主題的 [markup] 與 [related]。
-# 不加這兩行，程式碼上色、圖片說明、中文換行與相關文章設定都不會生效。
+# Important: Hugo does not merge a theme's [markup] and [related] by default.
+# Without these two lines, code highlighting, figure captions, CJK line
+# breaking and related-post settings do not take effect.
 [markup]
   _merge = "deep"
 [related]
   _merge = "deep"
 ```
 
-### 執行示範站台
+### Run the example site
 
 ```sh
 git clone https://github.com/rubinette/hugo-gridline.git
@@ -53,125 +56,125 @@ cd hugo-gridline
 hugo server -s exampleSite
 ```
 
-`exampleSite/themes/hugo-gridline` 是指向 repo 根目錄的符號連結，所以不論資料夾叫什麼名字都能直接執行。Windows 上若 git 沒有啟用符號連結（`core.symlinks`），請把資料夾命名為 `hugo-gridline`，改用 `hugo server -s exampleSite --themesDir ../..`。
+`exampleSite/themes/hugo-gridline` is a symlink to the repository root, so this works whatever the cloned folder is called. On Windows, if git does not create symlinks (`core.symlinks`), name the folder `hugo-gridline` and run `hugo server -s exampleSite --themesDir ../..` instead.
 
-示範站台（`exampleSite/`）是雙語的（繁中為預設、英文在 `/en/`），內容為虛構的 Orbitline 團隊部落格。
+The example site (`exampleSite/`) is bilingual — English at the root, Traditional Chinese under `/zh-tw/` — and its content is a fictional blog for a team called Orbitline.
 
-## 設定參數
+## Parameters
 
-| 參數 | 預設 | 說明 |
+| Parameter | Default | Description |
 | --- | --- | --- |
-| `colorScheme` | `"auto"` | `auto` 跟隨系統並顯示切換按鈕；`light` / `dark` 鎖定 |
-| `accent` / `accentDark` | — | 覆寫強調色（例如 `"#0f766e"`），淺色底色與色帶會自動推導 |
-| `monogram` | 標題首字 | 品牌方框裡的字 |
-| `description` | — | 首頁副標與頁尾說明 |
-| `featuredCount` | `3` | 精選卡片數量 |
-| `featuredRow` | `"latest"` | `latest` 放最新文章；`featured` 先放 `featured: true` 的文章 |
-| `showReadingTime` / `showToc` / `showRelated` | `true` | 開關閱讀時間、目錄、相關文章 |
-| `googleFonts` | `false` | 從 Google Fonts 載入 IBM Plex；關閉時使用系統字型 |
-| `hero.eyebrow` / `hero.title` / `hero.subtitle` | — | 首頁主視覺文字 |
-| `headerButton.label` / `.url` | — | 頁首右側的主要按鈕 |
-| `cta.title` / `.text` / `.eyebrow` / `.buttons[]` | — | 文章結尾的行動呼籲區塊；`buttons` 每項有 `label`、`url`、`primary` |
+| `colorScheme` | `"auto"` | `auto` follows the system and shows the toggle; `light` / `dark` lock the theme |
+| `accent` / `accentDark` | — | Override the accent colour (for example `"#0f766e"`); the soft tints and the band colour are derived from it |
+| `monogram` | first letter of the title | The letter in the brand box |
+| `description` | — | Home page subtitle and footer blurb |
+| `featuredCount` | `3` | Number of featured cards |
+| `featuredRow` | `"latest"` | `latest` shows the newest posts; `featured` puts posts with `featured: true` first |
+| `showReadingTime` / `showToc` / `showRelated` | `true` | Turn reading time, the table of contents and related posts on or off |
+| `googleFonts` | `false` | Load IBM Plex from Google Fonts; when off, the font stacks fall back to system fonts |
+| `hero.eyebrow` / `hero.title` / `hero.subtitle` | — | Home hero text |
+| `headerButton.label` / `.url` | — | Primary button at the right of the header |
+| `cta.title` / `.text` / `.eyebrow` / `.buttons[]` | — | Call-to-action block at the end of posts; each button has `label`, `url` and `primary` |
 
-選單：`menus.main` 是頁首導覽；`menus.footer` 用 `identifier` + `parent` 組成頁尾欄位。完整範例見 `exampleSite/hugo.toml`。
+Menus: `menus.main` is the header navigation; `menus.footer` builds footer columns from `identifier` + `parent`. See `exampleSite/hugo.toml` for a complete example.
 
-建議另外設定 `hasCJKLanguage = true`，閱讀時間與摘要才會正確計算中文字數。
+For Chinese, Japanese or Korean content, also set `hasCJKLanguage = true` so reading time and summaries count characters correctly.
 
-## 文章 front matter
+## Post front matter
 
 ```yaml
 ---
-title: 多人編輯的資料模型
+title: A data model for many editors
 date: 2026-11-10
-description: 卡片摘要與 meta description
-authors: [lin-yu]            # authors taxonomy 的 term
+description: Card summary and meta description
+authors: [lin-yu]            # terms of the authors taxonomy
 categories: [engineering]
-tags: [協作, rust]
-featured: true               # 顯示「精選」標籤
-cover: cover.png             # 卡片圖片：page bundle、assets/ 或網址
-subtitle: 標題下方的導言（選用）
-guest: 葉知秋                 # 顯示「與 葉知秋 對談」標籤
-badge: 自訂標籤               # 覆寫列表上的標籤
-links:                       # 目錄下方的「延伸連結」
-  - title: 路線圖
+tags: [collaboration, rust]
+featured: true               # show the "Featured" badge
+cover: cover.png             # card image: page bundle, assets/ or a URL
+subtitle: A lead under the title (optional)
+guest: Ada Lovelace          # show a "With Ada Lovelace" badge
+badge: Custom label          # override the badge in lists
+links:                       # the "See also" box under the table of contents
+  - title: Roadmap
     url: /roadmap/
-toc: false                   # 關閉這篇的目錄
-related: false               # 關閉這篇的相關文章
-cta: false                   # 關閉這篇的結尾區塊
+toc: false                   # no table of contents on this post
+related: false               # no related posts on this post
+cta: false                   # no closing block on this post
 ---
 ```
 
-列表上每篇文章只顯示一個標籤，優先順序：`badge` → `featured` → `guest` → 第一個分類。
+Each post shows one badge in lists, in this order: `badge` → `featured` → `guest` → first category.
 
-### 作者
+### Authors
 
-在 `content/authors/<slug>/_index.md` 建立作者頁：
+Create an author page at `content/authors/<slug>/_index.md`:
 
 ```yaml
 ---
-title: 林語
-role: 編輯器核心        # 顯示在署名下方
-avatar: avatar.jpg      # 選用：bundle 內、assets/ 或網址；沒有就顯示姓名縮寫
-initials: 林            # 選用：覆寫縮寫
+title: Lin Yu
+role: Editor core        # shown under the byline
+avatar: avatar.jpg       # optional: in the bundle, assets/ or a URL; initials otherwise
+initials: LY             # optional: override the initials
 ---
-作者簡介（顯示在作者頁主視覺）
+Author bio (shown in the author page hero)
 ```
 
-分類頁同理：`content/categories/<slug>/_index.md` 可設定 `title` 與 `description`。想要 `/blog/tagged/engineering/` 這種網址，參考示範站台的 `permalinks` 設定（用 `:contentbasename`，不要用 `:slug`，否則會用中文標題當網址）。
+Categories work the same way: `content/categories/<slug>/_index.md` can set `title` and `description`. For URLs like `/blog/tagged/engineering/`, copy the `permalinks` settings from the example site (use `:contentbasename`, not `:slug`, or titles in other scripts end up in the URL).
 
-## Markdown 擴充
+## Markdown extensions
 
 ````markdown
-![替代文字](diagram.png "這行會變成圖片下方的說明")
+![Alt text](diagram.png "This becomes the caption under the image")
 
 ```rust {title="src/id.rs"}
-// title 會顯示在程式碼區塊的標頭，沒有就顯示語言
+// title appears in the code block header; the language shows otherwise
 ```
 
 > [!NOTE]
-> 也支援 TIP、IMPORTANT、WARNING、CAUTION。
+> TIP, IMPORTANT, WARNING and CAUTION work too.
 
-```mermaid {caption="圖表下方的說明（選用）"}
+```mermaid {caption="Optional caption under the diagram"}
 flowchart LR
     A[Markdown] --> B[SVG]
 ```
 
 {{</* kbd "⌘ K" */>}}
-{{</* video src="demo.mp4" poster="demo.jpg" caption="說明文字" */>}}
+{{</* video src="demo.mp4" poster="demo.jpg" caption="Caption" */>}}
 ````
 
-### Mermaid 圖表
+### Mermaid diagrams
 
-` ```mermaid ` 程式碼區塊會在瀏覽器中由 [Pele](https://github.com/obsidianmd/pele) 1.13.0 渲染成 SVG，支援 Mermaid 12.1 的所有圖表類型（流程圖、循序圖、狀態圖、甘特圖、圓餅圖等）。
+` ```mermaid ` code blocks are rendered to SVG in the browser by [Pele](https://github.com/obsidianmd/pele) 1.13.0, which supports every Mermaid 12.1 diagram type (flowcharts, sequence, state, Gantt, pie and more).
 
-- **不需要任何設定**。Pele 存放在佈景主題的 `assets/vendor/pele/` 裡，不經過 CDN，也沒有對外連線。
-- **只在需要時載入**。沒有圖表的頁面不會載入任何東西；有圖表的頁面只下載用到的圖表類型（通常 10–20 個小檔案，不是全部 87 個）。
-- **跟著佈景主題走**。顏色、字型都對應到佈景主題的 CSS 變數，所以會跟著深淺色切換和 `params.accent`，不需要重新渲染。圖表的系列色以強調色和中性灰交錯，在兩種模式下對背景的對比都至少 4.2:1。
-- **語法錯誤**會直接顯示在圖表位置，標出行號；未啟用 JavaScript 時則顯示原始碼。
-- 圖表太寬、必須縮小才放得下時，右下角會出現放大／縮小按鈕。
-- 每張圖表右下角都有「放大到視窗」按鈕，會把整張圖縮放到填滿視窗顯示；放大後右下角有放大／縮小／重設按鈕，可拖曳平移；按 Esc、關閉按鈕或點擊外框外側即可關閉。
+- **No setup.** Pele ships in the theme's `assets/vendor/pele/`; there is no CDN and no outside request.
+- **Loaded on demand.** Pages without diagrams load nothing; pages with diagrams download only the diagram types they use (usually 10–20 small files, not all 87).
+- **Follows the theme.** Colours and fonts map to the theme's CSS variables, so diagrams follow the light / dark switch and `params.accent` without re-rendering. Series colours alternate between the accent and neutral grays, with at least 4.2:1 contrast against the background in both modes.
+- **Syntax errors** show in place of the diagram with the line number; with JavaScript off the source shows instead.
+- When a diagram is too wide and has to shrink to fit, zoom in / out buttons appear at its bottom right.
+- Every diagram has an "Expand to window" button at its bottom right that scales the whole diagram to fill the window. The expanded view has zoom in / out / reset buttons and can be dragged to pan; Esc, the close button or a click outside the frame closes it.
 
-要調整圖表樣式，可以覆寫 `.mermaid-diagram, .diagram-viewer-canvas` 上的 `--pele-*` 變數（見 `assets/css/gridline/diagram.css`）。要升級 Pele：把新版 npm 套件 `dist/esm/` 裡的 `lazy.js` 和 `chunks/` 放進 `assets/vendor/pele/<版本>/`，再更新 `layouts/_partials/mermaid.html` 裡的版本號。
+To restyle diagrams, override the `--pele-*` variables on `.mermaid-diagram, .diagram-viewer-canvas` (see `assets/css/gridline/diagram.css`). To upgrade Pele, put `lazy.js` and `chunks/` from the new npm package's `dist/esm/` into `assets/vendor/pele/<version>/`, then update the version in `layouts/_partials/mermaid.html`.
 
-## 客製化
+## Customising
 
-- **額外的 `<head>` 內容**（分析工具、字型）：在網站建立 `layouts/_partials/extend-head.html`
-- **樣式**：所有顏色、字型、間距都是 `assets/css/gridline/tokens.css` 裡的 CSS 變數。要調整個別數值，在 `extend-head.html` 加一段 `<style>` 覆寫變數；要整份替換某個模組，在網站建立同路徑的檔案（例如 `assets/css/gridline/tokens.css`）
-- **介面字串**：在網站的 `i18n/<lang>.toml` 覆寫任一鍵值；新增語言請參考 `i18n/en.toml`
+- **Extra `<head>` content** (analytics, fonts): create `layouts/_partials/extend-head.html` in your site
+- **Styles**: every colour, font and spacing value is a CSS variable in `assets/css/gridline/tokens.css`. To adjust a few values, override the variables in a `<style>` block in `extend-head.html`; to replace a whole module, create a file at the same path in your site (for example `assets/css/gridline/tokens.css`)
+- **Interface strings**: override any key in your site's `i18n/<lang>.toml`; for a new language, start from `i18n/en.toml`
 
-## 樣式來源：gridline-style
+## Style source: gridline-style
 
-`assets/css/gridline/` 與 `assets/js/gridline/` 不是在這裡手寫的，而是從設計系統 [gridline-style](https://github.com/rubinette/gridline-style) 的 `src/css`、`src/js` 同步過來；每個檔案第一行都註明來源版本。`layouts/_partials/head.html` 依固定順序合併這些模組（tokens、base、construction、components、prose、blog、diagram、syntax）。
+`assets/css/gridline/` and `assets/js/gridline/` are not written here: they are synced from `src/css` and `src/js` of the design system [gridline-style](https://github.com/rubinette/gridline-style), and the first line of each file names the source version. `layouts/_partials/head.html` concatenates the modules in a fixed order (tokens, base, construction, components, prose, blog, diagram, syntax).
 
-要修改樣式，請在 gridline-style 修改後同步回來：
+To change the styles, edit them in gridline-style and sync them back:
 
 ```bash
-python3 scripts/sync-gridline-style.py            # 預設讀取 ../gridline-style，或用 --from / $GRIDLINE_STYLE 指定
-python3 scripts/sync-gridline-style.py --check    # 檢查是否與 gridline-style 一致
+python3 scripts/sync-gridline-style.py            # reads ../gridline-style by default; or use --from / $GRIDLINE_STYLE
+python3 scripts/sync-gridline-style.py --check    # report whether the theme matches gridline-style
 ```
 
-## 授權
+## License
 
-MIT。
+MIT.
 
-`assets/vendor/pele/` 內含 [Pele](https://github.com/obsidianmd/pele)（MIT，© kepano），授權條款與其中引用的 Lucide 圖示（ISC）一併保留在 `assets/vendor/pele/1.13.0/LICENSE.txt`，並會隨圖表一起發布到網站。
+`assets/vendor/pele/` contains [Pele](https://github.com/obsidianmd/pele) (MIT, © kepano). Its licence, together with that of the Lucide icons it uses (ISC), is kept in `assets/vendor/pele/1.13.0/LICENSE.txt` and is published with the site alongside the diagrams.
