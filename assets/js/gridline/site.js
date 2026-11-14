@@ -1,8 +1,14 @@
+// Synced from gridline-style 0.1.0 (6c17e29) src/js/site.js by scripts/sync-gridline-style.py. Edit it there.
+// Gridline page behaviour: theme toggle, mobile navigation, docs navigation,
+// copy buttons, on-this-page highlight. Every feature checks for its markup,
+// so one file serves every template. Content stays usable without it.
 (() => {
   const doc = document;
   const root = doc.documentElement;
+  root.classList.remove("no-js");
+  root.classList.add("js");
 
-  // Theme toggle: only rendered when params.colorScheme = "auto".
+  // Theme toggle. The <head> snippet restores the stored choice before paint.
   const themeBtn = doc.querySelector(".theme-toggle");
   if (themeBtn) {
     const dark = matchMedia("(prefers-color-scheme: dark)");
@@ -19,24 +25,31 @@
     });
   }
 
-  // Mobile navigation.
+  // A disclosure button that opens a panel (mobile site nav, docs nav).
+  const disclose = (button, panel, wideQuery) => {
+    if (!button || !panel) return;
+    const setOpen = (open) => {
+      button.setAttribute("aria-expanded", String(open));
+      panel.dataset.open = String(open);
+    };
+    button.hidden = false;
+    button.addEventListener("click", () => setOpen(button.getAttribute("aria-expanded") !== "true"));
+    doc.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && panel.dataset.open === "true") { setOpen(false); button.focus(); }
+    });
+    if (wideQuery) matchMedia(wideQuery).addEventListener("change", (e) => { if (e.matches) setOpen(false); });
+    return setOpen;
+  };
+
   const menuBtn = doc.querySelector(".menu-toggle");
   const nav = doc.getElementById("site-nav");
-  if (menuBtn && nav && nav.children.length) {
-    const setOpen = (open) => {
-      menuBtn.setAttribute("aria-expanded", String(open));
-      nav.dataset.open = String(open);
-    };
-    menuBtn.hidden = false;
-    menuBtn.addEventListener("click", () => setOpen(menuBtn.getAttribute("aria-expanded") !== "true"));
-    doc.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && nav.dataset.open === "true") { setOpen(false); menuBtn.focus(); }
-    });
-    doc.addEventListener("click", (e) => {
+  if (nav && nav.children.length) {
+    const setOpen = disclose(menuBtn, nav, "(min-width: 821px)");
+    if (setOpen) doc.addEventListener("click", (e) => {
       if (nav.dataset.open === "true" && !nav.contains(e.target) && !menuBtn.contains(e.target)) setOpen(false);
     });
-    matchMedia("(min-width: 821px)").addEventListener("change", (e) => { if (e.matches) setOpen(false); });
   }
+  disclose(doc.querySelector(".docs-nav-toggle"), doc.getElementById("docs-nav-list"));
 
   // Copy buttons on code blocks.
   if (navigator.clipboard) {
@@ -56,7 +69,7 @@
     });
   }
 
-  // Highlight the current section in the table of contents.
+  // Highlight the current section in an on-this-page rail.
   const tocLinks = [...doc.querySelectorAll(".toc-aside a[href^='#']")];
   if (tocLinks.length && "IntersectionObserver" in window) {
     const byHeading = new Map();

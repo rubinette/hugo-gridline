@@ -1,0 +1,179 @@
+/* Synced from gridline-style 0.1.0 (6c17e29) src/css/construction.css by scripts/sync-gridline-style.py. Edit it there. */
+/* ── Construction ──────────────────────────────────────────────────────
+   Rails, grids, bands and diamond nodes. Rules that keep it honest:
+   · a grid line never runs a pixel or two beside a rail (grids anchor to rails);
+   · one diamond per crossing, centred on the 1px line (never two stacked);
+   · grids frame heroes and bands, never the text people read. */
+
+/* Every band of the page sits inside .frame; stacked frames read as two
+   continuous rails running the full height of the page. */
+.frame {
+  width: var(--frame-w);
+  margin-inline: auto;
+  border-inline: 1px solid var(--line);
+  position: relative;
+}
+
+/* Construction grid behind a band (section.grid-bg > .frame). Each margin's
+   grid is anchored to its rail, and inside the frame `round` fits a whole
+   number of cells between the rails. Pick --grid-size so it divides the
+   frame width (1120px: 20, 40) and lines land on whole pixels. */
+.grid-bg {
+  position: relative;
+  isolation: isolate;
+  background-color: var(--canvas);
+}
+.grid-bg::before,
+.grid-bg::after,
+.grid-bg > .frame::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: var(--grid-size) var(--grid-size);
+  pointer-events: none;
+}
+.grid-bg::before,
+.grid-bg::after { inset-block: 0; width: calc((100% - var(--frame-w)) / 2); }
+.grid-bg::before { left: 0; background-position: right top -1px; }
+.grid-bg::after { right: 0; background-position: left calc(var(--grid-size) - 1px) top -1px; }
+/* Spans the border box: the first line sits under the left rail. */
+.grid-bg > .frame::before {
+  inset: 0 -1px;
+  background-position: left top -1px;
+  background-repeat: round repeat;
+}
+
+/* Divider: 12px diagonal band between major sections, or a plain hairline.
+   Hollow diamonds mark where it crosses the rails. */
+.divider {
+  height: 12px;
+  border-block: 1px solid var(--line);
+  background: repeating-linear-gradient(135deg, transparent 0 3px, var(--band) 3px 4px), var(--canvas);
+  pointer-events: none;
+}
+.divider > .frame { height: 100%; }
+.divider.plain { height: 1px; border-bottom: 0; background: none; }
+
+/* A junction is an empty <i> inside a box whose left and right edges are rails;
+   its ::before / ::after are the two diamonds. The first junction marks the top
+   edge, a second one (.junction + .junction) the bottom edge. */
+.junction { position: absolute; left: 0; right: 0; top: -1px; }
+.junction + .junction { top: auto; bottom: -1px; }
+.divider.plain .junction { top: -1px; }
+
+.junction::before,
+.junction::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: var(--node);
+  height: var(--node);
+  background: var(--node-fill);
+  border: 1px solid var(--line-strong);
+  transform: translate(-50%, -50%) rotate(45deg);
+  z-index: 2;
+  pointer-events: none;
+}
+.junction::before { left: -.5px; }
+.junction::after { left: calc(100% + .5px); }
+.junction + .junction::before,
+.junction + .junction::after { top: 100%; }
+
+/* ── Band: a header band with outer rails ──────────────────────────────
+   The content sits on clean canvas inside the frame. The outer margins share
+   that canvas and carry only a fine grid of faint accent lines, boxed in by a
+   second pair of rails (.band-rails) up to --edge from the viewport. Markup:
+   <header class="band hatch">
+     <div class="band-rails" aria-hidden="true"><i class="junction"></i></div>
+     <div class="frame band-inner"><i class="junction" aria-hidden="true"></i>…</div>
+   </header>
+   The site header draws the diamonds on the band's top edge (.header-rails). */
+.band {
+  --fine-line: color-mix(in srgb, var(--canvas), var(--accent) var(--fine-line-mix));
+  position: relative;
+  z-index: 1; /* its own layer, above the content that follows, so bottom diamonds stay whole */
+  border-bottom: 1px solid var(--line);
+  background: var(--canvas);
+}
+.band::before,
+.band::after {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  z-index: -1;
+  width: calc((100% - var(--rails)) / 2);
+  /* Half-pixel lines drawn as an SVG mask: they anti-alias on 1x screens (a .5px
+     gradient stop renders nothing there) while the colour stays a token. */
+  background: var(--fine-line);
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10'%3E%3Cpath d='M0 .25H10M.25 0V10' fill='none' stroke='%23000' stroke-width='.5'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10'%3E%3Cpath d='M0 .25H10M.25 0V10' fill='none' stroke='%23000' stroke-width='.5'/%3E%3C/svg%3E");
+  -webkit-mask-size: var(--fine-cell) var(--fine-cell);
+  mask-size: var(--fine-cell) var(--fine-cell);
+  pointer-events: none;
+}
+/* Both fine grids are anchored to their rail, so a full cell always meets it. */
+.band::before { left: 0; -webkit-mask-position: right top -1px; mask-position: right top -1px; }
+.band::after { right: 0; -webkit-mask-position: left calc(var(--fine-cell) - 1px) top -1px; mask-position: left calc(var(--fine-cell) - 1px) top -1px; }
+
+.band-rails,
+.header-rails {
+  position: absolute;
+  inset: 0;
+  width: var(--rails);
+  margin-inline: auto;
+  pointer-events: none;
+}
+.band-rails {
+  z-index: -1;
+  border-inline: 1px solid var(--line);
+  background: var(--canvas);
+}
+/* The site header carries .header-rails on every page; it shows only when the
+   page has a band. Same box as the elements that draw the rails, so the
+   diamonds centre on them. */
+.header-rails { display: none; border-inline: 1px solid transparent; }
+body:has(.band) .header-rails { display: block; }
+
+.band-inner { padding: 72px var(--pad) 56px; }
+.band-inner.center { text-align: center; }
+/* .hatch: a diagonal hatch inside the frame that fades in toward the right rail. */
+.band.hatch > .frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: repeating-linear-gradient(135deg, transparent 0 3px, var(--line) 3px 4px);
+  -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,.65), transparent 50%);
+  mask-image: linear-gradient(to left, rgba(0,0,0,.65), transparent 50%);
+  pointer-events: none;
+}
+
+/* Diamonds where every rail meets the band's bottom hairline. */
+.band .junction { top: auto; bottom: -.5px; }
+.band .junction::before,
+.band .junction::after { top: 100%; }
+
+/* Below this width the outer rails would sit on, or within 24px of, the frame
+   rails: fold them into the frame and drop what would draw twice (the rail
+   lines and their diamonds). 1264px = --max + 2 * --edge + 2 * 24px. */
+@media (max-width: 1264px) {
+  :root { --rails: var(--frame-w); }
+  body:has(.band) .header-rails,
+  .band-rails .junction { display: none; }
+  .band-rails { border-color: transparent; }
+}
+
+@media (max-width: 600px) {
+  .band-inner { padding: 52px var(--pad) 36px; }
+}
+
+@media print {
+  .frame { border: 0; width: 100%; }
+  .divider, .junction { display: none !important; }
+  .grid-bg, .band { background: none; }
+  .grid-bg::before, .grid-bg::after, .grid-bg > .frame::before,
+  .band::before, .band::after, .band-rails, .band.hatch > .frame::before { display: none; }
+}

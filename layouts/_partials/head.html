@@ -21,19 +21,11 @@
 <meta name="theme-color" content="#111216" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="{{ "favicon.svg" | relURL }}" type="image/svg+xml">
 
+{{- /* Before paint: swap no-js for js and, with the toggle on, restore the stored theme. */ -}}
 {{- if eq $scheme "auto" }}
-<script>
-  (function () {
-    var d = document.documentElement;
-    d.classList.remove("no-js");
-    try {
-      var t = localStorage.getItem("gridline-theme");
-      if (t === "light" || t === "dark") d.setAttribute("data-theme", t);
-    } catch (e) {}
-  })();
-</script>
+<script>{{ (resources.Get "js/gridline/boot.js").Content | safeJS }}</script>
 {{- else }}
-<script>document.documentElement.classList.remove("no-js");</script>
+<script>document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/, "js");</script>
 {{- end }}
 
 {{- if site.Params.googleFonts }}
@@ -42,7 +34,13 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Serif:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap">
 {{- end }}
 
-{{- $css := slice (resources.Get "css/main.css") (resources.Get "css/syntax.css") | resources.Concat "css/gridline.css" }}
+{{- /* The Gridline design system, synced from gridline-style (scripts/sync-gridline-style.py).
+  Order is the cascade order; a site can append its own CSS through extend-head.html. */ -}}
+{{- $css := slice }}
+{{- range slice "tokens" "base" "construction" "components" "prose" "blog" "diagram" "syntax" }}
+  {{- $css = $css | append (resources.Get (printf "css/gridline/%s.css" .)) }}
+{{- end }}
+{{- $css = $css | resources.Concat "css/gridline.css" }}
 {{- if hugo.IsProduction }}
   {{- $css = $css | minify | fingerprint }}
 <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}" crossorigin="anonymous">

@@ -151,13 +151,24 @@ flowchart LR
 - 圖表太寬、必須縮小才放得下時，右下角會出現放大／縮小按鈕。
 - 每張圖表右下角都有「放大到視窗」按鈕，會把整張圖縮放到填滿視窗顯示；放大後右下角有放大／縮小／重設按鈕，可拖曳平移；按 Esc、關閉按鈕或點擊外框外側即可關閉。
 
-要調整圖表樣式，可以覆寫 `.mermaid-diagram, .diagram-viewer-canvas` 上的 `--pele-*` 變數（見 `assets/css/main.css`）。要升級 Pele：把新版 npm 套件 `dist/esm/` 裡的 `lazy.js` 和 `chunks/` 放進 `assets/vendor/pele/<版本>/`，再更新 `layouts/_partials/mermaid.html` 裡的版本號。
+要調整圖表樣式，可以覆寫 `.mermaid-diagram, .diagram-viewer-canvas` 上的 `--pele-*` 變數（見 `assets/css/gridline/diagram.css`）。要升級 Pele：把新版 npm 套件 `dist/esm/` 裡的 `lazy.js` 和 `chunks/` 放進 `assets/vendor/pele/<版本>/`，再更新 `layouts/_partials/mermaid.html` 裡的版本號。
 
 ## 客製化
 
 - **額外的 `<head>` 內容**（分析工具、字型）：在網站建立 `layouts/_partials/extend-head.html`
-- **樣式**：所有顏色、字型、間距都是 `assets/css/main.css` 開頭的 CSS 變數；在網站建立同路徑的檔案即可整份覆寫
+- **樣式**：所有顏色、字型、間距都是 `assets/css/gridline/tokens.css` 裡的 CSS 變數。要調整個別數值，在 `extend-head.html` 加一段 `<style>` 覆寫變數；要整份替換某個模組，在網站建立同路徑的檔案（例如 `assets/css/gridline/tokens.css`）
 - **介面字串**：在網站的 `i18n/<lang>.toml` 覆寫任一鍵值；新增語言請參考 `i18n/en.toml`
+
+## 樣式來源：gridline-style
+
+`assets/css/gridline/` 與 `assets/js/gridline/` 不是在這裡手寫的，而是從設計系統 [gridline-style](https://github.com/rubinette/gridline-style) 的 `src/css`、`src/js` 同步過來；每個檔案第一行都註明來源版本。`layouts/_partials/head.html` 依固定順序合併這些模組（tokens、base、construction、components、prose、blog、diagram、syntax）。
+
+要修改樣式，請在 gridline-style 修改後同步回來：
+
+```bash
+python3 scripts/sync-gridline-style.py            # 預設讀取 ../gridline-style，或用 --from / $GRIDLINE_STYLE 指定
+python3 scripts/sync-gridline-style.py --check    # 檢查是否與 gridline-style 一致
+```
 
 ## 授權
 

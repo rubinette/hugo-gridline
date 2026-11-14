@@ -1,0 +1,181 @@
+/* Synced from gridline-style 0.1.0 (6c17e29) src/css/prose.css by scripts/sync-gridline-style.py. Edit it there. */
+/* ── Prose: long-form reading text (posts, docs, changelog entries) ───── */
+
+.prose {
+  font-size: 17px;
+  line-height: 1.72;
+  color: var(--ink);
+  max-width: 70ch;
+  overflow-wrap: break-word;
+}
+.prose:lang(zh) { line-height: 1.9; max-width: 38em; }
+
+.prose > :first-child { margin-top: 0; }
+.prose p, .prose ul, .prose ol, .prose dl, .prose table { margin: 0 0 1.15em; }
+
+.prose h2 {
+  margin: 2.4em 0 .75em;
+  padding-bottom: .4em;
+  border-bottom: 1px solid var(--line);
+  font: 400 30px/1.2 var(--display);
+  letter-spacing: -.015em;
+}
+.prose h3 { margin: 2em 0 .5em; font: 600 19px/1.4 var(--body); }
+.prose h4 {
+  margin: 1.8em 0 .5em;
+  color: var(--muted);
+  font: 500 12px/1.5 var(--mono);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.prose:lang(zh) h2 { font-weight: 500; letter-spacing: .02em; font-size: 27px; line-height: 1.4; }
+.prose :is(h2, h3, h4) { position: relative; scroll-margin-top: calc(var(--header-h) + 24px); }
+
+.prose .anchor {
+  margin-left: .35em;
+  color: var(--line-strong);
+  font: 400 .8em var(--mono);
+  text-decoration: none;
+  opacity: 0;
+  transition: opacity .15s, color .15s;
+}
+.prose :is(h2, h3, h4):hover .anchor,
+.prose .anchor:focus-visible { opacity: 1; }
+.prose .anchor:hover { color: var(--accent); }
+
+.prose a:not(.anchor, .button) {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-color: var(--accent-line);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: text-decoration-color .15s;
+}
+.prose a:not(.anchor, .button):hover { text-decoration-color: currentColor; }
+
+.prose strong { font-weight: 600; }
+/* CJK emphasis: emphasis dots, never a synthesised italic. */
+.prose em:lang(zh) {
+  font-style: normal;
+  text-emphasis: filled dot;
+  -webkit-text-emphasis: filled dot;
+  text-emphasis-position: under right;
+  -webkit-text-emphasis-position: under right;
+}
+
+.prose ul, .prose ol { padding-left: 1.4em; }
+.prose li { margin: .3em 0; padding-left: .2em; }
+.prose li::marker { color: var(--muted); font-family: var(--mono); font-size: .85em; }
+.prose ul > li::marker { content: "▪  "; color: var(--accent); }
+.prose li > ul, .prose li > ol { margin: .3em 0; }
+
+.prose hr {
+  height: 12px;
+  margin: 3em 0;
+  border: 0;
+  border-block: 1px solid var(--line);
+  background: repeating-linear-gradient(135deg, transparent 0 3px, var(--band) 3px 4px);
+}
+
+.prose blockquote {
+  margin: 1.8em 0;
+  padding: .1em 0 .1em 22px;
+  border-left: 2px solid var(--accent);
+  color: var(--ink-2);
+  font: italic 300 22px/1.5 var(--display);
+}
+.prose blockquote:lang(zh) { font-style: normal; font-weight: 400; font-size: 20px; line-height: 1.75; }
+.prose blockquote p { margin: 0 0 .6em; }
+.prose blockquote > :last-child { margin-bottom: 0; }
+
+.prose :not(pre) > code {
+  padding: .1em .38em;
+  border: 1px solid var(--line);
+  background: var(--canvas);
+  font: .86em/1 var(--code-font);
+  overflow-wrap: anywhere;
+}
+.prose a code { color: inherit; }
+.prose kbd,
+kbd.key {
+  display: inline-block;
+  min-width: 1.6em;
+  padding: .1em .4em;
+  border: 1px solid var(--line-strong);
+  border-bottom-width: 2px;
+  background: var(--paper);
+  font: .8em/1.4 var(--mono);
+  text-align: center;
+}
+.prose mark { background: var(--accent-soft); color: inherit; padding: 0 .15em; }
+
+/* Tables: quiet, mono headings, horizontal scroll on narrow screens. */
+.table-wrap { margin: 1.6em 0; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.prose table {
+  width: 100%;
+  margin: 0;
+  border-collapse: collapse;
+  font-size: 15px;
+}
+.prose th, .prose td { padding: 11px 14px 11px 0; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+.prose th {
+  color: var(--muted);
+  font: 500 11px/1.5 var(--mono);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  border-bottom-color: var(--line-strong);
+  white-space: nowrap;
+}
+
+/* Bare <pre> (Markdown output without the .code-block wrapper). */
+.prose > pre {
+  margin: 2em 0;
+  padding: 18px 20px;
+  overflow-x: auto;
+  background: var(--code);
+  border: 1px solid var(--code-line);
+  box-shadow: var(--shadow-offset);
+  color: var(--code-ink);
+  font: 13.5px/1.65 var(--code-font);
+  tab-size: 4;
+}
+
+/* Numbered steps (docs how-tos). */
+.prose ol.steps { list-style: none; padding: 0; counter-reset: step; }
+.prose ol.steps > li {
+  position: relative;
+  margin: 0;
+  padding: 0 0 1.2em 2.2em;
+  border-left: 1px solid var(--line);
+  margin-left: .9em;
+}
+.prose ol.steps > li:last-child { border-left-color: transparent; padding-bottom: 0; }
+.prose ol.steps > li::before {
+  counter-increment: step;
+  content: counter(step);
+  position: absolute;
+  left: -.9em;
+  top: .15em;
+  display: grid;
+  place-items: center;
+  width: 1.8em;
+  height: 1.8em;
+  border: 1px solid var(--accent-line);
+  background: var(--accent-soft);
+  color: var(--accent);
+  font: 500 12px/1 var(--mono);
+}
+
+/* Footnotes. */
+.prose .footnotes { margin-top: 3em; padding-top: 1em; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
+.prose .footnotes hr { display: none; }
+.prose .footnotes ol { padding-left: 1.2em; }
+.prose .footnote-ref { font: 11px var(--mono); text-decoration: none; }
+
+@media (max-width: 600px) {
+  .prose { font-size: 16.5px; }
+  .prose h2 { font-size: 25px; }
+  .prose:lang(zh) h2 { font-size: 23px; }
+  .prose blockquote { font-size: 19px; }
+  .prose > pre { margin-inline: calc(-1 * var(--pad) - 1px); box-shadow: none; border-inline: 0; }
+}

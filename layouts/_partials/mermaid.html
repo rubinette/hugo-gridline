@@ -6,7 +6,7 @@
 {{- $pele := resources.Get (printf "%s/lazy.js" $dir) }}
 {{- range resources.Match (printf "%s/chunks/*.js" $dir) }}{{ $_ := .Publish }}{{ end }}
 {{- with resources.Get (printf "%s/LICENSE.txt" $dir) }}{{ $_ := .Publish }}{{ end }}
-{{- $init := resources.Get "js/mermaid.js" }}
+{{- $init := resources.Get "js/gridline/diagram.js" }}
 {{- if hugo.IsProduction }}{{ $init = $init | minify | fingerprint }}{{ end }}
 <link rel="modulepreload" href="{{ $pele.RelPermalink }}">
 <script type="module" src="{{ $init.RelPermalink }}"

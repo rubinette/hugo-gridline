@@ -1,0 +1,164 @@
+/* Synced from gridline-style 0.1.0 (6c17e29) src/css/diagram.css by scripts/sync-gridline-style.py. Edit it there. */
+/* ── Diagrams: Mermaid rendered by Pele (MIT, github.com/obsidianmd/pele) ─
+   Every colour is a theme token, so diagrams follow light/dark and a custom
+   accent without re-rendering. Series alternate blues and neutrals (one
+   accent, as everywhere); Pele draws in-slice labels in the background colour,
+   so every series mixes toward --ink, never --paper: each keeps >= 4.2:1
+   against the page in both themes. Markup and loader: references/mermaid.md. */
+
+.mermaid-diagram,
+pre.mermaid {
+  margin: 0;
+  background: var(--paper);
+}
+.mermaid-diagram {
+  position: relative;
+  padding: 24px 20px;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+.mermaid-diagram,
+.diagram-viewer-canvas {
+  /* Zoom controls (on the page, shown only when a diagram is scaled down to
+     fit) sit as a toolbar on the bottom edge instead of over the drawing. */
+  --pele-zoom-top: auto;
+  --pele-zoom-right: -1px;
+  --pele-zoom-bottom: -1px;
+  --pele-bg: var(--paper);
+  --pele-fg: var(--ink);
+  --pele-muted: var(--muted);
+  --pele-line: var(--ink-2);
+  --pele-surface: var(--surface);
+  --pele-surface-alt: var(--hover);
+  --pele-border: var(--line-strong);
+  --pele-accent: var(--accent);
+  --pele-error: var(--err);
+  --pele-critical: var(--err);
+  --pele-fg-on-light: #171717;
+  --pele-fg-on-dark: #fbfbf8;
+  --pele-font: var(--body);
+  --pele-font-mono: var(--code-font);
+  --pele-radius: 0px;
+  --pele-series-1: var(--accent);
+  --pele-series-2: var(--ink-2);
+  --pele-series-3: color-mix(in oklch, var(--muted), var(--paper) 10%);
+  --pele-series-4: color-mix(in oklch, var(--accent), var(--ink) 45%);
+  --pele-series-5: var(--muted);
+  --pele-series-6: color-mix(in oklch, var(--accent), var(--ink) 25%);
+  --pele-series-7: color-mix(in oklch, var(--ink-2), var(--muted) 50%);
+  --pele-series-8: color-mix(in oklch, var(--accent), var(--muted) 50%);
+}
+.mermaid-diagram:has(> .pele-zoom:not([hidden])) { padding-bottom: 64px; }
+/* The expand button always holds the bottom-right corner; the zoom toolbar,
+   when shown, docks to its left so the two read as one strip. */
+.mermaid-diagram:has(+ .diagram-expand) { padding-bottom: 64px; --pele-zoom-right: 40px; }
+.pele-zoom {
+  flex-direction: row !important;
+  gap: 0 !important;
+  padding: 0 !important;
+  border-color: var(--line) !important;
+}
+/* !important throughout: Pele sets these as inline styles (colour: inherit). */
+.pele-zoom button {
+  width: 40px !important;
+  height: 40px !important;
+  color: var(--ink-2) !important;
+}
+.pele-zoom button + button { border-left: 1px solid var(--line) !important; }
+.pele-zoom button:hover:not(:disabled) { background: var(--hover) !important; color: var(--accent) !important; }
+.pele-zoom button:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.mermaid-diagram svg { display: block; max-width: 100%; height: auto; }
+.diagram .figure-frame { position: relative; }
+
+.diagram-expand,
+.diagram-viewer-close {
+  display: grid;
+  place-items: center;
+  /* 40px inside the border, like each zoom button inside Pele's toolbar frame. */
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--ink-2);
+  cursor: pointer;
+}
+.diagram-expand { position: absolute; right: -1px; bottom: -1px; }
+.diagram-expand:hover,
+.diagram-viewer-close:hover { background: var(--hover); color: var(--accent); }
+.diagram-expand:focus-visible,
+.diagram-viewer-close:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+
+/* Full-window viewer: a framed panel over the construction grid. */
+.diagram-viewer {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 16px;
+  border: 0;
+  color: var(--ink);
+  background-color: var(--canvas);
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 24px 24px;
+  background-position: center -1px;
+}
+.diagram-viewer::backdrop { background: var(--canvas); }
+html:has(.diagram-viewer[open]) { overflow: hidden; }
+.diagram-viewer-panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  box-shadow: 2px 2px 0 var(--band);
+}
+.diagram-viewer-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border-bottom: 1px solid var(--line);
+}
+.diagram-viewer-title {
+  min-width: 0;
+  margin: 0;
+  padding: 0 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--muted);
+  font: italic 12.5px/1.6 var(--mono);
+}
+.diagram-viewer-title:lang(zh) { font-style: normal; }
+/* Its border folds into the panel edge and the bar's bottom line. */
+.diagram-viewer-close { flex: none; margin: -1px -1px -1px 0; }
+/* A size container: the copied SVG fits it with cq units (diagram.js).
+   The bottom padding keeps the zoom toolbar clear of the drawing at fit. */
+.diagram-viewer-canvas {
+  position: relative;
+  display: grid;
+  place-items: center;
+  flex: 1;
+  min-height: 0;
+  padding: clamp(16px, 4vw, 48px) clamp(16px, 4vw, 48px) 64px;
+  overflow: hidden;
+  container-type: size;
+}
+
+/* Before Pele runs, offline, or with JavaScript off, the source reads as a quiet code block. */
+pre.mermaid {
+  padding: 18px 20px;
+  overflow-x: auto;
+  color: var(--muted);
+  font: 13px/1.6 var(--code-font);
+  white-space: pre;
+}
+@media print {
+  .diagram-expand { display: none !important; }
+}

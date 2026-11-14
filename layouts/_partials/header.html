@@ -1,10 +1,7 @@
 {{- $page := . }}
-{{- /* Same test as single.html: posts open with the band that has outer rails. */ -}}
-{{- $isPost := and .IsPage (in site.MainSections .Section) (ne .Params.layout "page") }}
 <header class="site-header">
-  {{- if $isPost }}
+  {{- /* Diamonds for a band's outer rails; the CSS shows them only on pages with a .band. */}}
   <div class="header-rails" aria-hidden="true"><i class="junction"></i></div>
-  {{- end }}
   <div class="frame header-inner">
     <i class="junction" aria-hidden="true"></i>
     <a class="brand" href="{{ site.Home.RelPermalink }}">
