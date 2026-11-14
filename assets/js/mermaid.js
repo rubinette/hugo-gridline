@@ -5,12 +5,11 @@ const config = document.querySelector("script[data-pele]");
 if (config) {
   const labels = config.dataset;
   const blocks = [...document.querySelectorAll("pre.mermaid")];
-  const { mountAsync } = await import(labels.pele);
-  const options = {
-    zoom: {
-      labels: { zoomIn: labels.zoomIn, zoomOut: labels.zoomOut, reset: labels.zoomReset },
-    },
-  };
+  const { mountAsync, enableZoom } = await import(labels.pele);
+  const zoomLabels = { zoomIn: labels.zoomIn, zoomOut: labels.zoomOut, reset: labels.zoomReset };
+  const options = { zoom: { labels: zoomLabels } };
+  // In the viewer the controls are always there, and zooming goes deeper.
+  const viewerZoom = { always: true, maxScale: 8, labels: zoomLabels };
 
   const icon = (d) =>
     `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true"><path d="${d}"/></svg>`;
@@ -36,6 +35,8 @@ if (config) {
     // The dialog fills the window; a click on its margin (outside the panel) closes it.
     viewer.addEventListener("click", (event) => { if (event.target === viewer) viewer.close(); });
     viewer.addEventListener("close", () => {
+      viewer.zoom?.destroy();
+      viewer.zoom = undefined;
       viewer.querySelector(".diagram-viewer-canvas").replaceChildren();
       viewer.trigger?.focus();
     });
@@ -47,16 +48,19 @@ if (config) {
     const svg = host.querySelector(":scope > svg");
     if (!svg) return;
     const dialog = getViewer();
+    const width = Number(svg.getAttribute("width"));
+    const height = Number(svg.getAttribute("height"));
+    if (!width || !height) return;
     const copy = svg.cloneNode(true);
-    // Show the whole drawing even if it was zoomed in on the page, and let the
-    // viewBox scale it up or down to fit the canvas.
-    const width = svg.getAttribute("width");
-    const height = svg.getAttribute("height");
-    if (width && height) copy.setAttribute("viewBox", `0 0 ${width} ${height}`);
-    for (const attr of ["width", "height", "tabindex"]) copy.removeAttribute(attr);
+    // Start from the whole drawing even if it was zoomed in on the page. The
+    // width/height attributes stay: Pele's zoom reads the natural size from them.
+    copy.setAttribute("viewBox", `0 0 ${width} ${height}`);
+    copy.removeAttribute("tabindex");
+    // Fit the canvas (a size container) exactly, scaling up or down, so the
+    // box matches the drawing and zoom levels are measured from the real fit.
     Object.assign(copy.style, {
-      width: "100%", height: "100%", maxWidth: "none", margin: "0",
-      display: "block", cursor: "", userSelect: "", touchAction: "",
+      width: `min(100cqw, 100cqh * ${width / height})`, height: "auto", maxWidth: "none",
+      margin: "", display: "block", cursor: "", userSelect: "", touchAction: "",
     });
     const caption = host.closest("figure")?.querySelector("figcaption");
     const title = dialog.querySelector(".diagram-viewer-title");
@@ -69,9 +73,12 @@ if (config) {
       dialog.removeAttribute("aria-labelledby");
     }
 
-    dialog.querySelector(".diagram-viewer-canvas").replaceChildren(copy);
+    const canvas = dialog.querySelector(".diagram-viewer-canvas");
+    canvas.replaceChildren(copy);
     dialog.trigger = trigger;
     dialog.showModal();
+    // After showModal, so Pele measures the laid-out canvas.
+    dialog.zoom = enableZoom(canvas, viewerZoom);
   };
 
   const addExpandButton = (host) => {

@@ -1071,14 +1071,14 @@ pre.mermaid {
   display: flex;
   justify-content: center;
   overflow: hidden;
-  /* Zoom controls (shown only when a diagram is scaled down to fit) sit as a
-     toolbar on the bottom edge instead of over the drawing. */
-  --pele-zoom-top: auto;
-  --pele-zoom-right: -1px;
-  --pele-zoom-bottom: -1px;
 }
 .mermaid-diagram,
 .diagram-viewer-canvas {
+  /* Zoom controls (on the page, shown only when a diagram is scaled down to
+     fit) sit as a toolbar on the bottom edge instead of over the drawing. */
+  --pele-zoom-top: auto;
+  --pele-zoom-right: -1px;
+  --pele-zoom-bottom: -1px;
   --pele-bg: var(--paper);
   --pele-fg: var(--ink);
   --pele-muted: var(--muted);
@@ -1106,21 +1106,22 @@ pre.mermaid {
 .mermaid-diagram:has(> .pele-zoom:not([hidden])) { padding-bottom: 64px; }
 /* The expand button always holds the bottom-right corner; the zoom toolbar,
    when shown, docks to its left so the two read as one strip. */
-.mermaid-diagram:has(+ .diagram-expand) { padding-bottom: 64px; --pele-zoom-right: 38px; }
-.mermaid-diagram > .pele-zoom {
+.mermaid-diagram:has(+ .diagram-expand) { padding-bottom: 64px; --pele-zoom-right: 40px; }
+.pele-zoom {
   flex-direction: row !important;
   gap: 0 !important;
   padding: 0 !important;
   border-color: var(--line) !important;
 }
-.mermaid-diagram > .pele-zoom button {
+/* !important throughout: Pele sets these as inline styles (colour: inherit). */
+.pele-zoom button {
   width: 40px !important;
   height: 40px !important;
-  color: var(--ink-2);
+  color: var(--ink-2) !important;
 }
-.mermaid-diagram > .pele-zoom button + button { border-left: 1px solid var(--line) !important; }
-.mermaid-diagram > .pele-zoom button:hover:not(:disabled) { background: var(--hover) !important; color: var(--accent); }
-.mermaid-diagram > .pele-zoom button:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.pele-zoom button + button { border-left: 1px solid var(--line) !important; }
+.pele-zoom button:hover:not(:disabled) { background: var(--hover) !important; color: var(--accent) !important; }
+.pele-zoom button:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
 .mermaid-diagram svg { display: block; max-width: 100%; height: auto; }
 .diagram .figure-frame { position: relative; }
 
@@ -1128,8 +1129,9 @@ pre.mermaid {
 .diagram-viewer-close {
   display: grid;
   place-items: center;
-  width: 40px;
-  height: 40px;
+  /* 40px inside the border, like each zoom button inside Pele's toolbar frame. */
+  width: 42px;
+  height: 42px;
   padding: 0;
   border: 1px solid var(--line);
   background: var(--paper);
@@ -1191,11 +1193,17 @@ html:has(.diagram-viewer[open]) { overflow: hidden; }
 .diagram-viewer-title:lang(zh) { font-style: normal; }
 /* Its border folds into the panel edge and the bar's bottom line. */
 .diagram-viewer-close { flex: none; margin: -1px -1px -1px 0; }
+/* A size container: the copied SVG fits it with cq units (see mermaid.js).
+   The bottom padding keeps the zoom toolbar clear of the drawing at fit. */
 .diagram-viewer-canvas {
+  position: relative;
   display: grid;
+  place-items: center;
   flex: 1;
   min-height: 0;
-  padding: clamp(16px, 4vw, 48px);
+  padding: clamp(16px, 4vw, 48px) clamp(16px, 4vw, 48px) 64px;
+  overflow: hidden;
+  container-type: size;
 }
 
 /* Before Pele runs, or with JavaScript off, the source reads as a quiet code block. */
