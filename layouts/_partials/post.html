@@ -5,8 +5,10 @@
 {{- $aside := or $toc .Params.links }}
 
 <article class="post">
-  <header class="post-hero grid-bg">
+  <header class="post-hero">
+    <div class="post-hero-rails" aria-hidden="true"><i class="junction"></i></div>
     <div class="frame post-hero-inner">
+      <i class="junction" aria-hidden="true"></i>
       {{- with .GetTerms "categories" }}
       <p class="eyebrow">{{ range $i, $t := . }}{{ if $i }} / {{ end }}<a href="{{ $t.RelPermalink }}">{{ $t.LinkTitle }}</a>{{ end }}</p>
       {{- end }}
@@ -32,8 +34,6 @@
       </p>
     </div>
   </header>
-
-  {{- partial "divider.html" }}
 
   <div class="frame post-layout{{ if not $aside }} no-aside{{ end }}">
     <div class="post-main">

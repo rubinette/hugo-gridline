@@ -36,6 +36,7 @@
 
   --radius: 0;
   --node: 5px;
+  --node-fill: #ffffff;
   --grid-size: 48px;
   --max: 1120px;
   --gutter: 24px;
@@ -70,6 +71,8 @@
     --selection: #2a3150; --stripe: #23242a;
     --accent: #7e9bff; --accent-hover: #a5b9ff; --accent-soft: #1b2240; --accent-line: #34406e;
     --on-accent: #0b0d14; --band: rgba(126, 155, 255, .08);
+    --fine-line-mix: 7%;
+    --node-fill: #07080b;
     --code: #0c0d10; --code-line: #26272d;
     --ok: #7fcf9f; --ok-soft: #14241b; --warn: #e0b25c; --warn-soft: #2a2213; --err: #f08a7e; --err-soft: #2d1816;
     color-scheme: dark;
@@ -82,6 +85,8 @@
   --selection: #2a3150; --stripe: #23242a;
   --accent: #7e9bff; --accent-hover: #a5b9ff; --accent-soft: #1b2240; --accent-line: #34406e;
   --on-accent: #0b0d14; --band: rgba(126, 155, 255, .08);
+  --fine-line-mix: 7%;
+  --node-fill: #07080b;
   --code: #0c0d10; --code-line: #26272d;
   --ok: #7fcf9f; --ok-soft: #14241b; --warn: #e0b25c; --warn-soft: #2a2213; --err: #f08a7e; --err-soft: #2d1816;
   color-scheme: dark;
@@ -193,7 +198,7 @@ time, .count, .page-of, table, .post-meta { font-variant-numeric: tabular-nums; 
   top: 0;
   width: var(--node);
   height: var(--node);
-  background: var(--canvas);
+  background: var(--node-fill);
   border: 1px solid var(--line-strong);
   transform: translate(-50%, -50%) rotate(45deg);
   z-index: 2;
@@ -396,7 +401,7 @@ time, .count, .page-of, table, .post-meta { font-variant-numeric: tabular-nums; 
   left: 0;
   width: var(--node);
   height: var(--node);
-  background: var(--canvas);
+  background: var(--node-fill);
   border: 1px solid var(--line-strong);
   transform: translate(calc(-50% - .5px), -50%) rotate(45deg);
   z-index: 2;
@@ -632,10 +637,68 @@ time, .count, .page-of, table, .post-meta { font-variant-numeric: tabular-nums; 
 
 /* ───────────────────────── Post ───────────────────────── */
 
-.post-hero-inner {
-  padding: 72px var(--pad) 48px;
-  background: linear-gradient(90deg, var(--canvas) 0, color-mix(in srgb, var(--canvas) 88%, transparent) 60%, transparent 100%);
+/* Post header: the title sits on clean canvas inside the frame, with a hatch
+   that fades in toward the right rail. The outer margins share that canvas and
+   carry only a fine grid of faint accent lines, boxed in by a second pair of
+   rails up to --edge from the viewport (they merge with the frame rails once
+   the margin is narrower). */
+.post-hero {
+  --edge: 48px;
+  --fine-cell: 10px;
+  --fine-line: color-mix(in srgb, var(--canvas), var(--accent) var(--fine-line-mix, 15%));
+  --rails: max(min(var(--max), 100% - 2 * var(--gutter)), 100% - 2 * var(--edge));
+  position: relative;
+  z-index: 1; /* its own layer, above the article body so the bottom diamonds stay whole */
+  border-bottom: 1px solid var(--line);
+  background: var(--canvas);
 }
+.post-hero::before,
+.post-hero::after {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  z-index: -1;
+  width: calc((100% - var(--rails)) / 2);
+  /* Half-pixel lines, drawn as an SVG mask so they anti-alias on 1x screens
+     (a .5px gradient stop renders nothing there) while the colour stays a token. */
+  background: var(--fine-line);
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10'%3E%3Cpath d='M0 .25H10M.25 0V10' fill='none' stroke='%23000' stroke-width='.5'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10'%3E%3Cpath d='M0 .25H10M.25 0V10' fill='none' stroke='%23000' stroke-width='.5'/%3E%3C/svg%3E");
+  -webkit-mask-size: var(--fine-cell) var(--fine-cell);
+  mask-size: var(--fine-cell) var(--fine-cell);
+}
+/* Both grids are anchored to their rail, so a full cell always meets it. */
+.post-hero::before { left: 0; -webkit-mask-position: right top -1px; mask-position: right top -1px; }
+.post-hero::after { right: 0; -webkit-mask-position: left calc(var(--fine-cell) - 1px) top -1px; mask-position: left calc(var(--fine-cell) - 1px) top -1px; }
+
+.post-hero-rails {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  width: var(--rails);
+  margin-inline: auto;
+  border-inline: 1px solid var(--line);
+  background: var(--canvas);
+}
+
+.post-hero-inner { padding: 72px var(--pad) 56px; }
+.post-hero-inner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: repeating-linear-gradient(135deg, transparent 0 3px, var(--line) 3px 4px);
+  -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,.65), transparent 50%);
+  mask-image: linear-gradient(to left, rgba(0,0,0,.65), transparent 50%);
+  pointer-events: none;
+}
+
+/* Diamonds where every rail meets the bottom hairline. The top edge is the
+   sticky header's border, which would cover the upper half of a diamond. */
+.post-hero .junction { top: auto; bottom: -.5px; }
+.post-hero .junction::before,
+.post-hero .junction::after { top: 100%; }
+
 .post-title { max-width: 22ch; font-size: clamp(36px, 5vw, 56px); }
 :lang(zh) .post-title { max-width: 20em; }
 
@@ -883,22 +946,23 @@ time, .count, .page-of, table, .post-meta { font-variant-numeric: tabular-nums; 
   white-space: nowrap;
 }
 
-/* Figures: image in a hatched frame, mono caption underneath. */
-.figure { margin: 2.2em 0; }
-.figure-frame {
-  padding: 12px;
+/* Figures: the image runs edge to edge inside a hairline frame that casts a
+   small hard offset in the accent band colour; the caption shares the frame. */
+.figure {
+  margin: 2.2em 0;
   border: 1px solid var(--line);
-  background: repeating-linear-gradient(135deg, transparent 0 4px, var(--stripe) 4px 5px), var(--canvas);
+  background: var(--paper);
+  box-shadow: 2px 2px 0 var(--band);
 }
+.figure-frame { overflow: hidden; }
 .figure-frame img, .figure-frame video {
   display: block;
   width: 100%;
   margin-inline: auto;
-  border: 1px solid var(--line);
-  background: var(--paper);
 }
 .figure figcaption {
-  margin-top: 10px;
+  padding: 10px 12px;
+  border-top: 1px solid var(--line);
   color: var(--muted);
   font: italic 12.5px/1.6 var(--mono);
 }
@@ -978,11 +1042,9 @@ time, .count, .page-of, table, .post-meta { font-variant-numeric: tabular-nums; 
    Chart series alternate blues and neutrals (one accent, as everywhere). Pele
    draws in-slice labels in the background colour, so every series is mixed
    toward --ink, never --paper: each keeps >= 4.2:1 against the page in both themes. */
-.diagram .figure-frame { padding: 12px; }
 .mermaid-diagram,
 pre.mermaid {
   margin: 0;
-  border: 1px solid var(--line);
   background: var(--paper);
 }
 .mermaid-diagram {
@@ -1176,7 +1238,6 @@ pre.mermaid {
   .prose:lang(zh) h2 { font-size: 23px; }
   .prose blockquote { font-size: 19px; }
   .code-block, .prose > pre { margin-inline: calc(-1 * var(--pad) - 1px); box-shadow: none; border-inline: 0; }
-  .figure-frame { padding: 8px; }
   .row { flex-direction: column; align-items: flex-start; gap: 8px; padding-block: 12px; }
   .row-meta time { min-width: 0; text-align: left; }
   .post-nav { grid-template-columns: minmax(0, 1fr); }
@@ -1201,5 +1262,7 @@ pre.mermaid {
   .site-header, .site-footer, .divider, .post-aside, .toc-inline, .related, .cta, .post-nav, .copy { display: none !important; }
   .frame { border: 0; width: 100%; }
   .grid-bg { background: none; }
+  .post-hero { background: none; }
+  .post-hero::before, .post-hero::after, .post-hero-rails, .post-hero-inner::before { display: none; }
   .code-block { box-shadow: none; }
 }
