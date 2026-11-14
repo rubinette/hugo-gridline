@@ -1,6 +1,12 @@
 {{- $page := . }}
+{{- /* Same test as single.html: posts open with the band that has outer rails. */ -}}
+{{- $isPost := and .IsPage (in site.MainSections .Section) (ne .Params.layout "page") }}
 <header class="site-header">
+  {{- if $isPost }}
+  <div class="header-rails" aria-hidden="true"><i class="junction"></i></div>
+  {{- end }}
   <div class="frame header-inner">
+    <i class="junction" aria-hidden="true"></i>
     <a class="brand" href="{{ site.Home.RelPermalink }}">
       <span class="brand-mark" aria-hidden="true">{{ site.Params.monogram | default (substr site.Title 0 1) }}</span>
       <span class="brand-name">{{ site.Title }}</span>
