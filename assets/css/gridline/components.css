@@ -1,4 +1,4 @@
-/* Synced from gridline-style 0.1.0 (80590d1) src/css/components.css by scripts/sync-gridline-style.py. Edit it there. */
+/* Synced from gridline-style 0.1.0 (9764f86) src/css/components.css by scripts/sync-gridline-style.py. Edit it there. */
 /* ── Components ─────────────────────────────────────────────────────── */
 
 /* Buttons. Mono labels, square corners, 40px minimum height. One primary
@@ -102,9 +102,9 @@
   height: 28px;
   border-radius: 50%;
   overflow: hidden;
-  background: var(--accent-soft);
-  color: var(--accent);
-  border: 1px solid var(--accent-line);
+  background: var(--paper);
+  color: var(--ink-2);
+  border: 1px solid var(--line-strong);
   font: 600 11px/1 var(--body);
   box-shadow: 0 0 0 2px var(--surface);
 }
@@ -280,8 +280,8 @@
 .hero h1,
 .band-title {
   margin: 14px 0 0;
-  color: var(--accent);
-  font: 300 clamp(40px, 6vw, 64px)/1.04 var(--display);
+  color: var(--ink);
+  font: 300 clamp(40px, 6vw, 64px)/1.06 var(--display);
   letter-spacing: -.025em;
 }
 .band-title { font-size: clamp(36px, 5vw, 52px); }
@@ -297,7 +297,7 @@
 .hero-inner.center .actions,
 .band-inner.center .actions { justify-content: center; }
 :lang(zh) .hero h1,
-:lang(zh) .band-title { font-weight: 500; letter-spacing: .02em; line-height: 1.25; }
+:lang(zh) .band-title { font-weight: 400; letter-spacing: .02em; line-height: 1.25; }
 @media (max-width: 600px) {
   .hero { --grid-size: 16px; }
   .hero-inner { padding: 64px var(--pad) 52px; }
@@ -456,9 +456,9 @@
 }
 .section-head h2 { margin: 0; font: 400 34px/1.15 var(--display); letter-spacing: -.015em; }
 :lang(zh) .section-head h2 { font-weight: 500; letter-spacing: .02em; font-size: 30px; }
-.section-head p:not(.eyebrow) { margin: 0; color: var(--muted); max-width: 460px; }
+.section-head p:not(.eyebrow) { margin: 0; color: var(--ink-2); max-width: 520px; line-height: 1.6; }
 /* Title and lead stacked in one wrapper; as siblings they sit side by side. */
-.section-head > div > :is(h2, h3) + p { margin-top: 10px; }
+.section-head > div > :is(h2, h3) + p { margin-top: 14px; }
 .section-head .actions { flex-shrink: 0; }
 @media (max-width: 880px) {
   .section-head { display: block; }
@@ -477,11 +477,11 @@
 .cta h2 {
   margin: 14px auto 0;
   max-width: 18em;
-  color: var(--accent);
+  color: var(--ink);
   font: 300 clamp(32px, 4.4vw, 48px)/1.1 var(--display);
   letter-spacing: -.02em;
 }
-:lang(zh) .cta h2 { font-weight: 500; letter-spacing: .02em; line-height: 1.35; }
+:lang(zh) .cta h2 { font-weight: 400; letter-spacing: .02em; line-height: 1.35; }
 .cta p:not(.eyebrow) { margin: 16px auto 0; max-width: 560px; color: var(--ink-2); }
 .cta .actions { justify-content: center; margin-top: 30px; }
 @media (max-width: 600px) {
@@ -494,9 +494,8 @@
 
 .callout {
   margin: 1.8em 0;
-  padding: 16px 20px;
-  border: 1px solid var(--line);
-  border-left: 3px solid var(--accent);
+  padding: 16px 20px 18px;
+  border: 1px solid var(--accent-line);
   background: var(--accent-soft);
   font-size: 16px;
 }
@@ -508,9 +507,9 @@
   text-transform: uppercase;
 }
 .callout > :last-child { margin-bottom: 0; }
-.callout-warning { border-left-color: var(--warn); background: var(--warn-soft); }
+.callout-warning { border-color: var(--line-strong); background: var(--warn-soft); }
 .callout-warning .callout-title { color: var(--warn); }
-.callout-caution { border-left-color: var(--err); background: var(--err-soft); }
+.callout-caution { border-color: var(--line-strong); background: var(--err-soft); }
 .callout-caution .callout-title { color: var(--err); }
 
 /* ── Code blocks: dark in both themes, with the hard offset band ──────── */

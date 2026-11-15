@@ -1,4 +1,4 @@
-/* Synced from gridline-style 0.1.0 (80590d1) src/css/prose.css by scripts/sync-gridline-style.py. Edit it there. */
+/* Synced from gridline-style 0.1.0 (9764f86) src/css/prose.css by scripts/sync-gridline-style.py. Edit it there. */
 /* ── Prose: long-form reading text (posts, docs, changelog entries) ───── */
 
 .prose {
@@ -66,7 +66,7 @@
 .prose ul, .prose ol { padding-left: 1.4em; }
 .prose li { margin: .3em 0; padding-left: .2em; }
 .prose li::marker { color: var(--muted); font-family: var(--mono); font-size: .85em; }
-.prose ul > li::marker { content: "▪  "; color: var(--accent); }
+.prose ul > li::marker { content: "▪  "; color: var(--muted); }
 .prose li > ul, .prose li > ol { margin: .3em 0; }
 
 .prose hr {
@@ -80,7 +80,7 @@
 .prose blockquote {
   margin: 1.8em 0;
   padding: .1em 0 .1em 22px;
-  border-left: 2px solid var(--accent);
+  border-left: 1px solid var(--line-strong);
   color: var(--ink-2);
   font: italic 300 22px/1.5 var(--display);
 }
