@@ -1,4 +1,4 @@
-// Synced from gridline-style 0.1.0 (6c17e29) src/js/site.js by scripts/sync-gridline-style.py. Edit it there.
+// Synced from gridline-style 0.1.0 (80590d1) src/js/site.js by scripts/sync-gridline-style.py. Edit it there.
 // Gridline page behaviour: theme toggle, mobile navigation, docs navigation,
 // copy buttons, on-this-page highlight. Every feature checks for its markup,
 // so one file serves every template. Content stays usable without it.
@@ -59,6 +59,7 @@
       if (!btn || !code) return;
       const label = btn.textContent;
       btn.hidden = false;
+      btn.setAttribute("aria-live", "polite"); // screen readers hear "Copied
       btn.addEventListener("click", async () => {
         try {
           await navigator.clipboard.writeText(code.innerText.replace(/\n$/, ""));
@@ -67,6 +68,18 @@
         } catch (e) {}
       });
     });
+  }
+
+  // Wide tables and diagrams scroll sideways; a scroll box that overflows
+  // must be reachable by keyboard (WCAG 2.1.1), so give it a tab stop.
+  const scrollers = [...doc.querySelectorAll(".table-wrap, .prose .mermaid")];
+  if (scrollers.length) {
+    const sync = () => scrollers.forEach((el) => {
+      if (el.scrollWidth > el.clientWidth + 1) el.setAttribute("tabindex", "0");
+      else if (el.getAttribute("tabindex") === "0") el.removeAttribute("tabindex");
+    });
+    sync();
+    addEventListener("resize", sync, { passive: true });
   }
 
   // Highlight the current section in an on-this-page rail.

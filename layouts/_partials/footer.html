@@ -9,7 +9,7 @@
       {{- with site.Params.description }}<p>{{ . }}</p>{{ end }}
     </div>
     {{- with site.Menus.footer }}
-    <nav class="footer-cols" aria-label="Footer">
+    <nav class="footer-cols" aria-label="{{ T "nav_footer" }}">
       {{- range . }}
       <div class="footer-col">
         {{- if .HasChildren }}

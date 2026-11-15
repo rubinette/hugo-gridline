@@ -57,7 +57,6 @@ summaryLength = 40
   [languages.en.params]
     description = "Engineering notes, product updates and tips from the Orbitline team."
     [languages.en.params.hero]
-      eyebrow = "Blog"
       title = "From the Blog"
       subtitle = "Engineering notes, product updates and tips from the team."
     [languages.en.params.headerButton]
@@ -134,7 +133,6 @@ summaryLength = 40
   [languages.zh-tw.params]
     description = "Orbitline 團隊的工程筆記、產品更新與使用技巧。"
     [languages.zh-tw.params.hero]
-      eyebrow = "Blog / 部落格"
       title = "來自部落格"
       subtitle = "團隊的工程筆記、產品更新與使用技巧。"
     [languages.zh-tw.params.headerButton]

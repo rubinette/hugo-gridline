@@ -13,6 +13,8 @@
       {{- range site.Menus.main }}
         {{- $active := or ($page.IsMenuCurrent "main" .) ($page.HasMenuCurrent "main" .) }}
         {{- with .Page }}{{ if and (not .IsHome) (or (eq . $page) ($page.IsDescendant .)) }}{{ $active = true }}{{ end }}{{ end }}
+        {{- /* The home page is the blog index, so "you are here" is the main section's item. */}}
+        {{- with .Page }}{{ if and $page.IsHome (in site.MainSections .Section) (eq .Kind "section") }}{{ $active = true }}{{ end }}{{ end }}
         <a href="{{ .URL }}"{{ if $active }} aria-current="page"{{ end }}>{{ .Name }}</a>
       {{- end }}
     </nav>

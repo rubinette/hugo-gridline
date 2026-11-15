@@ -1,4 +1,4 @@
-/* Synced from gridline-style 0.1.0 (6c17e29) src/css/components.css by scripts/sync-gridline-style.py. Edit it there. */
+/* Synced from gridline-style 0.1.0 (80590d1) src/css/components.css by scripts/sync-gridline-style.py. Edit it there. */
 /* ── Components ─────────────────────────────────────────────────────── */
 
 /* Buttons. Mono labels, square corners, 40px minimum height. One primary
@@ -174,7 +174,13 @@
   border: 1px solid transparent;
 }
 .nav-links a:hover { background: var(--hover); color: var(--ink); }
-.nav-links a[aria-current="page"] { color: var(--accent); }
+/* "You are here": colour plus an underline, so it does not rely on colour alone (WCAG 1.4.1). */
+.nav-links a[aria-current="page"] {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 6px;
+}
 
 .header-actions { margin-left: auto; display: flex; align-items: center; gap: 8px; }
 .lang-switch { display: flex; gap: 8px; }
@@ -254,8 +260,10 @@
   .header-inner { padding-inline: 12px; gap: 12px; }
   .header-button { display: none; }
 }
+/* Narrow screens keep the mark visible and the name for screen readers, so
+   the home link always has an accessible name. */
 @media (max-width: 360px) {
-  .brand-name { display: none; }
+  .brand-name { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 }
 
 /* ── Hero: a title band on the construction grid ───────────────────────
@@ -679,8 +687,8 @@
 .footer-brand p { margin: 14px 0 0; max-width: 320px; color: var(--muted); font-size: 14px; }
 .footer-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 28px; }
 .footer-col ul { list-style: none; margin: 0; padding: 0; }
-.footer-col li + li { margin-top: 6px; }
-.footer-col a { color: var(--ink-2); font-size: 14px; text-decoration: none; }
+.footer-col li + li { margin-top: 2px; }
+.footer-col a { display: inline-flex; align-items: center; min-height: 28px; color: var(--ink-2); font-size: 14px; text-decoration: none; }
 .footer-col a:hover { color: var(--accent); }
 .footer-bottom { border-top: 1px solid var(--line); }
 .footer-bottom-inner {
@@ -694,7 +702,7 @@
 .footer-bottom-inner p { margin: 0; }
 .footer-bottom a { color: inherit; }
 .footer-links { display: flex; flex-wrap: wrap; gap: 18px; }
-.footer-links a { text-decoration: none; }
+.footer-links a { display: inline-flex; align-items: center; min-height: 24px; text-decoration: none; }  /* WCAG 2.5.8 target size */
 .footer-links a:hover { color: var(--accent); }
 @media (max-width: 880px) { .footer-top { grid-template-columns: minmax(0, 1fr); } }
 @media (max-width: 600px) { .footer-bottom-inner { flex-direction: column; } }
