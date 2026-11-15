@@ -9,7 +9,7 @@ A Hugo blog theme built on visible construction lines: a gray-white canvas, hair
 ## Features
 
 - **Blog home**: grid hero, three featured cards (the latest posts; the first is marked "Newest"), category and author rail, compact post list grouped by year, pagination
-- **Posts**: category eyebrow, author avatars and roles, date and reading time, an "On this page" table of contents that highlights the current section as you scroll, a "See also" links box, tags, previous / next, related posts and a closing call to action
+- **Posts**: category eyebrow, author avatars and roles, date and reading time, an "On this page" table of contents that highlights the current section as you scroll, a "See also" links box, tags, older / newer post links, related posts and a closing call to action
 - **Prose**: code blocks with a language label and copy button, Markdown alerts (`> [!NOTE]` and friends), framed figures with captions, horizontally scrolling tables, footnotes, `kbd` keys
 - **Mermaid diagrams**: rendered by [Pele](https://github.com/obsidianmd/pele), with colours and type that follow the theme and its light / dark mode, loaded only on pages that have a diagram
 - **Light and dark**: follows the system with a toggle that remembers the choice, or lock either one
@@ -72,7 +72,7 @@ The example site (`exampleSite/`) is bilingual — English at the root, Traditio
 | `featuredRow` | `"latest"` | `latest` shows the newest posts; `featured` puts posts with `featured: true` first |
 | `showReadingTime` / `showToc` / `showRelated` | `true` | Turn reading time, the table of contents and related posts on or off |
 | `googleFonts` | `false` | Load IBM Plex from Google Fonts; when off, the font stacks fall back to system fonts |
-| `hero.eyebrow` / `hero.title` / `hero.subtitle` | — | Home hero text |
+| `hero.eyebrow` / `hero.title` / `hero.subtitle` | — | Home hero text; leave `eyebrow` out unless it adds something the title does not say |
 | `headerButton.label` / `.url` | — | Primary button at the right of the header |
 | `cta.title` / `.text` / `.eyebrow` / `.buttons[]` | — | Call-to-action block at the end of posts; each button has `label`, `url` and `primary` |
 

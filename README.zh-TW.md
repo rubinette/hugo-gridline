@@ -9,7 +9,7 @@
 ## 功能
 
 - **部落格首頁**：格線主視覺、三張精選卡片（最新文章，第一張標「最新」）、左側分類與作者欄、依年份分組的緊湊文章列表、分頁
-- **文章頁**：分類眉標、作者頭像與職稱、日期與閱讀時間、右側「本頁內容」目錄（捲動時高亮目前段落）、延伸連結框、標籤、上一篇／下一篇、相關文章、結尾行動呼籲
+- **文章頁**：分類眉標、作者頭像與職稱、日期與閱讀時間、右側「本頁內容」目錄（捲動時高亮目前段落）、延伸連結框、標籤、較舊／較新文章連結、相關文章、結尾行動呼籲
 - **內文排版**：帶語言標籤與複製按鈕的程式碼區塊、Markdown 提示框（`> [!NOTE]` 等）、帶說明文字的圖片框、表格橫向捲動、註腳、`kbd` 按鍵
 - **Mermaid 圖表**：以 [Pele](https://github.com/obsidianmd/pele) 渲染，顏色與字型跟著佈景主題和深淺色走，只在有圖表的頁面載入
 - **深淺色**：跟隨系統並提供切換按鈕（記住偏好），或鎖定其中一種
@@ -71,7 +71,7 @@ hugo server -s exampleSite
 | `featuredRow` | `"latest"` | `latest` 放最新文章；`featured` 先放 `featured: true` 的文章 |
 | `showReadingTime` / `showToc` / `showRelated` | `true` | 開關閱讀時間、目錄、相關文章 |
 | `googleFonts` | `false` | 從 Google Fonts 載入 IBM Plex；關閉時使用系統字型 |
-| `hero.eyebrow` / `hero.title` / `hero.subtitle` | — | 首頁主視覺文字 |
+| `hero.eyebrow` / `hero.title` / `hero.subtitle` | — | 首頁主視覺文字；`eyebrow` 若只是重複標題就省略 |
 | `headerButton.label` / `.url` | — | 頁首右側的主要按鈕 |
 | `cta.title` / `.text` / `.eyebrow` / `.buttons[]` | — | 文章結尾的行動呼籲區塊；`buttons` 每項有 `label`、`url`、`primary` |
 
