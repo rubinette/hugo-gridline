@@ -80,7 +80,7 @@ The example site (`exampleSite/`) is bilingual — English at the root, Traditio
 | `featuredRow` | `"latest"` | `latest` shows the newest posts; `featured` puts posts with `featured: true` first |
 | `showReadingTime` / `showToc` / `showRelated` | `true` | Turn reading time, the table of contents and related posts on or off |
 | `images` | — | Default social preview image (1200 × 630 PNG or JPG in `static/` or `assets/`, or a URL); set it per language for translated previews |
-| `googleFonts` | `false` | Load IBM Plex from Google Fonts; when off, the font stacks fall back to system fonts |
+| `webFonts` | `false` | Load the web fonts, sliced by `unicode-range` so only the characters in use download: IBM Plex Serif and Sans and Lilex (Google Fonts); Chinese pages add Noto Serif TC for titles and IBM Plex Sans TC for text (served from the site's own `static/fonts/`). When off, the stacks fall back to system fonts (Noto Sans TC, PingFang, Microsoft JhengHei for Chinese). `googleFonts` still works as the older name |
 | `hero.eyebrow` / `hero.title` / `hero.subtitle` | — | Home hero text; leave `eyebrow` out unless it adds something the title does not say |
 | `headerButton.label` / `.url` | — | Primary button at the right of the header |
 | `cta.title` / `.text` / `.eyebrow` / `.buttons[]` | — | Call-to-action block at the end of posts; each button has `label`, `url` and `primary` |

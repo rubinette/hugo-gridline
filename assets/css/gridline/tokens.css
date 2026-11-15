@@ -1,4 +1,4 @@
-/* Synced from gridline-style 0.1.0 (0cf3bc3) src/css/tokens.css by scripts/sync-gridline-style.py. Edit it there. */
+/* Synced from gridline-style 0.1.0 (cf17ab7) src/css/tokens.css by scripts/sync-gridline-style.py. Edit it there. */
 /* ── Tokens ─────────────────────────────────────────────────────────────
    Gridline: gray-white canvas, hairline construction lines, one electric-blue
    accent, serif display type, mono metadata. Square corners everywhere except
@@ -100,12 +100,14 @@
   color-scheme: dark;
 }
 
-/* Traditional Chinese: CJK serif / sans after the Latin faces. --mono puts CJK
-   faces after the Latin mono for labels; --code-font keeps a Latin mono first
-   so code columns stay aligned. */
+/* Traditional Chinese: CJK faces after the Latin ones. Titles: Noto Serif TC
+   (400; 500 for section heads). Reading text and interface: IBM Plex Sans TC,
+   the Plex family's own Chinese, with Noto Sans TC as the fallback. Mono and
+   code keep Lilex for Latin and digits so columns align; Chinese in them falls
+   back to Plex Sans TC, since no CJK mono face is worth using. */
 :root:lang(zh) {
   --display: "IBM Plex Serif", "Noto Serif TC", "Songti TC", PMingLiU, serif;
-  --body: "IBM Plex Sans", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
-  --mono: Lilex, "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, "PingFang TC", "Heiti TC", "Noto Sans CJK TC", "Microsoft JhengHei", monospace;
-  --code-font: Lilex, "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, "Heiti TC", "Noto Sans CJK TC", "PingFang TC", monospace;
+  --body: "IBM Plex Sans", "IBM Plex Sans TC", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+  --mono: Lilex, "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, "IBM Plex Sans TC", "Noto Sans TC", "PingFang TC", "Heiti TC", "Noto Sans CJK TC", "Microsoft JhengHei", monospace;
+  --code-font: Lilex, "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, "IBM Plex Sans TC", "Noto Sans TC", "Heiti TC", "Noto Sans CJK TC", "PingFang TC", monospace;
 }

@@ -79,7 +79,7 @@ hugo server -s exampleSite
 | `featuredRow` | `"latest"` | `latest` 放最新文章；`featured` 先放 `featured: true` 的文章 |
 | `showReadingTime` / `showToc` / `showRelated` | `true` | 開關閱讀時間、目錄、相關文章 |
 | `images` | — | 預設的社群預覽圖（放在 `static/` 或 `assets/` 的 1200 × 630 PNG／JPG，或網址）；可依語言分別設定 |
-| `googleFonts` | `false` | 從 Google Fonts 載入 IBM Plex；關閉時使用系統字型 |
+| `webFonts` | `false` | 載入網路字型，以 `unicode-range` 分片，只下載頁面用到的字：IBM Plex Serif／Sans 與 Lilex（Google Fonts）；中文頁面另載思源宋體 Noto Serif TC（標題）與 IBM Plex Sans TC（內文，由網站自己的 `static/fonts/` 提供）。關閉時退回系統字型（中文為思源黑體、蘋方、微軟正黑）。舊名 `googleFonts` 仍可使用 |
 | `hero.eyebrow` / `hero.title` / `hero.subtitle` | — | 首頁主視覺文字；`eyebrow` 若只是重複標題就省略 |
 | `headerButton.label` / `.url` | — | 頁首右側的主要按鈕 |
 | `cta.title` / `.text` / `.eyebrow` / `.buttons[]` | — | 文章結尾的行動呼籲區塊；`buttons` 每項有 `label`、`url`、`primary` |

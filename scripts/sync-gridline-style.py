@@ -5,7 +5,8 @@ The theme does not keep its own copy of the design system: the CSS modules
 and JS under assets/css/gridline/ and assets/js/gridline/ come from
 https://github.com/rubinette/gridline-style (src/css, src/js), and the
 favicons in static/ and the README lockups in images/ come from its brand/
-folder. Edit them there, then run this script so the theme follows.
+folder, and the sliced IBM Plex Sans TC web font in static/fonts/ comes from its
+assets/fonts/. Edit them there, then run this script so the theme follows.
 
   python3 scripts/sync-gridline-style.py [--from ../gridline-style]
   python3 scripts/sync-gridline-style.py --check     # exit 1 if out of date
@@ -46,8 +47,15 @@ def source_label(src: Path) -> str:
     return f"gridline-style {version} ({commit}{'+dirty' if dirty else ''})"
 
 
+# Web fonts gridline-style slices itself (scripts/fonts.py), copied byte for byte.
+FONTS = "ibm-plex-sans-tc"
+
+
 def brand(src: Path) -> dict[Path, bytes]:
-    return {ROOT / dst: (src / s).read_bytes() for s, dst in BRAND.items()}
+    blobs = {ROOT / dst: (src / s).read_bytes() for s, dst in BRAND.items()}
+    for f in sorted((src / "assets" / "fonts" / FONTS).iterdir()):
+        blobs[ROOT / "static" / "fonts" / FONTS / f.name] = f.read_bytes()
+    return blobs
 
 
 def planned(src: Path) -> dict[Path, str]:
@@ -75,11 +83,12 @@ def main() -> int:
 
     files = planned(src)
     managed = {ROOT / "assets" / "css" / "gridline", ROOT / "assets" / "js" / "gridline"}
-    strays = sorted(p for d in managed if d.exists() for p in d.iterdir() if p not in files)
+    blobs = brand(src)
+    managed.add(ROOT / "static" / "fonts" / FONTS)
+    strays = sorted(p for d in managed if d.exists() for p in d.iterdir() if p not in files and p not in blobs)
     # The version label alone does not make a copy stale: compare content below it.
     body = lambda text: text.split("\n", 1)[1] if "\n" in text else text
     stale = [p for p, text in files.items() if not p.exists() or body(p.read_text(encoding="utf-8")) != body(text)]
-    blobs = brand(src)
     stale += [p for p, data in blobs.items() if not p.exists() or p.read_bytes() != data]
 
     if args.check:
@@ -106,7 +115,7 @@ def main() -> int:
     for p in strays:
         p.unlink()
         print(f"removed {p.relative_to(ROOT)}")
-    print(f"OK: synced {len(files) + len(BRAND)} files from {source_label(src)}")
+    print(f"OK: synced {len(files) + len(blobs)} files from {source_label(src)}")
     return 0
 
 

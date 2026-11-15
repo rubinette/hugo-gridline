@@ -1,4 +1,4 @@
-// Synced from gridline-style 0.1.0 (0cf3bc3) src/js/diagram.js by scripts/sync-gridline-style.py. Edit it there.
+// Synced from gridline-style 0.1.0 (cf17ab7) src/js/diagram.js by scripts/sync-gridline-style.py. Edit it there.
 // Renders <pre class="mermaid"> blocks with Pele (MIT, github.com/obsidianmd/pele)
 // and adds an expand-to-window viewer with zoom. Colours and fonts come from the
 // --pele-* variables in diagram.css, so light/dark switches need no re-render.

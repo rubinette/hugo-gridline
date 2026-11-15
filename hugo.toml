@@ -13,9 +13,11 @@
   showReadingTime = true
   showToc = true
   showRelated = true
-  # Load IBM Plex Serif / Sans / Mono from Google Fonts. Off by default:
-  # the font stacks fall back to good system fonts.
-  googleFonts = false
+  # Load the web fonts, sliced by unicode-range so only the characters a page
+  # uses download: IBM Plex Serif / Sans and Lilex; Chinese pages add Noto Serif TC
+  # (titles) and IBM Plex Sans TC (text). Off by default (no third-party requests):
+  # the font stacks fall back to system fonts. googleFonts is the older name.
+  webFonts = false
 
 # Hugo does not merge a theme's [markup] or [related] by default. Sites using
 # this theme should add `_merge = "deep"` under both (see README).

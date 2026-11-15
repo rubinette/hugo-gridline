@@ -33,10 +33,22 @@
 <script>document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/, "js");</script>
 {{- end }}
 
-{{- if site.Params.googleFonts }}
+{{- /* Web fonts, the same block as gridline-style src/parts/fonts.<lang>.html. Every face is
+  sliced by unicode-range, so a page fetches only the slices holding its characters: Google Fonts
+  for IBM Plex Serif and Sans, Lilex and Noto Serif TC; IBM Plex Sans TC is served from this site
+  (static/fonts/, frequency-ordered slices synced from gridline-style).
+  Chinese pages add Noto Serif TC (titles) and IBM Plex Sans TC (text, interface, Chinese in mono).
+  googleFonts is the older name of webFonts. */ -}}
+{{- if or site.Params.webFonts site.Params.googleFonts }}
+{{- $zh := hasPrefix (lower site.Language.Lang) "zh" }}
+{{- $families := "family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Serif:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Lilex:wght@400;500;600" }}
+{{- if $zh }}{{ $families = printf "%s&family=Noto+Serif+TC:wght@400;500" $families }}{{ end }}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Serif:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?{{ $families | safeURL }}&display=swap">
+{{- if $zh }}
+<link rel="stylesheet" href="{{ "fonts/ibm-plex-sans-tc/plex-sans-tc.css" | relURL }}">
+{{- end }}
 {{- end }}
 
 {{- /* The Gridline design system, synced from gridline-style (scripts/sync-gridline-style.py).

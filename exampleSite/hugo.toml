@@ -44,6 +44,8 @@ summaryLength = 40
   featuredCount = 3
   # "latest" (default): newest posts on top. "featured": posts with `featured: true` first.
   featuredRow = "latest"
+  # Load the sliced web fonts (see the theme's hugo.toml).
+  webFonts = true
 
 # ───────────── English ─────────────
 [languages.en]
