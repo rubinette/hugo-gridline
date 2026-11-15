@@ -2,6 +2,6 @@
 <nav class="pagination" aria-label="{{ T "nav_pagination" }}">
   {{- with .Prev }}<a class="button" href="{{ .URL }}" rel="prev">← {{ T "newer_posts" }}</a>{{ else }}<span></span>{{ end }}
   <span class="page-of">{{ T "page_of" (dict "Current" .PageNumber "Total" .TotalPages) }}</span>
-  {{- with .Next }}<a class="button" href="{{ .URL }}" rel="next">{{ T "older_posts" }} →</a>{{ else }}<span></span>{{ end }}
+  {{- with .Next }}<a class="button" href="{{ .URL }}" rel="next">{{ T "older_posts" }} <span class="arrow" aria-hidden="true">→</span></a>{{ else }}<span></span>{{ end }}
 </nav>
 {{- end }}

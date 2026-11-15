@@ -1,10 +1,17 @@
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="images/lockup-dark.svg">
+  <img src="images/lockup.svg" alt="Gridline" width="198" height="48">
+</picture>
+
 # Gridline
 
 **English** · [繁體中文](README.zh-TW.md)
 
-A Hugo blog theme built on visible construction lines: a gray-white canvas, hairline rails, serif display type, mono metadata and a single electric-blue accent. The page structure is modelled on [zed.dev/blog](https://zed.dev/blog) (grid hero → featured cards → category rail beside a compact post list; an "On this page" column on posts). The visual system and the code are original: the theme contains no Zed trademarks, logos or assets and is not affiliated with Zed Industries.
+A grid-led editorial blog theme for Hugo: hairline construction lines, serif display type, mono metadata and one electric-blue accent, in light and dark. It is the Hugo theme of the [Gridline](https://github.com/rubinette/gridline-style) design system. The page structure is inspired by [zed.dev/blog](https://zed.dev/blog) (grid hero → featured cards → category rail beside a compact post list; an "On this page" column on posts). The visual system and the code are original: the theme contains no Zed trademarks, logos or assets and is not affiliated with Zed Industries.
 
-![Gridline](images/screenshot.png)
+![The example site's blog home in English, light mode](images/screenshot.png)
+
+![The same page in Traditional Chinese, dark mode](images/screenshot-zh-tw.png)
 
 ## Features
 
@@ -13,7 +20,8 @@ A Hugo blog theme built on visible construction lines: a gray-white canvas, hair
 - **Prose**: code blocks with a language label and copy button, Markdown alerts (`> [!NOTE]` and friends), framed figures with captions, horizontally scrolling tables, footnotes, `kbd` keys
 - **Mermaid diagrams**: rendered by [Pele](https://github.com/obsidianmd/pele), with colours and type that follow the theme and its light / dark mode, loaded only on pages that have a diagram
 - **Light and dark**: follows the system with a toggle that remembers the choice, or lock either one
-- **Multilingual**: English and Traditional Chinese interface strings built in; Chinese text uses CJK serif and sans faces, emphasis dots and strict line breaking
+- **Multilingual**: English and Traditional Chinese interface strings built in, with each language's own date format (`Nov 10, 2026`, `2026年11月10日`); Chinese text uses CJK serif and sans faces, emphasis dots and strict line breaking
+- **Sharing**: Open Graph and Twitter / X card tags with a 1200 × 630 preview image from the post, its cover or the site default; favicon and touch icon included
 - **Responsive**: below 1080px the table of contents moves to the top of the article, below 880px the category rail becomes a chip list, below 820px the main menu folds behind a "Menu" button
 - No external JavaScript dependencies; every page and link still works with JavaScript off
 
@@ -71,6 +79,7 @@ The example site (`exampleSite/`) is bilingual — English at the root, Traditio
 | `featuredCount` | `3` | Number of featured cards |
 | `featuredRow` | `"latest"` | `latest` shows the newest posts; `featured` puts posts with `featured: true` first |
 | `showReadingTime` / `showToc` / `showRelated` | `true` | Turn reading time, the table of contents and related posts on or off |
+| `images` | — | Default social preview image (1200 × 630 PNG or JPG in `static/` or `assets/`, or a URL); set it per language for translated previews |
 | `googleFonts` | `false` | Load IBM Plex from Google Fonts; when off, the font stacks fall back to system fonts |
 | `hero.eyebrow` / `hero.title` / `hero.subtitle` | — | Home hero text; leave `eyebrow` out unless it adds something the title does not say |
 | `headerButton.label` / `.url` | — | Primary button at the right of the header |
@@ -92,6 +101,7 @@ categories: [engineering]
 tags: [collaboration, rust]
 featured: true               # show the "Featured" badge
 cover: cover.png             # card image: page bundle, assets/ or a URL
+images: [share.png]          # social preview (optional; a PNG / JPG cover is used otherwise)
 subtitle: A lead under the title (optional)
 guest: Ada Lovelace          # show a "With Ada Lovelace" badge
 badge: Custom label          # override the badge in lists
@@ -162,9 +172,18 @@ To restyle diagrams, override the `--pele-*` variables on `.mermaid-diagram, .di
 - **Styles**: every colour, font and spacing value is a CSS variable in `assets/css/gridline/tokens.css`. To adjust a few values, override the variables in a `<style>` block in `extend-head.html`; to replace a whole module, create a file at the same path in your site (for example `assets/css/gridline/tokens.css`)
 - **Interface strings**: override any key in your site's `i18n/<lang>.toml`; for a new language, start from `i18n/en.toml`
 
+## Brand and icons
+
+Gridline is the name of the design system and of this theme (`hugo-gridline` when you mean the repository). The brand rules (name, mark, colour, type, voice) are in gridline-style's [BRAND.md](https://github.com/rubinette/gridline-style/blob/main/BRAND.md).
+
+- **Your site is your brand.** The header, footer and card placeholders show your monogram (`params.monogram`), not the Gridline mark.
+- **Icons.** The theme ships the Gridline mark as a default `favicon.svg` (follows light / dark), `favicon.png` (32 px) and `apple-touch-icon.png` (180 px). Put files with the same names in your site's `static/` to replace them.
+- **Social preview.** Set `params.images` to a 1200 × 630 image. The example site's `exampleSite/assets/og/og.svg` follows the Gridline preview layout with the site's own monogram and name; copy it, change the text and export a PNG.
+- The example content is about Orbitline, a **fictional** product; the footer and the first posts say so. Replace it all when you start your own site.
+
 ## Style source: gridline-style
 
-`assets/css/gridline/` and `assets/js/gridline/` are not written here: they are synced from `src/css` and `src/js` of the design system [gridline-style](https://github.com/rubinette/gridline-style), and the first line of each file names the source version. `layouts/_partials/head.html` concatenates the modules in a fixed order (tokens, base, construction, components, prose, blog, diagram, syntax).
+`assets/css/gridline/` and `assets/js/gridline/` are not written here: they are synced from `src/css` and `src/js` of the design system [gridline-style](https://github.com/rubinette/gridline-style), and the first line of each file names the source version. The icons in `static/` and the README lockups in `images/` come from its `brand/` folder the same way. `layouts/_partials/head.html` concatenates the modules in a fixed order (tokens, base, construction, components, prose, blog, diagram, syntax).
 
 To change the styles, edit them in gridline-style and sync them back:
 

@@ -56,6 +56,8 @@ summaryLength = 40
 
   [languages.en.params]
     description = "Engineering notes, product updates and tips from the Orbitline team."
+    # Social preview for pages without their own raster `images` / `cover` (the source is assets/og/og.svg).
+    images = ["og.png"]
     [languages.en.params.hero]
       title = "From the Blog"
       subtitle = "Engineering notes, product updates and tips from the team."
@@ -132,6 +134,7 @@ summaryLength = 40
 
   [languages.zh-tw.params]
     description = "Orbitline 團隊的工程筆記、產品更新與使用技巧。"
+    images = ["og-zh-tw.png"]
     [languages.zh-tw.params.hero]
       title = "來自部落格"
       subtitle = "團隊的工程筆記、產品更新與使用技巧。"

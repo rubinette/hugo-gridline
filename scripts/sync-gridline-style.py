@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-"""Copy the Gridline styles and scripts this theme uses from gridline-style.
+"""Copy the Gridline styles, scripts and brand files this theme uses from gridline-style.
 
 The theme does not keep its own copy of the design system: the CSS modules
 and JS under assets/css/gridline/ and assets/js/gridline/ come from
-https://github.com/rubinette/gridline-style (src/css, src/js). Edit them
-there, then run this script so the theme follows.
+https://github.com/rubinette/gridline-style (src/css, src/js), and the
+favicons in static/ and the README lockups in images/ come from its brand/
+folder. Edit them there, then run this script so the theme follows.
 
   python3 scripts/sync-gridline-style.py [--from ../gridline-style]
   python3 scripts/sync-gridline-style.py --check     # exit 1 if out of date
@@ -25,6 +26,14 @@ ROOT = Path(__file__).resolve().parent.parent
 # Cascade order matters: layouts/_partials/head.html concatenates in this order.
 CSS = ("tokens", "base", "construction", "components", "prose", "blog", "diagram", "syntax")
 JS = ("boot", "site", "diagram")
+# Brand files are copied byte for byte (no version line: PNGs cannot carry one).
+BRAND = {
+    "brand/mark-auto.svg": "static/favicon.svg",
+    "brand/png/mark-32.png": "static/favicon.png",
+    "brand/png/mark-180.png": "static/apple-touch-icon.png",
+    "brand/lockup.svg": "images/lockup.svg",
+    "brand/lockup-dark.svg": "images/lockup-dark.svg",
+}
 
 
 def source_label(src: Path) -> str:
@@ -35,6 +44,10 @@ def source_label(src: Path) -> str:
     except (OSError, subprocess.CalledProcessError):
         commit, dirty = "unknown", ""
     return f"gridline-style {version} ({commit}{'+dirty' if dirty else ''})"
+
+
+def brand(src: Path) -> dict[Path, bytes]:
+    return {ROOT / dst: (src / s).read_bytes() for s, dst in BRAND.items()}
 
 
 def planned(src: Path) -> dict[Path, str]:
@@ -66,6 +79,8 @@ def main() -> int:
     # The version label alone does not make a copy stale: compare content below it.
     body = lambda text: text.split("\n", 1)[1] if "\n" in text else text
     stale = [p for p, text in files.items() if not p.exists() or body(p.read_text(encoding="utf-8")) != body(text)]
+    blobs = brand(src)
+    stale += [p for p, data in blobs.items() if not p.exists() or p.read_bytes() != data]
 
     if args.check:
         for p in stale:
@@ -75,7 +90,7 @@ def main() -> int:
         if stale or strays:
             print("Run: python3 scripts/sync-gridline-style.py")
             return 1
-        print(f"OK: {len(files)} files match {source_label(src)}")
+        print(f"OK: {len(files) + len(blobs)} files match {source_label(src)}")
         return 0
 
     # Writing also refreshes the version label of files whose content is unchanged.
@@ -83,10 +98,15 @@ def main() -> int:
         p.parent.mkdir(parents=True, exist_ok=True)
         p.write_text(files[p], encoding="utf-8")
         print(f"wrote {p.relative_to(ROOT)}")
+    for p, data in blobs.items():
+        if not p.exists() or p.read_bytes() != data:
+            p.parent.mkdir(parents=True, exist_ok=True)
+            p.write_bytes(data)
+            print(f"wrote {p.relative_to(ROOT)}")
     for p in strays:
         p.unlink()
         print(f"removed {p.relative_to(ROOT)}")
-    print(f"OK: synced {len(files)} files from {source_label(src)}")
+    print(f"OK: synced {len(files) + len(BRAND)} files from {source_label(src)}")
     return 0
 
 

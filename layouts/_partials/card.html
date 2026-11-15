@@ -22,7 +22,7 @@
         {{- with $authors }}
         <span class="card-authors">{{ range $i, $a := . }}{{ if $i }}, {{ end }}{{ $a.name }}{{ end }}</span>
         {{- end }}
-        <time datetime="{{ $p.Date.Format "2006-01-02" }}">{{ $p.Date | time.Format ":date_medium" }}</time>
+        <time datetime="{{ $p.Date.Format "2006-01-02" }}">{{ partial "date.html" (dict "date" $p.Date) }}</time>
         {{- if .newest }}<span class="badge accent">{{ T "newest" }}</span>{{ end }}
       </div>
     </div>

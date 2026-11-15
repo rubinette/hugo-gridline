@@ -19,7 +19,12 @@
 <meta name="color-scheme" content="{{ if eq $scheme "auto" }}light dark{{ else }}{{ $scheme }}{{ end }}">
 <meta name="theme-color" content="#f5f5f0" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#111216" media="(prefers-color-scheme: dark)">
+{{- /* The Gridline mark (synced from gridline-style brand/). A site replaces it by putting
+  its own favicon.svg, favicon.png and apple-touch-icon.png in static/. */}}
+<link rel="icon" href="{{ "favicon.png" | relURL }}" sizes="32x32" type="image/png">
 <link rel="icon" href="{{ "favicon.svg" | relURL }}" type="image/svg+xml">
+<link rel="apple-touch-icon" href="{{ "apple-touch-icon.png" | relURL }}">
+{{ hugo.Generator }}
 
 {{- /* Before paint: swap no-js for js and, with the toggle on, restore the stored theme. */ -}}
 {{- if eq $scheme "auto" }}
@@ -55,6 +60,5 @@
 <style>:root[data-theme="dark"]{--accent:{{ . | safeCSS }}}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--accent:{{ . | safeCSS }}}}</style>
 {{- end }}
 
-{{- partial "opengraph.html" . }}
-{{- partial "twitter_cards.html" . }}
+{{- partial "social.html" . }}
 {{- partial "extend-head.html" . }}

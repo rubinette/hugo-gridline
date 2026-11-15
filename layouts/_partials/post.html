@@ -28,9 +28,9 @@
       </ul>
       {{- end }}
       <p class="post-meta">
-        <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date | time.Format ":date_long" }}</time>
+        <time datetime="{{ .Date.Format "2006-01-02" }}">{{ partial "date.html" (dict "date" .Date "style" "long") }}</time>
         {{- if site.Params.showReadingTime }}<span>{{ T "reading_time" .ReadingTime }}</span>{{ end }}
-        {{- if gt (.Lastmod.Sub .Date).Hours 24 }}<span>{{ T "updated" }} <time datetime="{{ .Lastmod.Format "2006-01-02" }}">{{ .Lastmod | time.Format ":date_medium" }}</time></span>{{ end }}
+        {{- if gt (.Lastmod.Sub .Date).Hours 24 }}<span>{{ T "updated" }} <time datetime="{{ .Lastmod.Format "2006-01-02" }}">{{ partial "date.html" (dict "date" .Lastmod) }}</time></span>{{ end }}
       </p>
     </div>
   </header>

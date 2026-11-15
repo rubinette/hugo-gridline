@@ -42,6 +42,10 @@ not_found_lead = "The page you were looking for moved or never existed."
 back_home = "Back to the blog"
 by = "By"
 
+# Date layouts (Go reference time: Jan 2, 2006). See layouts/_partials/date.html.
+date_medium = "Jan 2, 2006"
+date_long = "January 2, 2006"
+
 [reading_time]
 one = "{{ .Count }} min read"
 other = "{{ .Count }} min read"

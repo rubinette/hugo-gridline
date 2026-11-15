@@ -1,0 +1,8 @@
+{{- /* A date for display. Context: dict "date" (time.Time) "style" ("medium" | "long").
+  The layout comes from the i18n keys date_medium / date_long (Go layouts, e.g. "Jan 2, 2006"
+  or "2006年1月2日"), so each language writes dates its own way even where Hugo has no
+  locale data for it. Without those keys, Hugo's :date_medium / :date_long are used. */ -}}
+{{- $style := .style | default "medium" }}
+{{- $layout := T (printf "date_%s" $style) }}
+{{- if $layout }}{{ .date.Format $layout }}{{ else }}{{ .date | time.Format (printf ":date_%s" $style) }}{{ end }}
+{{- /**/ -}}

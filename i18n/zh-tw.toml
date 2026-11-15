@@ -42,6 +42,10 @@ not_found_lead = "這個頁面可能已經搬移，或從未存在。"
 back_home = "回到部落格"
 by = "作者"
 
+# Date layouts (Go reference time: Jan 2, 2006). See layouts/_partials/date.html.
+date_medium = "2006年1月2日"
+date_long = "2006年1月2日"
+
 [reading_time]
 other = "閱讀約 {{ .Count }} 分鐘"
 

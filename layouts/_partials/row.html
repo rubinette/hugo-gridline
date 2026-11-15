@@ -7,6 +7,6 @@
   </span>
   <span class="row-meta">
     {{- partial "badge.html" . }}
-    <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date | time.Format ":date_medium" }}</time>
+    <time datetime="{{ .Date.Format "2006-01-02" }}">{{ partial "date.html" (dict "date" .Date) }}</time>
   </span>
 </a>

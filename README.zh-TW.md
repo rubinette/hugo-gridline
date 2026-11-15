@@ -1,10 +1,17 @@
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="images/lockup-dark.svg">
+  <img src="images/lockup.svg" alt="Gridline" width="198" height="48">
+</picture>
+
 # Gridline
 
 [English](README.md) · **繁體中文**
 
-一個以構造格線為骨架的 Hugo 部落格佈景主題：灰白底色、髮絲般的構造線、襯線標題字、等寬字中繼資料，只用一個電光藍作為強調色。版面結構參考 [zed.dev/blog](https://zed.dev/blog)（格線主視覺 → 精選卡片 → 分類欄 + 緊湊文章列表；文章頁右側「本頁內容」），視覺系統與程式碼皆為原創，不包含任何 Zed 的商標、標誌或素材，也與 Zed Industries 無關。
+以構造線為骨架的 Hugo 部落格佈景主題：細線導軌、襯線標題、等寬中繼資料與單一電光藍，支援淺色與深色。它是 [Gridline](https://github.com/rubinette/gridline-style) 設計系統的 Hugo 佈景主題。版面結構參考 [zed.dev/blog](https://zed.dev/blog)（格線主視覺 → 精選卡片 → 分類欄 + 緊湊文章列表；文章頁右側「本頁內容」），視覺系統與程式碼皆為原創，不包含任何 Zed 的商標、標誌或素材，也與 Zed Industries 無關。
 
-![Gridline](images/screenshot-zh-tw.png)
+![示範站台的繁體中文部落格首頁，深色模式](images/screenshot-zh-tw.png)
+
+![同一頁的英文版，淺色模式](images/screenshot.png)
 
 ## 功能
 
@@ -13,7 +20,8 @@
 - **內文排版**：帶語言標籤與複製按鈕的程式碼區塊、Markdown 提示框（`> [!NOTE]` 等）、帶說明文字的圖片框、表格橫向捲動、註腳、`kbd` 按鍵
 - **Mermaid 圖表**：以 [Pele](https://github.com/obsidianmd/pele) 渲染，顏色與字型跟著佈景主題和深淺色走，只在有圖表的頁面載入
 - **深淺色**：跟隨系統並提供切換按鈕（記住偏好），或鎖定其中一種
-- **多語系**：內建繁體中文與英文介面字串；中文排版使用 CJK 襯線／黑體字型、著重號、嚴格斷行
+- **多語系**：內建繁體中文與英文介面字串，日期依語言書寫（`2026年11月10日`、`Nov 10, 2026`）；中文排版使用 CJK 襯線／黑體字型、著重號、嚴格斷行
+- **分享**：Open Graph 與 Twitter／X 卡片標籤，預覽圖（1200 × 630）依序取自文章設定、封面或站台預設；內附網站圖示與觸控圖示
 - **響應式**：1080px 以下目錄收進文章頂端，880px 以下分類變成標籤列，820px 以下主選單收進「選單」按鈕
 - 無外部 JavaScript 相依；未啟用 JavaScript 時所有內容與連結仍可使用
 
@@ -70,6 +78,7 @@ hugo server -s exampleSite
 | `featuredCount` | `3` | 精選卡片數量 |
 | `featuredRow` | `"latest"` | `latest` 放最新文章；`featured` 先放 `featured: true` 的文章 |
 | `showReadingTime` / `showToc` / `showRelated` | `true` | 開關閱讀時間、目錄、相關文章 |
+| `images` | — | 預設的社群預覽圖（放在 `static/` 或 `assets/` 的 1200 × 630 PNG／JPG，或網址）；可依語言分別設定 |
 | `googleFonts` | `false` | 從 Google Fonts 載入 IBM Plex；關閉時使用系統字型 |
 | `hero.eyebrow` / `hero.title` / `hero.subtitle` | — | 首頁主視覺文字；`eyebrow` 若只是重複標題就省略 |
 | `headerButton.label` / `.url` | — | 頁首右側的主要按鈕 |
@@ -91,6 +100,7 @@ categories: [engineering]
 tags: [協作, rust]
 featured: true               # 顯示「精選」標籤
 cover: cover.png             # 卡片圖片：page bundle、assets/ 或網址
+images: [share.png]          # 社群預覽圖（選填；未設定時使用 PNG／JPG 封面）
 subtitle: 標題下方的導言（選用）
 guest: 葉知秋                 # 顯示「與 葉知秋 對談」標籤
 badge: 自訂標籤               # 覆寫列表上的標籤
@@ -161,9 +171,18 @@ flowchart LR
 - **樣式**：所有顏色、字型、間距都是 `assets/css/gridline/tokens.css` 裡的 CSS 變數。要調整個別數值，在 `extend-head.html` 加一段 `<style>` 覆寫變數；要整份替換某個模組，在網站建立同路徑的檔案（例如 `assets/css/gridline/tokens.css`）
 - **介面字串**：在網站的 `i18n/<lang>.toml` 覆寫任一鍵值；新增語言請參考 `i18n/en.toml`
 
+## 品牌與圖示
+
+Gridline 是設計系統與本佈景主題的名稱（指程式庫時寫 `hugo-gridline`）。命名、標誌、色彩、字型與文案語氣等品牌規範，見 gridline-style 的 [BRAND.zh-TW.md](https://github.com/rubinette/gridline-style/blob/main/BRAND.zh-TW.md)。
+
+- **你的網站是你的品牌。** 頁首、頁尾與卡片預留圖顯示的是你的字首標記（`params.monogram`），不是 Gridline 標誌。
+- **圖示。** 佈景主題預設附上 Gridline 標誌：`favicon.svg`（跟著深淺色切換）、`favicon.png`（32 px）與 `apple-touch-icon.png`（180 px）。在網站的 `static/` 放同名檔案即可替換。
+- **社群預覽圖。** 把 `params.images` 設為 1200 × 630 的圖片。示範站台的 `exampleSite/assets/og/og-zh-tw.svg` 依 Gridline 預覽圖版型，換上站台自己的字首標記與名稱；複製後改文字再匯出 PNG 即可。
+- 示範內容裡的 Orbitline 是**虛構**產品，頁尾與前幾篇文章都有註明。建立自己的網站時請全部替換。
+
 ## 樣式來源：gridline-style
 
-`assets/css/gridline/` 與 `assets/js/gridline/` 不是在這裡手寫的，而是從設計系統 [gridline-style](https://github.com/rubinette/gridline-style) 的 `src/css`、`src/js` 同步過來；每個檔案第一行都註明來源版本。`layouts/_partials/head.html` 依固定順序合併這些模組（tokens、base、construction、components、prose、blog、diagram、syntax）。
+`assets/css/gridline/` 與 `assets/js/gridline/` 不是在這裡手寫的，而是從設計系統 [gridline-style](https://github.com/rubinette/gridline-style) 的 `src/css`、`src/js` 同步過來；每個檔案第一行都註明來源版本。`static/` 裡的圖示與 README 的標誌圖也同樣從它的 `brand/` 資料夾同步。`layouts/_partials/head.html` 依固定順序合併這些模組（tokens、base、construction、components、prose、blog、diagram、syntax）。
 
 要修改樣式，請在 gridline-style 修改後同步回來：
 
