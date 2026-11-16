@@ -21,7 +21,6 @@
           {{- partial "avatars.html" (dict "authors" (slice .) "size" "md") }}
           <span class="author-text">
             {{- if .url }}<a href="{{ .url }}">{{ .name }}</a>{{ else }}{{ .name }}{{ end }}
-            {{- with .role }}<span class="author-role">{{ . }}</span>{{ end }}
           </span>
         </li>
         {{- end }}
@@ -63,7 +62,6 @@
       <div class="aside-sticky">
         {{- if $toc }}
         <nav class="toc toc-aside" aria-label="{{ T "on_this_page" }}">
-          <p class="nav-label">{{ T "on_this_page" }}</p>
           {{ $tocHTML }}
         </nav>
         {{- end }}

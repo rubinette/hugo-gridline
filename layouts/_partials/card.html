@@ -1,4 +1,6 @@
-{{- /* dict "page" P "h" "h2"|"h3" "newest" bool */ -}}
+{{- /* dict "page" P "h" "h2"|"h3" "newest" bool
+  "Newest" is shown only when featuredRow = "featured": in the default
+  newest-first row the order and the dates already say it. */ -}}
 {{- $p := .page }}
 {{- $h := .h | default "h3" }}
 {{- $cover := partial "cover.html" $p }}
@@ -23,7 +25,7 @@
         <span class="card-authors">{{ range $i, $a := . }}{{ if $i }}, {{ end }}{{ $a.name }}{{ end }}</span>
         {{- end }}
         <time datetime="{{ $p.Date.Format "2006-01-02" }}">{{ partial "date.html" (dict "date" $p.Date) }}</time>
-        {{- if .newest }}<span class="badge accent">{{ T "newest" }}</span>{{ end }}
+        {{- if and .newest (eq site.Params.featuredRow "featured") }}<span class="badge accent">{{ T "newest" }}</span>{{ end }}
       </div>
     </div>
   </a>

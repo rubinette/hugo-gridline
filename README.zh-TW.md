@@ -15,8 +15,8 @@
 
 ## 功能
 
-- **部落格首頁**：格線主視覺、三張精選卡片（最新文章，第一張標「最新」）、左側分類與作者欄、依年份分組的緊湊文章列表、分頁
-- **文章頁**：分類眉標、作者頭像與職稱、日期與閱讀時間、右側「本頁內容」目錄（捲動時高亮目前段落）、延伸連結框、標籤、較舊／較新文章連結、相關文章、結尾行動呼籲
+- **部落格首頁**：格線主視覺、三張精選卡片（最新文章）、左側分類與作者欄、依年份分組的緊湊文章列表、分頁
+- **文章頁**：分類眉標、作者頭像、日期與閱讀時間、右側目錄（捲動時高亮目前段落）、延伸連結框、標籤、較舊／較新文章連結、相關文章、結尾行動呼籲
 - **內文排版**：帶語言標籤與複製按鈕的程式碼區塊、Markdown 提示框（`> [!NOTE]` 等）、帶說明文字的圖片框、表格橫向捲動、註腳、`kbd` 按鍵
 - **Mermaid 圖表**：以 [Pele](https://github.com/obsidianmd/pele) 渲染，顏色與字型跟著佈景主題和深淺色走，只在有圖表的頁面載入
 - **深淺色**：跟隨系統並提供切換按鈕（記住偏好），或鎖定其中一種
@@ -74,7 +74,7 @@ hugo server -s exampleSite
 | `colorScheme` | `"auto"` | `auto` 跟隨系統並顯示切換按鈕；`light` / `dark` 鎖定 |
 | `accent` / `accentDark` | — | 覆寫強調色（例如 `"#0f766e"`），淺色底色與色帶會自動推導 |
 | `monogram` | 標題首字 | 品牌方框裡的字 |
-| `description` | — | 首頁副標與頁尾說明 |
+| `description` | — | 首頁副標與 meta 描述 |
 | `featuredCount` | `3` | 精選卡片數量 |
 | `featuredRow` | `"latest"` | `latest` 放最新文章；`featured` 先放 `featured: true` 的文章 |
 | `showReadingTime` / `showToc` / `showRelated` | `true` | 開關閱讀時間、目錄、相關文章 |
@@ -82,7 +82,7 @@ hugo server -s exampleSite
 | `webFonts` | `false` | 載入網路字型，以 `unicode-range` 分片，只下載頁面用到的字：IBM Plex Serif／Sans 與 Lilex（Google Fonts）；中文頁面另載思源宋體 Noto Serif TC（標題）與 IBM Plex Sans TC（內文，由網站自己的 `static/fonts/` 提供）。關閉時退回系統字型（中文為思源黑體、蘋方、微軟正黑）。舊名 `googleFonts` 仍可使用 |
 | `hero.eyebrow` / `hero.title` / `hero.subtitle` | — | 首頁主視覺文字；`eyebrow` 若只是重複標題就省略 |
 | `headerButton.label` / `.url` | — | 頁首右側的主要按鈕 |
-| `cta.title` / `.text` / `.eyebrow` / `.buttons[]` | — | 文章結尾的行動呼籲區塊；`buttons` 每項有 `label`、`url`、`primary` |
+| `cta.title` / `.text` / `.buttons[]` | — | 文章結尾的行動呼籲區塊；`buttons` 每項有 `label`、`url`、`primary`。`text` 只在說出標題和按鈕沒說的事時才加 |
 
 選單：`menus.main` 是頁首導覽；`menus.footer` 用 `identifier` + `parent` 組成頁尾欄位。完整範例見 `exampleSite/hugo.toml`。
 
@@ -98,7 +98,7 @@ description: 卡片摘要與 meta description
 authors: [lin-yu]            # authors taxonomy 的 term
 categories: [engineering]
 tags: [協作, rust]
-featured: true               # 顯示「精選」標籤
+featured: true               # featuredRow = "featured" 時排在精選列前面
 cover: cover.png             # 卡片圖片：page bundle、assets/ 或網址
 images: [share.png]          # 社群預覽圖（選填；未設定時使用 PNG／JPG 封面）
 subtitle: 標題下方的導言（選用）
@@ -122,7 +122,7 @@ cta: false                   # 關閉這篇的結尾區塊
 ```yaml
 ---
 title: 林語
-role: 編輯器核心        # 顯示在署名下方
+role: 編輯器核心        # 顯示在作者頁的名字上方
 avatar: avatar.jpg      # 選用：bundle 內、assets/ 或網址；沒有就顯示姓名縮寫
 initials: 林            # 選用：覆寫縮寫
 ---

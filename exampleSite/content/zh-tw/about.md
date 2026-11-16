@@ -1,7 +1,6 @@
 ---
 title: 關於
 description: 這是 Gridline Hugo 佈景主題的示範站台。
-eyebrow: About / 關於
 ---
 
 **Orbitline** 是一個虛構的產品，這裡的文章、作者與數據都只是用來展示版面的範例內容。

@@ -15,8 +15,8 @@ A grid-led editorial blog theme for Hugo: hairline construction lines, serif dis
 
 ## Features
 
-- **Blog home**: grid hero, three featured cards (the latest posts; the first is marked "Newest"), category and author rail, compact post list grouped by year, pagination
-- **Posts**: category eyebrow, author avatars and roles, date and reading time, an "On this page" table of contents that highlights the current section as you scroll, a "See also" links box, tags, older / newer post links, related posts and a closing call to action
+- **Blog home**: grid hero, three featured cards (the latest posts), category and author rail, compact post list grouped by year, pagination
+- **Posts**: category eyebrow, author avatars, date and reading time, a table of contents that highlights the current section as you scroll, a "See also" links box, tags, older / newer post links, related posts and a closing call to action
 - **Prose**: code blocks with a language label and copy button, Markdown alerts (`> [!NOTE]` and friends), framed figures with captions, horizontally scrolling tables, footnotes, `kbd` keys
 - **Mermaid diagrams**: rendered by [Pele](https://github.com/obsidianmd/pele), with colours and type that follow the theme and its light / dark mode, loaded only on pages that have a diagram
 - **Light and dark**: follows the system with a toggle that remembers the choice, or lock either one
@@ -75,7 +75,7 @@ The example site (`exampleSite/`) is bilingual — English at the root, Traditio
 | `colorScheme` | `"auto"` | `auto` follows the system and shows the toggle; `light` / `dark` lock the theme |
 | `accent` / `accentDark` | — | Override the accent colour (for example `"#0f766e"`); the soft tints and the band colour are derived from it |
 | `monogram` | first letter of the title | The letter in the brand box |
-| `description` | — | Home page subtitle and footer blurb |
+| `description` | — | Home page subtitle and meta description |
 | `featuredCount` | `3` | Number of featured cards |
 | `featuredRow` | `"latest"` | `latest` shows the newest posts; `featured` puts posts with `featured: true` first |
 | `showReadingTime` / `showToc` / `showRelated` | `true` | Turn reading time, the table of contents and related posts on or off |
@@ -83,7 +83,7 @@ The example site (`exampleSite/`) is bilingual — English at the root, Traditio
 | `webFonts` | `false` | Load the web fonts, sliced by `unicode-range` so only the characters in use download: IBM Plex Serif and Sans and Lilex (Google Fonts); Chinese pages add Noto Serif TC for titles and IBM Plex Sans TC for text (served from the site's own `static/fonts/`). When off, the stacks fall back to system fonts (Noto Sans TC, PingFang, Microsoft JhengHei for Chinese). `googleFonts` still works as the older name |
 | `hero.eyebrow` / `hero.title` / `hero.subtitle` | — | Home hero text; leave `eyebrow` out unless it adds something the title does not say |
 | `headerButton.label` / `.url` | — | Primary button at the right of the header |
-| `cta.title` / `.text` / `.eyebrow` / `.buttons[]` | — | Call-to-action block at the end of posts; each button has `label`, `url` and `primary` |
+| `cta.title` / `.text` / `.buttons[]` | — | Call-to-action block at the end of posts; each button has `label`, `url` and `primary`. Add `text` only if it says something the title and buttons do not |
 
 Menus: `menus.main` is the header navigation; `menus.footer` builds footer columns from `identifier` + `parent`. See `exampleSite/hugo.toml` for a complete example.
 
@@ -99,7 +99,7 @@ description: Card summary and meta description
 authors: [lin-yu]            # terms of the authors taxonomy
 categories: [engineering]
 tags: [collaboration, rust]
-featured: true               # show the "Featured" badge
+featured: true               # first in the featured row when featuredRow = "featured"
 cover: cover.png             # card image: page bundle, assets/ or a URL
 images: [share.png]          # social preview (optional; a PNG / JPG cover is used otherwise)
 subtitle: A lead under the title (optional)
@@ -123,7 +123,7 @@ Create an author page at `content/authors/<slug>/_index.md`:
 ```yaml
 ---
 title: Lin Yu
-role: Editor core        # shown under the byline
+role: Editor core        # shown above the name on the author page
 avatar: avatar.jpg       # optional: in the bundle, assets/ or a URL; initials otherwise
 initials: LY             # optional: override the initials
 ---

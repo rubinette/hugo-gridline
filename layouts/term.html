@@ -1,8 +1,10 @@
 {{ define "main" }}
   {{- $author := false }}
   {{- if eq .Data.Plural "authors" }}{{ $author = partial "author-entry.html" . }}{{ end }}
-  {{- $eyebrow := .Data.Plural | humanize }}
-  {{- if eq .Data.Plural "categories" }}{{ $eyebrow = T "categories" }}{{ else if eq .Data.Plural "tags" }}{{ $eyebrow = T "tags" }}{{ else if $author }}{{ $eyebrow = $author.role | default (T "authors") }}{{ end }}
+  {{- /* Category pages need no eyebrow: the rail marks the current one. Tags are
+       not in the rail, so they keep the label; an author page shows the role. */}}
+  {{- $eyebrow := "" }}
+  {{- if eq .Data.Plural "tags" }}{{ $eyebrow = T "tags" }}{{ else if $author }}{{ $eyebrow = $author.role }}{{ end }}
   {{- partial "blog-index.html" (dict "page" . "pages" .Pages "featured" false "active" .
       "eyebrow" $eyebrow "title" .Title "lead" (.Description | default .Content) "author" $author) }}
 {{ end }}

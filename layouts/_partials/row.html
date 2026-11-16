@@ -1,3 +1,9 @@
+{{- /* Context: a page, or dict "page" P "badge" false. On a category's own page
+     every row would show that category, so the badge is left out there. */ -}}
+{{- $p := . }}
+{{- $badge := true }}
+{{- if reflect.IsMap . }}{{ $p = .page }}{{ $badge = .badge }}{{ end }}
+{{- with $p }}
 {{- $authors := partial "authors.html" . }}
 <a class="row" href="{{ .RelPermalink }}">
   <span class="row-title">
@@ -6,7 +12,8 @@
     {{- with $authors }}<span class="sr-only"> — {{ range $i, $a := . }}{{ if $i }}, {{ end }}{{ $a.name }}{{ end }}</span>{{ end }}
   </span>
   <span class="row-meta">
-    {{- partial "badge.html" . }}
+    {{- if $badge }}{{ partial "badge.html" . }}{{ end }}
     <time datetime="{{ .Date.Format "2006-01-02" }}">{{ partial "date.html" (dict "date" .Date) }}</time>
   </span>
 </a>
+{{- end }}

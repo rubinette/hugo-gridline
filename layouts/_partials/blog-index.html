@@ -4,6 +4,7 @@
 {{- $page := .page }}
 {{- $pages := .pages }}
 {{- $paginator := $page.Paginate $pages }}
+{{- $inCategory := and .active (eq .active.Data.Plural "categories") }}
 
 {{- partial "hero.html" (dict "eyebrow" .eyebrow "title" .title "lead" .lead "author" .author) }}
 {{- partial "divider.html" }}
@@ -32,7 +33,7 @@
     <h2 class="year"><span>{{ .Key }}</span></h2>
     <ol class="rows">
       {{- range .Pages }}
-      <li>{{ partial "row.html" . }}</li>
+      <li>{{ partial "row.html" (dict "page" . "badge" (not $inCategory)) }}</li>
       {{- end }}
     </ol>
     {{- end }}

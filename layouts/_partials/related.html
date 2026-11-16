@@ -10,7 +10,6 @@
 <section class="related" aria-labelledby="related-title">
   <div class="frame section-head">
     <h2 id="related-title">{{ T "related_posts" }}</h2>
-    <p>{{ T "related_lead" }}</p>
   </div>
   <div class="frame card-grid">
     {{- range . }}{{ partial "card.html" (dict "page" . "h" "h3") }}{{ end }}

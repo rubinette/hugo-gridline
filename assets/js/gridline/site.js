@@ -1,4 +1,4 @@
-// Synced from gridline-style 0.1.0 (e0eee62) src/js/site.js by scripts/sync-gridline-style.py. Edit it there.
+// Synced from gridline-style 0.1.0 (1e854b9) src/js/site.js by scripts/sync-gridline-style.py. Edit it there.
 // Gridline page behaviour: theme toggle, mobile navigation, docs navigation,
 // copy buttons, on-this-page highlight. Every feature checks for its markup,
 // so one file serves every template. Content stays usable without it.

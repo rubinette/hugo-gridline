@@ -67,9 +67,7 @@ summaryLength = 40
       label = "Subscribe"
       url = "/index.xml"
     [languages.en.params.cta]
-      eyebrow = "Stay in the loop"
       title = "Every new post, straight to your reader"
-      text = "Subscribe with RSS, or tell us what you would like to read next."
       [[languages.en.params.cta.buttons]]
         label = "Subscribe via RSS"
         url = "/index.xml"
@@ -144,9 +142,7 @@ summaryLength = 40
       label = "訂閱"
       url = "/index.xml"
     [languages.zh-tw.params.cta]
-      eyebrow = "保持聯繫"
       title = "每篇新文章，第一時間送到你的閱讀器"
-      text = "用 RSS 訂閱，或到討論區告訴我們你想讀什麼。"
       [[languages.zh-tw.params.cta.buttons]]
         label = "以 RSS 訂閱"
         url = "/index.xml"

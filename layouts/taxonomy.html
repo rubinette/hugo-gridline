@@ -1,5 +1,5 @@
 {{ define "main" }}
-  {{- partial "hero.html" (dict "title" .Title "lead" (.Description | default .Content)) }}
+  {{- partial "hero.html" (dict "title" .Title "lead" .Content) }}
   {{- partial "divider.html" }}
   <section class="frame term-grid">
     {{- range .Data.Terms.ByCount }}

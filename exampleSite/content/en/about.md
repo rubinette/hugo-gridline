@@ -1,7 +1,6 @@
 ---
 title: About
 description: This is the demo site for the Gridline Hugo theme.
-eyebrow: About
 ---
 
 **Orbitline** is a fictional product. The posts, authors and numbers on this site are sample content that exists to show the layout.
