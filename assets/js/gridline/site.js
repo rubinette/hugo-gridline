@@ -1,4 +1,4 @@
-// Synced from gridline-style 0.1.0 (cf17ab7) src/js/site.js by scripts/sync-gridline-style.py. Edit it there.
+// Synced from gridline-style 0.1.0 (e0eee62) src/js/site.js by scripts/sync-gridline-style.py. Edit it there.
 // Gridline page behaviour: theme toggle, mobile navigation, docs navigation,
 // copy buttons, on-this-page highlight. Every feature checks for its markup,
 // so one file serves every template. Content stays usable without it.
@@ -80,6 +80,25 @@
     });
     sync();
     addEventListener("resize", sync, { passive: true });
+  }
+
+  // The header draws the diamonds for a band's outer rails (.header-rails).
+  // Those rails end with the band, so once it has scrolled up under the header
+  // the diamonds would float on empty canvas: hide them until it comes back.
+  const header = doc.querySelector(".site-header");
+  const band = doc.querySelector(".band");
+  if (header && band && header.querySelector(".header-rails") && "IntersectionObserver" in window) {
+    let io = null;
+    const watch = () => {
+      if (io) io.disconnect();
+      const h = Math.round(header.getBoundingClientRect().height);
+      io = new IntersectionObserver(([entry]) => {
+        header.classList.toggle("past-band", !entry.isIntersecting);
+      }, { rootMargin: `-${h}px 0px 0px 0px` });
+      io.observe(band);
+    };
+    watch();
+    addEventListener("resize", watch, { passive: true });
   }
 
   // Highlight the current section in an on-this-page rail.
